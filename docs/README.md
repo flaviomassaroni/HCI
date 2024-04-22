@@ -4,7 +4,7 @@ Human-Computer interaction project
 
 
 <div align="center">
-  <img src="./images/lana.jpg" width="300px" />
+  <img src="./images/lana.jpg" width="700px" />
 </div>
 
 
