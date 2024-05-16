@@ -4,7 +4,7 @@ Human-Computer interaction project
 
 
 <div align="center">
-  <img src="./images/lana.jpg" width="700px" />
+  <img src="./images/lorenzo.jpg" width="700px" />
 </div>
 
 
@@ -13,4 +13,4 @@ Human-Computer interaction project
 
 ## License
 
-Lana Rohades is released under the [MIT License](./LICENSE).
+Lorenzo is released under the [MIT License](./LICENSE).
