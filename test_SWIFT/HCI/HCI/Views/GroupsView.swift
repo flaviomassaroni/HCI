@@ -2,11 +2,12 @@ import SwiftUI
 
 struct GroupsView: View {
     @EnvironmentObject var viewModel: FinanceViewModel
+
     @State private var showingCreateFundView = false
     
     var body: some View {
         NavigationView {
-            VStack(spacing:0) {
+            VStack {
                 ZStack{
                     RoundedRectangle(cornerRadius: 14)
                     .foregroundColor(Color.blue)
@@ -21,7 +22,8 @@ struct GroupsView: View {
                 
                 
                 List(viewModel.groups) { group in
-                    HStack {
+                    NavigationLink(destination: FundDetailsView(group: group)) {
+                        HStack {
                         VStack(alignment: .leading) {
                             Text(group.name)
                                 .font(.system(size: 25))
@@ -44,8 +46,26 @@ struct GroupsView: View {
                             
                         
                     }
+                    }
                 }
-                .listStyle(DefaultListStyle())
+                .listStyle(PlainListStyle())
+                
+                Spacer()
+                
+                // Add a floating button at the bottom right
+                HStack {
+                    Spacer()
+                    Button(action: {
+                        showingCreateFundView = true
+                    }) {
+                        Image(systemName: "plus")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .shadow(radius: 5)
+                    }
+                    .padding()
                     .sheet(isPresented: $showingCreateFundView) {
                         CreateFundView()
                     }
