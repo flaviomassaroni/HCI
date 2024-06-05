@@ -328,7 +328,7 @@ class _BudgetDetailsWidgetState extends State<BudgetDetailsWidget> {
                                 barWidth: 2.0,
                                 isCurved: true,
                                 preventCurveOverShooting: true,
-                                dotData: FlDotData(show: false),
+                                dotData: const FlDotData(show: false),
                                 belowBarData: BarAreaData(
                                   show: true,
                                   color: const Color(0x6639D2C0),
