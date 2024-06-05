@@ -3,10 +3,8 @@ import SwiftUI
 
 struct GroupsView: View {
     @EnvironmentObject var viewModel: FinanceViewModel
-    @State private var navigateToHomepage = false
-    
-    var body: some View {
-        NavigationView {
+        
+        var body: some View {
             VStack {
                 Text("Groups")
                     .font(.largeTitle)
@@ -30,45 +28,14 @@ struct GroupsView: View {
                     }
                 }
                 .listStyle(PlainListStyle())
-                
-                HStack {
-                    Button(action: {
-                        navigateToHomepage = true
-                    })  {
-                        VStack {
-                            Image(systemName: "person")
-                            Text("Personal")
-                        }
-                        .padding()
-                    }
-                    Spacer()
-                    Button(action: {
-                        // Do nothing or add functionality if needed
-                    }) {
-                        VStack {
-                            Image(systemName: "person.3")
-                            Text("Groups")
-                        }
-                        .padding()
-                    }
-                }
-                .background(Color.blue)
-                .foregroundColor(.white)
-                .cornerRadius(10)
-                .padding()
-                
-                NavigationLink(destination: HomePage().navigationBarHidden(true), isActive: $navigateToHomepage) {
-                    EmptyView()
-                }
             }
             .navigationTitle("Funds")
             .navigationBarHidden(true) // Hide the back button
         }
     }
-}
 
-struct GroupsView_Previews: PreviewProvider {
-    static var previews: some View {
-        GroupsView().environmentObject(FinanceViewModel())
+    struct GroupsView_Previews: PreviewProvider {
+        static var previews: some View {
+            GroupsView().environmentObject(FinanceViewModel())
+        }
     }
-}
