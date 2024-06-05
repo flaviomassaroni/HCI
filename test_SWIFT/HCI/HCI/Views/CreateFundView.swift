@@ -360,16 +360,3 @@ func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Dat
     let amountPerRecurrence = Double(totalAmount) / Double(recurrences)
     return amountPerRecurrence
 }
-
-//// Example usage
-//let totalAmount = 6000.0
-//let startDate = Date()  // Use the current date for example
-//let endDate = Calendar.current.date(byAdding: .month, value: 12, to: startDate)!  // 1 year from now
-//let selectedNumber = 1
-//let selectedUnit = "Month"
-//
-//if let amountPerRecurrence = calculateRecurringAmount(totalAmount: totalAmount, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit) {
-//    print("Amount per recurrence: \(amountPerRecurrence)")
-//} else {
-//    print("Unable to calculate the amount per recurrence.")
-//}
