@@ -48,7 +48,7 @@ struct GroupsView: View {
                     }
                     }
                 }
-                .listStyle(PlainListStyle())
+                .listStyle(DefaultListStyle())
                 
                 Spacer()
                 
