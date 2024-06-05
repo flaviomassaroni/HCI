@@ -5,30 +5,49 @@ struct GroupsView: View {
     @EnvironmentObject var viewModel: FinanceViewModel
         
         var body: some View {
-            VStack {
-                Text("Groups")
-                    .font(.largeTitle)
-                    .padding()
+            VStack(spacing:0) {
+                ZStack{
+                    RoundedRectangle(cornerRadius: 14)
+                    .foregroundColor(Color.blue)
+                    Text("Groups")
+                        .font(.largeTitle)
+                        .padding()
+                        .foregroundColor(Color.white)
+                        .fontWeight(.semibold)
+                }
+                .frame(height:200)
+                .padding(.top, -50)
+                
                 
                 List(viewModel.groups) { group in
                     HStack {
                         VStack(alignment: .leading) {
                             Text(group.name)
-                                .font(.headline)
-                            Text("\(group.startDate) - \(group.endDate)")
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        VStack(alignment: .trailing) {
-                            Text("\(group.currentAmount, specifier: "%.2f")/\(group.totalAmount, specifier: "%.2f")€")
-                                .font(.headline)
+                                .font(.system(size: 25))
+                                .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                            HStack{
+                                Text("\(group.startDate) --> \(group.endDate)")
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                                Spacer()
+                                Text("\(group.currentAmount, specifier: "%.0f")/\(group.totalAmount, specifier: "%.0f")€")
+                                    .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                                    .font(.system(size: 17))
+                            }
                             ProgressBar(value: group.currentAmount / group.totalAmount)
-                        }
+                                .scaleEffect(CGSize(width: 1.0, height: 0.8))
+                                .cornerRadius(14)
+                            }
+
+                            
+                            
+                        
                     }
                 }
-                .listStyle(PlainListStyle())
+                .listStyle(DefaultListStyle())
+                
             }
+            .background(Color(hex: "ECECEE"))
             .navigationTitle("Funds")
             .navigationBarHidden(true) // Hide the back button
         }
