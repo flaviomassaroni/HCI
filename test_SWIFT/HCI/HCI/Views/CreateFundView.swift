@@ -1,14 +1,16 @@
 // Views/CreateFundView.swift
 import SwiftUI
+import Foundation
 
 struct CreateFundView: View {
+    
     @State private var fundName: String = ""
     @State private var totalAmount: String = ""
     @State private var startDate: Date = Date()
     @State private var endDate: Date = Date()
-    @State private var selectedNumber = 0
-    @State private var selectedUnit = ""
-    @State private var computedAmount = 0
+    @State private var selectedNumber = 1
+    @State private var selectedUnit = "Day"
+    @State private var computedAmount: Double = 0.0
     @State private var friends: [String] = []
     @State private var newFriend: String = ""
     
@@ -22,20 +24,21 @@ struct CreateFundView: View {
     }
     
     var body: some View {
-        ScrollView {
-            VStack (alignment: .center, spacing: 10){
-                ZStack{
-                    RoundedRectangle(cornerRadius: 14)
-                        .foregroundColor(Color.blue)
-                    Text("Create New Fund")
-                        .font(.largeTitle)
-                        .padding()
-                        .foregroundColor(Color.white)
-                        .fontWeight(.semibold)
-                }
-                .frame(height:200)
-                .padding(.top, -50)
+        VStack (alignment: .center, spacing: 10){
+            ZStack{
+                RoundedRectangle(cornerRadius: 14)
+                    .foregroundColor(Color.blue)
+                    
+                Text("Create New Fund")
+                    .font(.largeTitle)
+                    .padding()
+                    .foregroundColor(Color.white)
+                .fontWeight(.semibold)
                 
+            }
+            .frame(width: screenWidth, height: 100)
+            .padding(.top, -50)
+        ScrollView {
                 //          Fund Name
                 ZStack {
                     RoundedRectangle(cornerRadius: 14)
@@ -199,7 +202,7 @@ struct CreateFundView: View {
                             }
                             .padding(.top, -10)
                             
-                            Text("You will put: \(computedAmount) every \(numbers[selectedNumber]-1) \(selectedUnit)")
+                            Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
                                 .font(.body)
                                 .fontWeight(.semibold)
                                 .padding()
@@ -213,13 +216,28 @@ struct CreateFundView: View {
                                 selectedUnit = unitSingular
                             }
                         }
+                        .onChange(of: selectedNumber) { _ in
+                            updateComputedAmount()
+                        }
+                        .onChange(of: selectedUnit) { _ in
+                            updateComputedAmount()
+                        }
+                        .onChange(of: startDate) { _ in
+                            updateComputedAmount()
+                        }
+                        .onChange(of: endDate) { _ in
+                            updateComputedAmount()
+                        }
+                        .onChange(of: totalAmount) { _ in
+                            updateComputedAmount()
+                        }
                     }
                 }
                 .frame(width: screenWidth - 28, height: 86)
                 .padding(.horizontal, 14)
                 .padding(.vertical, 140)
                 
-                
+//                Friends adding section
                 ZStack(alignment: .center) {
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundColor(Color.white)
@@ -287,9 +305,21 @@ struct CreateFundView: View {
                     }
                     
                 }
+                .frame(width: screenWidth - 28, height: 86)
+                .padding(.horizontal, 14)
+                .padding(.vertical, 55)
             }
             .navigationTitle("New shared fund")
         }
+    }
+    
+    func updateComputedAmount() {
+        guard let totalAmountDouble = Double(totalAmount) else {
+            computedAmount = 0.0
+            return
+        }
+        
+        computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit)
     }
 }
 
@@ -298,3 +328,48 @@ struct CreateFundView_Previews: PreviewProvider {
         CreateFundView()
     }
 }
+
+
+func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Date, selectedNumber: Int, selectedUnit: String) -> Double {
+    // Calculate the total number of days between start and end date
+    let calendar = Calendar.current
+    guard let totalDays = calendar.dateComponents([.day], from: startDate, to: endDate).day else {
+        return 0.0
+    }
+
+    // Calculate the number of recurrences based on the frequency
+    var numberOfRecurrences: Int?
+    switch selectedUnit {
+    case "Day", "Days":
+        numberOfRecurrences = totalDays / selectedNumber
+    case "Week", "Weeks":
+        numberOfRecurrences = totalDays / (7 * selectedNumber)
+    case "Month", "Months":
+        numberOfRecurrences = calendar.dateComponents([.month], from: startDate, to: endDate).month! / selectedNumber
+    case "Year", "Years":
+        numberOfRecurrences = calendar.dateComponents([.year], from: startDate, to: endDate).year! / selectedNumber
+    default:
+        return 0.0
+    }
+
+    guard let recurrences = numberOfRecurrences, recurrences > 0 else {
+        return 0.0
+    }
+
+    // Calculate the amount to be put on each recurrence
+    let amountPerRecurrence = Double(totalAmount) / Double(recurrences)
+    return amountPerRecurrence
+}
+
+//// Example usage
+//let totalAmount = 6000.0
+//let startDate = Date()  // Use the current date for example
+//let endDate = Calendar.current.date(byAdding: .month, value: 12, to: startDate)!  // 1 year from now
+//let selectedNumber = 1
+//let selectedUnit = "Month"
+//
+//if let amountPerRecurrence = calculateRecurringAmount(totalAmount: totalAmount, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit) {
+//    print("Amount per recurrence: \(amountPerRecurrence)")
+//} else {
+//    print("Unable to calculate the amount per recurrence.")
+//}
