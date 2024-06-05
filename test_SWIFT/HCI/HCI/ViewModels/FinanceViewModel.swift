@@ -2,7 +2,7 @@
 import Foundation
 
 class FinanceViewModel: ObservableObject {
-    @Published var balance: Double = 1927.56
+    @Published var balance: Double = 190027.56
     @Published var transactions: [Transaction] = [
         Transaction(name: "Patches", date: "25/05/24", time: "09:34", amount: 3.20, category: "Health", location: "Farmacia Igea"),
         Transaction(name: "Coffee", date: "25/05/24", time: "09:34", amount: 1.10, category: "Food", location: "Bar Buongiorno"),

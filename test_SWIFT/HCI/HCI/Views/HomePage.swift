@@ -3,6 +3,7 @@ import SwiftUI
 
 struct HomePage: View {
     @EnvironmentObject var viewModel: FinanceViewModel
+    @State private var navigateToGroups = false
     
     var body: some View {
         NavigationView {
@@ -49,7 +50,9 @@ struct HomePage: View {
                 .listStyle(PlainListStyle())
                 
                 HStack {
-                    NavigationLink(destination: HomePage()) {
+                    Button(action: {
+                        // Do nothing or add functionality if needed
+                    }) {
                         VStack {
                             Image(systemName: "person")
                             Text("Personal")
@@ -57,7 +60,9 @@ struct HomePage: View {
                         .padding()
                     }
                     Spacer()
-                    NavigationLink(destination: GroupsView()) {
+                    Button(action: {
+                        navigateToGroups = true
+                    }) {
                         VStack {
                             Image(systemName: "person.3")
                             Text("Groups")
@@ -69,6 +74,10 @@ struct HomePage: View {
                 .foregroundColor(.white)
                 .cornerRadius(10)
                 .padding()
+                
+                NavigationLink(destination: GroupsView().navigationBarHidden(true), isActive: $navigateToGroups) {
+                    EmptyView()
+                }
             }
             .navigationTitle("HomePage")
         }
