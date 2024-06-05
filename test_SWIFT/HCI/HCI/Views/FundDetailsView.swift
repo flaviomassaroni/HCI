@@ -1,4 +1,3 @@
-// Views/FundDetailsView.swift
 import SwiftUI
 
 struct FundDetailsView: View {
@@ -33,11 +32,9 @@ struct FundDetailsView: View {
                 .padding(.top)
             
             List {
-                // Add contributions history here
-                Text("16/05/24: 50€")
-                Text("17/04/24: 50€")
-                Text("24/03/24: 50€")
-                // Add more contributions
+                ForEach(group.contributionHistory, id: \.0) { contribution in
+                    Text("\(contribution.0): \(contribution.1, specifier: "%.2f")€")
+                }
             }
         }
         .navigationTitle("Fund Details View")
@@ -46,6 +43,11 @@ struct FundDetailsView: View {
 
 struct FundDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        FundDetailsView(group: Group(name: "Boat", startDate: "23/05/24", endDate: "30/06/25", totalAmount: 6000, currentAmount: 550))
+        FundDetailsView(group: Group(name: "Boat", startDate: "23/05/24", endDate: "30/06/25", totalAmount: 6000, currentAmount: 550, contributionHistory: [
+            ("01/05/24", 100.0),
+            ("15/05/24", 150.0),
+            ("01/06/24", 200.0),
+            ("15/06/24", 100.0)
+        ]))
     }
 }

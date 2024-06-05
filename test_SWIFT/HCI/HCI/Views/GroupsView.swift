@@ -1,10 +1,11 @@
-// Views/GroupsView.swift
 import SwiftUI
 
 struct GroupsView: View {
     @EnvironmentObject var viewModel: FinanceViewModel
-        
-        var body: some View {
+    @State private var showingCreateFundView = false
+    
+    var body: some View {
+        NavigationView {
             VStack(spacing:0) {
                 ZStack{
                     RoundedRectangle(cornerRadius: 14)
@@ -45,16 +46,20 @@ struct GroupsView: View {
                     }
                 }
                 .listStyle(DefaultListStyle())
-                
+                    .sheet(isPresented: $showingCreateFundView) {
+                        CreateFundView()
+                    }
+                }
             }
             .background(Color(hex: "ECECEE"))
             .navigationTitle("Funds")
             .navigationBarHidden(true) // Hide the back button
         }
     }
+}
 
-    struct GroupsView_Previews: PreviewProvider {
-        static var previews: some View {
-            GroupsView().environmentObject(FinanceViewModel())
-        }
+struct GroupsView_Previews: PreviewProvider {
+    static var previews: some View {
+        GroupsView().environmentObject(FinanceViewModel())
     }
+}
