@@ -5,7 +5,7 @@ struct ContentView: View {
         VStack {
             // Top Bar
             VStack {
-            // Header
+                // Header
                 HStack {
                     Image(systemName: "line.horizontal.3")
                         .font(.title)
@@ -16,32 +16,33 @@ struct ContentView: View {
                             .font(.title)
                         Text("Card")
                             .font(.caption)
-                            
                     }
-                    
                 }
                 .padding()
                 .foregroundColor(.white)
                 
                 // Balance Section
-                VStack(alignment: .leading) {
-                    Text("Your Balance")
-                        .font(.title2)
-                        .fontWeight(.semibold)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.center)
-                    
-                    Text("€1927.56")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Your Balance")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                        
+                        Text("€1927.56")
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                    }
+                    Spacer()
                 }
-                .padding(.horizontal)
-        }
-        .frame(height: 250)
-        .background(Color(hex: "3B46F1"))
-        .cornerRadius(14)
-
+                .padding()
+            }
+            .frame(height: 250)
+            .background(Color(hex: "3B46F1"))
+            .cornerRadius(14)
+            
+            
             // Transactions Section
             VStack(alignment: .leading) {
                 Text("Your Transactions")
@@ -57,32 +58,36 @@ struct ContentView: View {
                 }
             }
             .padding(.top)
-
+            
             Spacer()
-
+            
             // Bottom Navigation
-            HStack() {
+            HStack {
                 Spacer()
                 VStack {
                     Image(systemName: "person.crop.circle")
                     Text("Personal")
                         .font(.caption)
+                        .foregroundColor(.white)
                 }
                 Spacer()
-                VStack {
-                    Image(systemName: "person.2.square.stack")
-                    Text("Groups")
-                        .font(.caption)
+                NavigationLink(destination: GroupsView()) {
+                    VStack {
+                        Image(systemName: "person.2.square.stack")
+                        Text("Groups")
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                    }
                 }
                 Spacer()
             }
             .padding()
             .background(Color(hex: "3B46F1"))
             .foregroundColor(.white)
-            .cornerRadius(14)
+            .padding(.bottom, UIApplication.shared.windows.first?.safeAreaInsets.bottom) // Add padding for safe area
         }
         .background(Color(UIColor.systemGray6))
-        .frame(height: 939.0)
+        .edgesIgnoringSafeArea(.bottom) // Ensure edges ignore safe area for a full background
     }
 }
 
