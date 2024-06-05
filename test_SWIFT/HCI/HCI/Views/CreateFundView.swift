@@ -111,7 +111,7 @@ struct CreateFundView: View {
             .padding(.horizontal, 14)
             .padding(.vertical, 10)
             
-            DatePicker("Start Date", selection: $startDate, displayedComponents: .date)
+            DatePicker("Choose start date", selection: $startDate, displayedComponents: .date)
                 .padding(.horizontal)
             
             DatePicker("End Date", selection: $endDate, displayedComponents: .date)
