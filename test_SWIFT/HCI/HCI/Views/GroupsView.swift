@@ -24,7 +24,6 @@ struct GroupsView: View {
                     }
                     .frame(height: 200)
                     .padding(.top, -50)
-//                    .padding(.bottom, -8)
 
                     // List with consistent background color
                     List(viewModel.groups) { group in

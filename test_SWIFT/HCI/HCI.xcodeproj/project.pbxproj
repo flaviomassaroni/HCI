@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		A715801E2C10657900477F44 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A715801D2C10657900477F44 /* MainView.swift */; };
 		A76A93322C10522100DFB084 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A93312C10522100DFB084 /* Transaction.swift */; };
-		A76A93342C1052C900DFB084 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A93332C1052C900DFB084 /* ProgressBar.swift */; };
 		A76A93362C1052EC00DFB084 /* FundDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A93352C1052EC00DFB084 /* FundDetailsView.swift */; };
 		A76A93382C10531400DFB084 /* CreateFundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A93372C10531400DFB084 /* CreateFundView.swift */; };
 		A76A933A2C10532B00DFB084 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A93392C10532B00DFB084 /* GroupsView.swift */; };
@@ -45,7 +44,6 @@
 /* Begin PBXFileReference section */
 		A715801D2C10657900477F44 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		A76A93312C10522100DFB084 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
-		A76A93332C1052C900DFB084 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		A76A93352C1052EC00DFB084 /* FundDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundDetailsView.swift; sourceTree = "<group>"; };
 		A76A93372C10531400DFB084 /* CreateFundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFundView.swift; sourceTree = "<group>"; };
 		A76A93392C10532B00DFB084 /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
@@ -92,7 +90,6 @@
 		A76A932D2C104EB000DFB084 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				A76A93332C1052C900DFB084 /* ProgressBar.swift */,
 				A76A93352C1052EC00DFB084 /* FundDetailsView.swift */,
 				A715801D2C10657900477F44 /* MainView.swift */,
 				A76A93372C10531400DFB084 /* CreateFundView.swift */,
@@ -330,7 +327,6 @@
 				A76A93362C1052EC00DFB084 /* FundDetailsView.swift in Sources */,
 				A7FE46732C0F554500B3A2FC /* Color+Hex.swift in Sources */,
 				A76A933F2C10536E00DFB084 /* FinanceViewModel.swift in Sources */,
-				A76A93342C1052C900DFB084 /* ProgressBar.swift in Sources */,
 				A715801E2C10657900477F44 /* MainView.swift in Sources */,
 				A76A93322C10522100DFB084 /* Transaction.swift in Sources */,
 				A76A933A2C10532B00DFB084 /* GroupsView.swift in Sources */,

@@ -5,16 +5,49 @@ struct FundDetailsView: View {
     
     var body: some View {
         VStack {
-            Text(group.name)
-                .font(.largeTitle)
-                .padding()
-            
-            Text("\(group.currentAmount, specifier: "%.2f")/\(group.totalAmount, specifier: "%.2f")€")
-                .font(.headline)
-            
-            ProgressBar(value: group.currentAmount / group.totalAmount)
-                .frame(height: 20)
-                .padding()
+            ZStack {
+                RoundedRectangle(cornerRadius: 14)
+                    .foregroundColor(Color.blue)
+                VStack{
+                    Text(group.name)
+                        .font(.largeTitle)
+                        .padding(.top, 20)
+                        .foregroundColor(Color.white)
+                        .fontWeight(.semibold)
+                    Text("\(group.startDate) ---> \(group.endDate)")
+                         .foregroundColor(.white)
+                         .font(.system(size: 18))
+                         .fontWeight(.semibold)
+                         .padding(0)
+                    Text("\(group.currentAmount, specifier: "%.0f")/\(group.totalAmount, specifier: "%.0f")€")
+                        .font(.system(size: 35))
+                        .padding(.top, 20)
+                        .padding(.bottom, -1)
+                        .foregroundColor(Color.white)
+                        .fontWeight(.bold)
+                    HStack{
+                        Text("\(Int((group.currentAmount / group.totalAmount) * 100))%")
+                            .font(.system(size: 17))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.leading, 20)
+                        
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 14)
+                                .foregroundColor(Color.white)
+                                .frame(height: 20)
+                                .padding(.vertical, 0)
+                                .padding(.trailing, 20)
+                            ProgressBar(value: group.currentAmount / group.totalAmount )
+                                .frame(height: 20)
+                                .padding(.vertical, 0)
+                                .padding(.trailing, 20)
+                        }
+                    }
+                }
+            }
+            .frame(height: 280)
+            .padding(.top, -50)
             
             Text("Participants")
                 .font(.headline)
@@ -33,7 +66,7 @@ struct FundDetailsView: View {
             
             List {
                 ForEach(group.contributionHistory, id: \.0) { contribution in
-                    Text("\(contribution.0): \(contribution.1, specifier: "%.2f")€")
+                    Text("\(contribution.0): \(contribution.1, specifier: "%.0f")€")
                 }
             }
         }
