@@ -72,7 +72,7 @@ struct GroupsView: View {
                 }
             }
             .background(Color(hex: "ECECEE"))
-            .navigationTitle("Funds")
+            .navigationTitle("Groups")
             .navigationBarHidden(true) // Hide the back button
         }
     }
