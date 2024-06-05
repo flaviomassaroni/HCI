@@ -8,4 +8,6 @@ struct Group: Identifiable {
     var endDate: String
     var totalAmount: Double
     var currentAmount: Double
+    var contributionHistory: [(String, Double)]
+
 }
