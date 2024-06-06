@@ -3,6 +3,13 @@ import SwiftUI
 import Foundation
 
 struct CreateFundView: View {
+//    var friends: [Friend]
+    
+    @State private var friends: [Friend] = [
+        Friend(id: UUID(), name: "Leonardo", mail: "leo@gmail.com", accountId: UUID()),
+        Friend(id: UUID(), name: "Flavio", mail: "flavio@gmail.com", accountId: UUID()),
+        Friend(id: UUID(), name: "Andrea", mail: "andre@gmail.com", accountId: UUID())
+    ]
     
     @State private var fundName: String = ""
     @State private var totalAmount: String = ""
@@ -11,8 +18,8 @@ struct CreateFundView: View {
     @State private var selectedNumber = 1
     @State private var selectedUnit = "Day"
     @State private var computedAmount: Double = 0.0
-    @State private var friends: [String] = []
     @State private var newFriend: String = ""
+    @State private var addedFriends: [String] = [""]
     
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
     @State var screenHeight: CGFloat = UIScreen.main.bounds.height
@@ -29,24 +36,26 @@ struct CreateFundView: View {
                 RoundedRectangle(cornerRadius: 14)
                     .foregroundColor(Color.blue)
                     
-                Text("Create New Fund")
-                    .font(.largeTitle)
-                    .padding()
-                    .foregroundColor(Color.white)
-                .fontWeight(.semibold)
+                VStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width: 100, height: 5)
+                        .padding(.top, 5)
+                        .foregroundColor(Color.gray)
+                    Text("Create New Fund")
+                        .font(.largeTitle)
+                        .padding()
+                        .foregroundColor(Color.white)
+                    .fontWeight(.semibold)
+                }
                 
             }
-            .frame(width: screenWidth, height: 100)
-            .padding(.top, -50)
-        ScrollView {
+            .frame(width: screenWidth, height: 110)
+            .padding(.top, -10)
+            ScrollView {
                 //          Fund Name
                 ZStack {
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundColor(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .stroke(Color.white, lineWidth: 2)
-                        )
                         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Fund Name")
@@ -83,11 +92,8 @@ struct CreateFundView: View {
                 ZStack {
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundColor(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 14)
-                                .stroke(Color.white, lineWidth: 2)
-                        )
                         .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
+
                     VStack(alignment: .leading, spacing: 5) {
                         Text("Total amount to save")
                             .font(.title3)
@@ -106,6 +112,7 @@ struct CreateFundView: View {
                                     .background(Color(.systemGray6))
                                     .cornerRadius(10)
                                     .padding(.horizontal, 5)
+                                    .keyboardType(.numberPad)
                             }
                             .padding(.leading)
                             
@@ -164,6 +171,7 @@ struct CreateFundView: View {
                                 DatePicker(
                                     "",
                                     selection: $endDate,
+                                    in: startDate...,
                                     displayedComponents: .date
                                 )
                                 .datePickerStyle(.compact)
@@ -215,8 +223,6 @@ struct CreateFundView: View {
                             } else if selectedNumber == 1 && selectedUnit.hasSuffix("s") {
                                 selectedUnit = unitSingular
                             }
-                        }
-                        .onChange(of: selectedNumber) { _ in
                             updateComputedAmount()
                         }
                         .onChange(of: selectedUnit) { _ in
@@ -249,7 +255,8 @@ struct CreateFundView: View {
                     
                     VStack{
                         Text("Friends")
-                            .font(.subheadline)
+                            .font(.title3)
+                            .fontWeight(.semibold)
                             .padding(.top)
                         
                         HStack {
@@ -260,7 +267,7 @@ struct CreateFundView: View {
                             
                             Button(action: {
                                 if !newFriend.isEmpty {
-                                    friends.append(newFriend)
+                                    addedFriends.append(newFriend)
                                     newFriend = ""
                                 }
                             }) {
@@ -273,20 +280,19 @@ struct CreateFundView: View {
                         }
                         .padding(.horizontal)
                         
-                        ForEach(friends, id: \.self) { friend in
-                            HStack {
-                                Text(friend)
-                                Spacer()
-                                Button(action: {
-                                    if let index = friends.firstIndex(of: friend) {
-                                        friends.remove(at: index)
+                        ScrollView(.horizontal, showsIndicators: false) {
+                            HStack(spacing: 20) {
+                                ForEach(friends, id: \.self) { friend in
+                                    VStack {
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .fill(Color.blue)
+                                            .frame(width: 100, height: 100)
+                                        Text(friend.name)
+                                            .foregroundColor(.white)
                                     }
-                                }) {
-                                    Image(systemName: "minus.circle")
-                                        .foregroundColor(.red)
                                 }
                             }
-                            .padding(.horizontal)
+                            .padding()
                         }
                         
                         Spacer()
@@ -357,6 +363,6 @@ func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Dat
     }
 
     // Calculate the amount to be put on each recurrence
-    let amountPerRecurrence = Double(totalAmount) / Double(recurrences)
+    let amountPerRecurrence = Double(totalAmount) / Double(recurrences + 1)
     return amountPerRecurrence
 }
