@@ -19,18 +19,18 @@ class FinanceViewModel: ObservableObject {
             ("15/05/24", 150.0),
             ("01/06/24", 200.0),
             ("15/06/24", 100.0)
-        ]),
+        ], participants: ["Andrea Salinetti", "Leonardo Scappatura", "Flavio Massaroni"]),
         Group(id: UUID(), name: "Spain Holidays", startDate: "23/05/24", endDate: "30/06/25", period: "1M", totalAmount: 2000, currentAmount: 850, contributionHistory: [
             ("01/05/24", 200.0),
             ("15/05/24", 300.0),
             ("01/06/24", 150.0),
             ("15/06/24", 200.0)
-        ]),
+        ], participants: ["Andrea Salinetti", "Leonardo Scappatura", "Flavio Massaroni"]),
         Group(id: UUID(), name: "Graduation Present", startDate: "23/05/24", endDate: "30/06/25", period: "1M", totalAmount: 300, currentAmount: 250, contributionHistory: [
             ("01/05/24", 50.0),
             ("15/05/24", 100.0),
             ("01/06/24", 50.0),
             ("15/06/24", 50.0)
-        ])
+        ], participants: ["Andrea Salinetti", "Leonardo Scappatura", "Flavio Massaroni"])
     ]
 }

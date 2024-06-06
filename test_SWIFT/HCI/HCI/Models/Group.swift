@@ -10,6 +10,7 @@ struct Group: Identifiable {
     var totalAmount: Double
     var currentAmount: Double
     var contributionHistory: [(String, Double)]
+    var participants: [String]
 
 
 }

@@ -22,6 +22,8 @@
 		A7FE46642C0F4AE400B3A2FC /* HCIUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FE46632C0F4AE400B3A2FC /* HCIUITests.swift */; };
 		A7FE46662C0F4AE400B3A2FC /* HCIUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FE46652C0F4AE400B3A2FC /* HCIUITestsLaunchTests.swift */; };
 		A7FE46732C0F554500B3A2FC /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FE46722C0F554500B3A2FC /* Color+Hex.swift */; };
+		C80D2E402C10BDA80009478D /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E3F2C10BDA80009478D /* ProgressBar.swift */; };
+		C80D2E422C10BEF60009478D /* FundDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E412C10BEF60009478D /* FundDetailViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +62,8 @@
 		A7FE46632C0F4AE400B3A2FC /* HCIUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HCIUITests.swift; sourceTree = "<group>"; };
 		A7FE46652C0F4AE400B3A2FC /* HCIUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HCIUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		A7FE46722C0F554500B3A2FC /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
+		C80D2E3F2C10BDA80009478D /* ProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		C80D2E412C10BEF60009478D /* FundDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundDetailViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +94,7 @@
 		A76A932D2C104EB000DFB084 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				C80D2E3F2C10BDA80009478D /* ProgressBar.swift */,
 				A76A93352C1052EC00DFB084 /* FundDetailsView.swift */,
 				A715801D2C10657900477F44 /* MainView.swift */,
 				A76A93372C10531400DFB084 /* CreateFundView.swift */,
@@ -126,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				A76A933E2C10536E00DFB084 /* FinanceViewModel.swift */,
+				C80D2E412C10BEF60009478D /* FundDetailViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -322,10 +328,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				A76A93422C10539200DFB084 /* Group.swift in Sources */,
+				C80D2E402C10BDA80009478D /* ProgressBar.swift in Sources */,
 				A76A933C2C10534900DFB084 /* HomePage.swift in Sources */,
 				A7FE46492C0F4AE200B3A2FC /* HCIApp.swift in Sources */,
 				A76A93362C1052EC00DFB084 /* FundDetailsView.swift in Sources */,
 				A7FE46732C0F554500B3A2FC /* Color+Hex.swift in Sources */,
+				C80D2E422C10BEF60009478D /* FundDetailViewModel.swift in Sources */,
 				A76A933F2C10536E00DFB084 /* FinanceViewModel.swift in Sources */,
 				A715801E2C10657900477F44 /* MainView.swift in Sources */,
 				A76A93322C10522100DFB084 /* Transaction.swift in Sources */,
