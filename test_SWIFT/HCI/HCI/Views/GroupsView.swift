@@ -48,33 +48,36 @@ struct GroupsView: View {
                                             .fontWeight(.bold)
                                             .font(.system(size: 17))
                                     }
-                                    HStack{
+                                    HStack {
                                         ProgressBar(value: group.currentAmount / group.totalAmount)
                                             .scaleEffect(CGSize(width: 1.0, height: 0.8))
                                             .cornerRadius(14)
-                                    Text("\(Int((group.currentAmount / group.totalAmount) * 100))%")
-                                                                                    .font(.caption)
-                                                                                    .fontWeight(.bold)
-                                                                                    .foregroundColor(.black)
+                                        Text("\(Int((group.currentAmount / group.totalAmount) * 100))%")
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.black)
                                     }
                                 }
                                 Spacer()
                             }
                             .padding(5)
-                            
                             // Custom chevron at the top right corner
                             Image(systemName: "chevron.right")
                                 .foregroundColor(.gray)
                                 .padding(.trailing, 10)
                                 .padding(.top, 18)
                         }
-
                         .cornerRadius(8)
                         .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
                         .padding(.vertical, 5)
                     }
                     .listStyle(DefaultListStyle())
+                }
+                .navigationTitle("Funds")
+                .navigationBarHidden(true) // Hide the back button
 
+                VStack {
+                    Spacer()
                     HStack {
                         Spacer()
                         Button(action: {
@@ -95,8 +98,6 @@ struct GroupsView: View {
                     .padding(.bottom, 10)
                 }
             }
-            .navigationTitle("Funds")
-            .navigationBarHidden(true) // Hide the back button
         }
     }
 }
