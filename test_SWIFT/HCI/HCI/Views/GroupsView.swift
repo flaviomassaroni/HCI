@@ -4,11 +4,15 @@ struct GroupsView: View {
     @EnvironmentObject var viewModel: FinanceViewModel
 
     @State private var showingCreateFundView = false
-    
+
     var body: some View {
         NavigationView {
             ZStack {
-                VStack {
+                // Main background color
+                Color(hex: "ECECEE")
+                    .edgesIgnoringSafeArea(.all)
+
+                VStack(spacing: 0) {
                     ZStack {
                         RoundedRectangle(cornerRadius: 14)
                             .foregroundColor(Color.blue)
@@ -21,13 +25,20 @@ struct GroupsView: View {
                     .frame(height: 200)
                     .padding(.top, -50)
 
+                    // List with consistent background color
                     List(viewModel.groups) { group in
-                        NavigationLink(destination: FundDetailsView(group: group)) {
+                        ZStack(alignment: .topTrailing) {
+                            NavigationLink(destination: FundDetailsView(group: group)) {
+                                EmptyView()
+                            }
+                            .opacity(0) // Make the default chevron invisible
+
                             HStack {
                                 VStack(alignment: .leading) {
                                     Text(group.name)
                                         .font(.system(size: 25))
                                         .fontWeight(.bold)
+                                        .padding(.vertical, 5)
                                     HStack {
                                         Text("\(group.startDate) --> \(group.endDate)")
                                             .font(.subheadline)
@@ -37,17 +48,33 @@ struct GroupsView: View {
                                             .fontWeight(.bold)
                                             .font(.system(size: 17))
                                     }
-                                    ProgressBar(value: group.currentAmount / group.totalAmount)
-                                        .scaleEffect(CGSize(width: 1.0, height: 0.8))
-                                        .cornerRadius(14)
+                                    HStack {
+                                        ProgressBar(value: group.currentAmount / group.totalAmount)
+                                            .scaleEffect(CGSize(width: 1.0, height: 0.8))
+                                            .cornerRadius(14)
+                                        Text("\(Int((group.currentAmount / group.totalAmount) * 100))%")
+                                            .font(.caption)
+                                            .fontWeight(.bold)
+                                            .foregroundColor(.black)
+                                    }
                                 }
+                                Spacer()
                             }
+                            .padding(5)
+
+                            // Custom chevron at the top right corner
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.gray)
+                                .padding(.trailing, 10)
+                                .padding(.top, 18)
                         }
+                        .cornerRadius(8)
+                        .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
+                        .padding(.vertical, 5)
                     }
                     .listStyle(DefaultListStyle())
                 }
-                .background(Color(hex: "ECECEE"))
-                .navigationTitle("Groups")
+                .navigationTitle("Funds")
                 .navigationBarHidden(true) // Hide the back button
 
                 VStack {
@@ -61,7 +88,7 @@ struct GroupsView: View {
                                 .padding()
                                 .background(Color.blue)
                                 .foregroundColor(.white)
-                                .cornerRadius(10)
+                                .cornerRadius(90)
                                 .shadow(radius: 5)
                         }
                         .padding()
@@ -69,8 +96,8 @@ struct GroupsView: View {
                             CreateFundView()
                         }
                     }
+                    .padding(.bottom, 10)
                 }
-                .padding()
             }
         }
     }
