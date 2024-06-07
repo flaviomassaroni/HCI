@@ -12,7 +12,4 @@ struct Group: Identifiable {
     var currentAmount: Double
     var contributionHistory: [Contribution]
     var participants: [Participant]
-    
- 
-
 }
