@@ -24,6 +24,7 @@
 		A7FE46732C0F554500B3A2FC /* Color+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7FE46722C0F554500B3A2FC /* Color+Hex.swift */; };
 		C80D2E402C10BDA80009478D /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E3F2C10BDA80009478D /* ProgressBar.swift */; };
 		C80D2E422C10BEF60009478D /* FundDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E412C10BEF60009478D /* FundDetailViewModel.swift */; };
+		C80D2E442C12F9AF0009478D /* Contribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E432C12F9AF0009478D /* Contribution.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,7 @@
 		A7FE46722C0F554500B3A2FC /* Color+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Hex.swift"; sourceTree = "<group>"; };
 		C80D2E3F2C10BDA80009478D /* ProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		C80D2E412C10BEF60009478D /* FundDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundDetailViewModel.swift; sourceTree = "<group>"; };
+		C80D2E432C12F9AF0009478D /* Contribution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contribution.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 			children = (
 				A76A93312C10522100DFB084 /* Transaction.swift */,
 				A76A93412C10539200DFB084 /* Group.swift */,
+				C80D2E432C12F9AF0009478D /* Contribution.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -329,6 +332,7 @@
 			files = (
 				A76A93422C10539200DFB084 /* Group.swift in Sources */,
 				C80D2E402C10BDA80009478D /* ProgressBar.swift in Sources */,
+				C80D2E442C12F9AF0009478D /* Contribution.swift in Sources */,
 				A76A933C2C10534900DFB084 /* HomePage.swift in Sources */,
 				A7FE46492C0F4AE200B3A2FC /* HCIApp.swift in Sources */,
 				A76A93362C1052EC00DFB084 /* FundDetailsView.swift in Sources */,

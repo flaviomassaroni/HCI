@@ -1,5 +1,6 @@
 // Models/Group.swift
 import Foundation
+import SwiftUI
 
 struct Group: Identifiable {
     var id = UUID()
@@ -9,8 +10,9 @@ struct Group: Identifiable {
     var period: String
     var totalAmount: Double
     var currentAmount: Double
-    var contributionHistory: [(String, Double)]
-    var participants: [String]
-
+    var contributionHistory: [Contribution]
+    var participants: [Participant]
+    
+ 
 
 }

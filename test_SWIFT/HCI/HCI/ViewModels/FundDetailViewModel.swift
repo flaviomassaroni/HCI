@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 func addPeriodToDate(dateString: String, period: String) -> String? {
     // Create a date formatter to parse the input date string
@@ -36,3 +37,27 @@ func addPeriodToDate(dateString: String, period: String) -> String? {
         return nil // Return nil if the calculation fails
     }
 }
+
+let profileColors: [Color] = [
+    Color(hex: "FF5733"), // Vibrant Orange
+    Color(hex: "33FF57"), // Bright Green
+    Color(hex: "3357FF"), // Bright Blue
+    Color(hex: "FF33A6"), // Hot Pink
+    Color(hex: "A633FF"), // Purple
+    Color(hex: "33FFF0"), // Aqua
+    Color(hex: "FF8C33"), // Warm Orange
+    Color(hex: "FFC733"), // Golden Yellow
+    Color(hex: "8DFF33"), // Lime Green
+    Color(hex: "FF3333"), // Bright Red
+    Color(hex: "33B8FF"), // Sky Blue
+    Color(hex: "FF33D4"), // Magenta
+    Color(hex: "B833FF"), // Violet
+    Color(hex: "33FFA2"), // Mint Green
+    Color(hex: "FF8633"), // Coral
+    Color(hex: "FFE733"), // Sunflower Yellow
+    Color(hex: "8CFF33"), // Chartreuse
+    Color(hex: "33D4FF"), // Cyan
+    Color(hex: "FF3384"), // Fuchsia
+    Color(hex: "6F33FF")  // Indigo
+]
+
