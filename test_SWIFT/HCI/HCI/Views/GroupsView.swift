@@ -70,6 +70,21 @@ struct GroupsView: View {
                         CreateFundView()
                     }
                 }
+                
+//                HStack {
+//                    Spacer()
+//                    NavigationLink(destination: CreateFundView()) {
+//                        Image(systemName: "plus")
+//                            .padding()
+//                            .background(Color.blue)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(10)
+//                            .shadow(radius: 5)
+//                    }
+//                    .padding()
+//                }
+//                Spacer()
+                
             }
             .background(Color(hex: "ECECEE"))
             .navigationTitle("Funds")

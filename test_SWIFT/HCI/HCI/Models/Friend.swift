@@ -1,6 +1,6 @@
 import Foundation
 
-struct Friend: Identifiable {
+struct Friend: Identifiable, Hashable {
     var id = UUID()
     var name: String
     var mail: String

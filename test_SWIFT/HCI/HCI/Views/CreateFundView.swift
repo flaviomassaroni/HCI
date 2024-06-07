@@ -5,11 +5,7 @@ import Foundation
 struct CreateFundView: View {
 //    var friends: [Friend]
     
-    @State private var friends: [Friend] = [
-        Friend(id: UUID(), name: "Leonardo", mail: "leo@gmail.com", accountId: UUID()),
-        Friend(id: UUID(), name: "Flavio", mail: "flavio@gmail.com", accountId: UUID()),
-        Friend(id: UUID(), name: "Andrea", mail: "andre@gmail.com", accountId: UUID())
-    ]
+    @StateObject private var friendsModel = FriendsModel()
     
     @State private var fundName: String = ""
     @State private var totalAmount: String = ""
@@ -45,277 +41,302 @@ struct CreateFundView: View {
                         .font(.largeTitle)
                         .padding()
                         .foregroundColor(Color.white)
-                    .fontWeight(.semibold)
+                        .fontWeight(.semibold)
                 }
                 
             }
             .frame(width: screenWidth, height: 110)
             .padding(.top, -10)
-            ScrollView {
-                //          Fund Name
-                ZStack {
-                    RoundedRectangle(cornerRadius: 14)
-                        .foregroundColor(Color.white)
-                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("Fund Name")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .padding(.leading)
-                            .foregroundColor(Color.black)
-                        
-                        ZStack(alignment: .trailing) {
-                            TextField("Fuerteventura's Trip", text: $fundName)
-                                .padding()
-                                .background(Color(.systemGray6))
-                                .cornerRadius(10)
-                                .padding(.horizontal)
-                            
-                            Button(action: {
-                                fundName = ""
-                            }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 10)
-                            }
-                            .padding(.horizontal)
-                        }
-                    }
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 10)
-                }
-                .frame(width: screenWidth - 28, height: 86)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 10)
-                
-                //          Amount
-                ZStack {
-                    RoundedRectangle(cornerRadius: 14)
-                        .foregroundColor(Color.white)
-                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
-
-                    VStack(alignment: .leading, spacing: 5) {
-                        Text("Total amount to save")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .padding(.leading)
-                            .foregroundColor(Color.black)
-                        
-                        ZStack(alignment: .trailing) {
-                            HStack(spacing: 1) {
-                                Text("€")
-                                    .fontWeight(.bold)
-                                    .padding(.leading, 1.0)
-                                
-                                TextField("6000", text: $totalAmount)
-                                    .padding()
-                                    .background(Color(.systemGray6))
-                                    .cornerRadius(10)
-                                    .padding(.horizontal, 5)
-                                    .keyboardType(.numberPad)
-                            }
-                            .padding(.leading)
-                            
-                            Button(action: {
-                                totalAmount = ""
-                            }) {
-                                Image(systemName: "xmark.circle.fill")
-                                    .foregroundColor(.gray)
-                            }
-                            .padding(.horizontal)
-                        }
-                        .padding(.trailing, 14)
-                    }
-                    .padding(.horizontal, 5)
-                    .padding(.vertical, 10)
-                }
-                .frame(width: screenWidth - 28, height: 86)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 10)
-                
-                
-                //          Date Picking
-                ZStack(alignment: .center) {
-                    RoundedRectangle(cornerRadius: 14)
-                        .foregroundColor(Color.white)
-                        .overlay(
+            
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack (spacing:10) {
+                        //          Fund Name
+                        ZStack {
                             RoundedRectangle(cornerRadius: 14)
-                                .stroke(Color.white, lineWidth: 2)
-                        )
-                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
-                        
-                    VStack {
-                        HStack (spacing: 20){
-                            VStack (alignment: .center){
-                                Text("Start Date")
-                                    .fontWeight(.bold)
-                                    .padding(.bottom, -5)
+                                .foregroundColor(Color.white)
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("Fund Name")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .padding(.leading)
+                                    .foregroundColor(Color.black)
                                 
-                                DatePicker(
-                                    "",
-                                    selection: $startDate,
-                                    displayedComponents: .date
-                                )
-                                .datePickerStyle(.compact)
-                                .labelsHidden()
-                                .padding()
+                                ZStack(alignment: .trailing) {
+                                    TextField("Fuerteventura's Trip", text: $fundName)
+                                        .padding()
+                                        .background(Color(.systemGray6))
+                                        .cornerRadius(10)
+                                        .padding(.horizontal)
+                                    
+                                    Button(action: {
+                                        fundName = ""
+                                    }) {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(.gray)
+                                            .padding(.trailing, 10)
+                                    }
+                                    .padding(.horizontal)
+                                }
                             }
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            
-                            
-                            VStack (alignment: .center){
-                                Text("End Date")
-                                    .fontWeight(.bold)
-                                    .padding(.bottom, -5)
-                                
-                                DatePicker(
-                                    "",
-                                    selection: $endDate,
-                                    in: startDate...,
-                                    displayedComponents: .date
-                                )
-                                .datePickerStyle(.compact)
-                                .labelsHidden()
-                                .padding()
-                            }
-                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 10)
                         }
-                        .padding(.horizontal, 5)
+                        .frame(width: screenWidth - 28, height: 86)
+                        .padding(.horizontal, 14)
                         .padding(.vertical, 10)
                         
-                        VStack {
-                            Text("Every")
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                                .padding(.bottom, 5)
-                            
-                            HStack {
-                                Picker(selection: $selectedNumber, label: Text("Number")) {
-                                    ForEach(numbers, id: \.self) { number in
-                                        Text("\(number)").tag(number)
-                                    }
-                                }
-                                .pickerStyle(WheelPickerStyle())
-                                .frame(width: 100, height: 150)
-                                .clipped()
-                                
-                                Picker(selection: $selectedUnit, label: Text("Unit")) {
-                                    ForEach(units, id: \.self) { unit in
-                                        Text(unit).tag(unit)
-                                    }
-                                }
-                                .pickerStyle(WheelPickerStyle())
-                                .frame(width: 150, height: 150)
-                                .clipped()
-                            }
-                            .padding(.top, -10)
-                            
-                            Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
-                                .font(.body)
-                                .fontWeight(.semibold)
-                                .padding()
-                        }
-                        .onChange(of: selectedNumber) { _ in
-                            // Update selectedUnit to ensure it matches the correct plurality
-                            let unitSingular = selectedUnit.replacingOccurrences(of: "s", with: "")
-                            if selectedNumber > 1 && !selectedUnit.hasSuffix("s") {
-                                selectedUnit = unitSingular + "s"
-                            } else if selectedNumber == 1 && selectedUnit.hasSuffix("s") {
-                                selectedUnit = unitSingular
-                            }
-                            updateComputedAmount()
-                        }
-                        .onChange(of: selectedUnit) { _ in
-                            updateComputedAmount()
-                        }
-                        .onChange(of: startDate) { _ in
-                            updateComputedAmount()
-                        }
-                        .onChange(of: endDate) { _ in
-                            updateComputedAmount()
-                        }
-                        .onChange(of: totalAmount) { _ in
-                            updateComputedAmount()
-                        }
-                    }
-                }
-                .frame(width: screenWidth - 28, height: 86)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 140)
-                
-//                Friends adding section
-                ZStack(alignment: .center) {
-                    RoundedRectangle(cornerRadius: 14)
-                        .foregroundColor(Color.white)
-                        .overlay(
+                        //          Amount
+                        ZStack {
                             RoundedRectangle(cornerRadius: 14)
-                                .stroke(Color.white, lineWidth: 2)
-                        )
-                        .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
-                    
-                    VStack{
-                        Text("Friends")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .padding(.top)
-                        
-                        HStack {
-                            TextField("Enter your friend's name", text: $newFriend)
-                                .padding()
-                                .background(Color(.systemGray6))
-                                .cornerRadius(10)
+                                .foregroundColor(Color.white)
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
                             
-                            Button(action: {
-                                if !newFriend.isEmpty {
-                                    addedFriends.append(newFriend)
-                                    newFriend = ""
+                            VStack(alignment: .leading, spacing: 5) {
+                                Text("Total amount to save")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .padding(.leading)
+                                    .foregroundColor(Color.black)
+                                
+                                ZStack(alignment: .trailing) {
+                                    HStack(spacing: 1) {
+                                        Text("€")
+                                            .fontWeight(.bold)
+                                            .padding(.leading, 1.0)
+                                        
+                                        TextField("6000", text: $totalAmount)
+                                            .padding()
+                                            .background(Color(.systemGray6))
+                                            .cornerRadius(10)
+                                            .padding(.horizontal, 5)
+                                            .keyboardType(.numberPad)
+                                    }
+                                    .padding(.leading)
+                                    
+                                    Button(action: {
+                                        totalAmount = ""
+                                    }) {
+                                        Image(systemName: "xmark.circle.fill")
+                                            .foregroundColor(.gray)
+                                    }
+                                    .padding(.horizontal)
                                 }
-                            }) {
-                                Image(systemName: "plus")
-                                    .padding()
-                                    .background(Color.blue)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
+                                .padding(.trailing, 14)
+                            }
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 10)
+                        }
+                        .frame(width: screenWidth - 28, height: 86)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 10)
+                        
+                        
+                        //          Date Picking
+                        ZStack(alignment: .center) {
+                            RoundedRectangle(cornerRadius: 14)
+                                .foregroundColor(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .stroke(Color.white, lineWidth: 2)
+                                )
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
+                            
+                            VStack {
+                                HStack (spacing: 20){
+                                    VStack (alignment: .center){
+                                        Text("Start Date")
+                                            .fontWeight(.bold)
+                                            .padding(.bottom, -5)
+                                        
+                                        DatePicker(
+                                            "",
+                                            selection: $startDate,
+                                            displayedComponents: .date
+                                        )
+                                        .datePickerStyle(.compact)
+                                        .labelsHidden()
+                                        .padding()
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    
+                                    
+                                    VStack (alignment: .center){
+                                        Text("End Date")
+                                            .fontWeight(.bold)
+                                            .padding(.bottom, -5)
+                                        
+                                        DatePicker(
+                                            "",
+                                            selection: $endDate,
+                                            in: startDate...,
+                                            displayedComponents: .date
+                                        )
+                                        .datePickerStyle(.compact)
+                                        .labelsHidden()
+                                        .padding()
+                                    }
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                }
+                                .padding(.horizontal, 5)
+                                .padding(.vertical, 10)
+                                
+                                VStack {
+                                    Text("Every")
+                                        .font(.title2)
+                                        .fontWeight(.semibold)
+                                        .padding(.bottom, 5)
+                                    
+                                    HStack {
+                                        Picker(selection: $selectedNumber, label: Text("Number")) {
+                                            ForEach(numbers, id: \.self) { number in
+                                                Text("\(number)").tag(number)
+                                            }
+                                        }
+                                        .pickerStyle(WheelPickerStyle())
+                                        .frame(width: 100, height: 150)
+                                        .clipped()
+                                        
+                                        Picker(selection: $selectedUnit, label: Text("Unit")) {
+                                            ForEach(units, id: \.self) { unit in
+                                                Text(unit).tag(unit)
+                                            }
+                                        }
+                                        .pickerStyle(WheelPickerStyle())
+                                        .frame(width: 150, height: 150)
+                                        .clipped()
+                                    }
+                                    .padding(.top, -10)
+                                    
+                                    Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
+                                        .font(.body)
+                                        .fontWeight(.semibold)
+                                        .padding()
+                                }
+                                .onChange(of: selectedNumber) { _ in
+                                    // Update selectedUnit to ensure it matches the correct plurality
+                                    let unitSingular = selectedUnit.replacingOccurrences(of: "s", with: "")
+                                    if selectedNumber > 1 && !selectedUnit.hasSuffix("s") {
+                                        selectedUnit = unitSingular + "s"
+                                    } else if selectedNumber == 1 && selectedUnit.hasSuffix("s") {
+                                        selectedUnit = unitSingular
+                                    }
+                                    updateComputedAmount()
+                                }
+                                .onChange(of: selectedUnit) { _ in
+                                    updateComputedAmount()
+                                }
+                                .onChange(of: startDate) { _ in
+                                    updateComputedAmount()
+                                }
+                                .onChange(of: endDate) { _ in
+                                    updateComputedAmount()
+                                }
+                                .onChange(of: totalAmount) { _ in
+                                    updateComputedAmount()
+                                }
                             }
                         }
-                        .padding(.horizontal)
+                        .frame(width: screenWidth - 28, height: 86)
+                        .padding(.horizontal, 14)
+                        .padding(.vertical, 140)
                         
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(spacing: 20) {
-                                ForEach(friends, id: \.self) { friend in
-                                    VStack {
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .fill(Color.blue)
-                                            .frame(width: 100, height: 100)
-                                        Text(friend.name)
+                        //                Friends adding section
+                        ZStack(alignment: .center) {
+                            RoundedRectangle(cornerRadius: 14)
+                                .foregroundColor(Color.white)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 14)
+                                        .stroke(Color.white, lineWidth: 2)
+                                )
+                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
+                            
+                            VStack{
+                                Text("Friends")
+                                    .font(.title3)
+                                    .fontWeight(.semibold)
+                                    .padding(.top)
+                                
+                                HStack {
+                                    TextField("Enter your friend's name", text: $newFriend)
+                                        .padding()
+                                        .background(Color(.systemGray6))
+                                        .cornerRadius(10)
+                                    
+                                    Button(action: {
+                                        if !newFriend.isEmpty {
+                                            addedFriends.append(newFriend)
+                                            newFriend = ""
+                                        }
+                                    }) {
+                                        Image(systemName: "plus")
+                                            .padding()
+                                            .background(Color.blue)
                                             .foregroundColor(.white)
+                                            .cornerRadius(10)
                                     }
                                 }
+                                .padding(.horizontal)
+                                
+                                ScrollView(.horizontal, showsIndicators: false) {
+                                    HStack(spacing: 10) {
+                                        ForEach(friendsModel.friends, id: \.self) { friend in
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .fill(Color.blue)
+                                                    .frame(height: 40)
+                                                HStack {
+                                                    Text(friend.name)
+                                                        .foregroundColor(.white)
+                                                        .padding(.leading, 10)
+                                                    Spacer()
+                                                    Button(action: {
+                                                        if let index = friendsModel.friends.firstIndex(of: friend) {
+                                                            friendsModel.friends.remove(at: index)
+                                                        }
+                                                    }) {
+                                                        Image(systemName: "xmark.circle.fill")
+                                                            .foregroundColor(.white)
+                                                    }
+                                                    .padding(.trailing, 10)
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .padding()
+                                }
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    // Add fund creation logic here
+                                }) {
+                                    Text("Create Fund")
+                                        .font(.headline)
+                                        .foregroundColor(.white)
+                                        .padding()
+                                        .background(Color.green)
+                                        .cornerRadius(10)
+                                }
+                                .padding()
                             }
-                            .padding()
+                            
                         }
+                        .frame(width: screenWidth - 28, height: 86)
+                        .padding(.horizontal, 14)
+                        .padding(.top, 90)
+                        .padding(.vertical, 10)
                         
                         Spacer()
-                        
-                        Button(action: {
-                            // Add fund creation logic here
-                        }) {
-                            Text("Create Fund")
-                                .font(.headline)
-                                .foregroundColor(.white)
-                                .padding()
-                                .background(Color.green)
-                                .cornerRadius(10)
-                        }
-                        .padding()
+                        Spacer()
+                        Spacer()
+                        Spacer()
                     }
-                    
+                    .frame(minHeight: geometry.size.height)
                 }
-                .frame(width: screenWidth - 28, height: 86)
-                .padding(.horizontal, 14)
-                .padding(.vertical, 55)
+                .navigationTitle("New shared fund")
             }
-            .navigationTitle("New shared fund")
         }
     }
     
