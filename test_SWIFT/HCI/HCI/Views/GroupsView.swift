@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct GroupsView: View {
-    @EnvironmentObject var viewModel: FinanceViewModel
+    @StateObject private var viewModel = FinanceViewModel()
 
     @State private var showingCreateFundView = false
 
@@ -119,6 +119,6 @@ struct GroupsView: View {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView().environmentObject(FinanceViewModel())
+        GroupsView()
     }
 }

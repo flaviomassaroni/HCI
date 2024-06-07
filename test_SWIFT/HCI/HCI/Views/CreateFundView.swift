@@ -3,9 +3,12 @@ import SwiftUI
 import Foundation
 
 struct CreateFundView: View {
-//    var friends: [Friend]
+
+//    @Binding var isPresented: Bool
+    @Environment (\.dismiss) var dismiss
     
     @StateObject private var friendsModel = FriendsModel()
+    @StateObject private var financeModel = FinanceViewModel()
     
     @State private var fundName: String = ""
     @State private var totalAmount: String = ""
@@ -15,7 +18,7 @@ struct CreateFundView: View {
     @State private var selectedUnit = "Day"
     @State private var computedAmount: Double = 0.0
     @State private var newFriend: String = ""
-    @State private var addedFriends: [String] = [""]
+    @State private var participants: [Participant] = []
     
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
     @State var screenHeight: CGFloat = UIScreen.main.bounds.height
@@ -253,7 +256,7 @@ struct CreateFundView: View {
                                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
                             
                             VStack{
-                                Text("Friends")
+                                Text("Participants")
                                     .font(.title3)
                                     .fontWeight(.semibold)
                                     .padding(.top)
@@ -266,7 +269,7 @@ struct CreateFundView: View {
                                     
                                     Button(action: {
                                         if !newFriend.isEmpty {
-                                            addedFriends.append(newFriend)
+                                            participants.append(Participant(id: UUID(), name: newFriend, colour: Color(hex: "FF5733")))
                                             newFriend = ""
                                         }
                                     }) {
@@ -281,19 +284,19 @@ struct CreateFundView: View {
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 10) {
-                                        ForEach(friendsModel.friends, id: \.self) { friend in
+                                        ForEach(participants, id: \.self) { participant in
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 10)
                                                     .fill(Color.blue)
                                                     .frame(height: 40)
                                                 HStack {
-                                                    Text(friend.name)
+                                                    Text(participant.name)
                                                         .foregroundColor(.white)
                                                         .padding(.leading, 10)
                                                     Spacer()
                                                     Button(action: {
-                                                        if let index = friendsModel.friends.firstIndex(of: friend) {
-                                                            friendsModel.friends.remove(at: index)
+                                                        if let index = participants.firstIndex(of: participant) {
+                                                            participants.remove(at: index)
                                                         }
                                                     }) {
                                                         Image(systemName: "xmark.circle.fill")
@@ -309,9 +312,7 @@ struct CreateFundView: View {
                                 
                                 Spacer()
                                 
-                                Button(action: {
-                                    // Add fund creation logic here
-                                }) {
+                                Button(action: createGroup) {
                                     Text("Create Fund")
                                         .font(.headline)
                                         .foregroundColor(.white)
@@ -347,6 +348,27 @@ struct CreateFundView: View {
         }
         
         computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit)
+    }
+    
+    func createGroup(){
+        let amountD = Double(totalAmount)!
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/YY"
+        
+        let newGroup = Group(
+            name: fundName,
+            startDate: formatter.string(from:startDate),
+            endDate: formatter.string(from: endDate),
+            period: (selectedNumber, selectedUnit[selectedUnit.startIndex]),
+            totalAmount: amountD,
+            currentAmount: 0.0,
+            contributionHistory: [],
+            participants: participants
+        )
+        print("group \(newGroup)")
+        financeModel.addGroup(newGroup)
+        dismiss()
+        
     }
 }
 

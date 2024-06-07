@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-func addPeriodToDate(dateString: String, period: String) -> String? {
+func addPeriodToDate(dateString: String, period: (Int, Character)) -> String? {
     // Create a date formatter to parse the input date string
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd/MM/yy"
@@ -11,10 +11,21 @@ func addPeriodToDate(dateString: String, period: String) -> String? {
         return nil // Return nil if the input date string is invalid
     }
     
-    // Extract the number part and the unit part from the period string
-    guard let periodValue = Int(period.dropLast()), // Extract number
-          let periodUnit = period.last else { // Extract unit
-        return nil // Return nil if the period string is invalid
+    let periodValue = period.0
+    let periodUnit = period.1
+
+    // Example validation: Ensure periodValue is greater than zero
+    guard periodValue > 0 else {
+        // Handle invalid periodValue
+        print("Invalid periodValue")
+        return nil
+    }
+    
+    let validUnits: Set<Character> = ["D", "W", "M", "Y"]
+    guard validUnits.contains(periodUnit) else {
+        // Handle invalid periodUnit
+        print("Invalid periodUnit")
+        return nil
     }
     
     // Calculate the new date based on the period unit
