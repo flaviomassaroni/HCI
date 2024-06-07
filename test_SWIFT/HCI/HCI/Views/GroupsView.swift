@@ -97,6 +97,21 @@ struct GroupsView: View {
                     }
                     .padding(.bottom, 10)
                 }
+                
+//                HStack {
+//                    Spacer()
+//                    NavigationLink(destination: CreateFundView()) {
+//                        Image(systemName: "plus")
+//                            .padding()
+//                            .background(Color.blue)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(10)
+//                            .shadow(radius: 5)
+//                    }
+//                    .padding()
+//                }
+//                Spacer()
+                
             }
         }
     }
