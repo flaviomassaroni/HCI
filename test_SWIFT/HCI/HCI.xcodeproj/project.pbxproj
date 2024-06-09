@@ -29,7 +29,6 @@
 		C80D2E4B2C13608B0009478D /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E4A2C13608B0009478D /* Checkbox.swift */; };
 		EDC0C8B42C12084900A18B25 /* FriendsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC0C8B32C12084900A18B25 /* FriendsModel.swift */; };
 		EDC0C8B62C1208D200A18B25 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC0C8B52C1208D200A18B25 /* Friend.swift */; };
-
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
