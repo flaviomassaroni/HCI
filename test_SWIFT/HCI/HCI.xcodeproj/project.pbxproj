@@ -27,6 +27,9 @@
 		C80D2E442C12F9AF0009478D /* Contribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E432C12F9AF0009478D /* Contribution.swift */; };
 		C80D2E482C134AAE0009478D /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E472C134AAE0009478D /* NotificationView.swift */; };
 		C80D2E4B2C13608B0009478D /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E4A2C13608B0009478D /* Checkbox.swift */; };
+		EDC0C8B42C12084900A18B25 /* FriendsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC0C8B32C12084900A18B25 /* FriendsModel.swift */; };
+		EDC0C8B62C1208D200A18B25 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC0C8B52C1208D200A18B25 /* Friend.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +73,8 @@
 		C80D2E432C12F9AF0009478D /* Contribution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contribution.swift; sourceTree = "<group>"; };
 		C80D2E472C134AAE0009478D /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
 		C80D2E4A2C13608B0009478D /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
+		EDC0C8B32C12084900A18B25 /* FriendsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsModel.swift; sourceTree = "<group>"; };
+		EDC0C8B52C1208D200A18B25 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -118,6 +123,7 @@
 				A76A93312C10522100DFB084 /* Transaction.swift */,
 				A76A93412C10539200DFB084 /* Group.swift */,
 				C80D2E432C12F9AF0009478D /* Contribution.swift */,
+				EDC0C8B52C1208D200A18B25 /* Friend.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -141,6 +147,7 @@
 			children = (
 				A76A933E2C10536E00DFB084 /* FinanceViewModel.swift */,
 				C80D2E412C10BEF60009478D /* FundDetailViewModel.swift */,
+				EDC0C8B32C12084900A18B25 /* FriendsModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -348,7 +355,9 @@
 				C80D2E482C134AAE0009478D /* NotificationView.swift in Sources */,
 				A715801E2C10657900477F44 /* MainView.swift in Sources */,
 				A76A93322C10522100DFB084 /* Transaction.swift in Sources */,
+				EDC0C8B42C12084900A18B25 /* FriendsModel.swift in Sources */,
 				A76A933A2C10532B00DFB084 /* GroupsView.swift in Sources */,
+				EDC0C8B62C1208D200A18B25 /* Friend.swift in Sources */,
 				A76A93382C10531400DFB084 /* CreateFundView.swift in Sources */,
 				C80D2E4B2C13608B0009478D /* Checkbox.swift in Sources */,
 			);
@@ -521,6 +530,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -549,6 +559,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

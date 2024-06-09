@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct GroupsView: View {
-    @EnvironmentObject var viewModel: FinanceViewModel
+    @StateObject private var viewModel = FinanceViewModel()
 
     @State private var showingCreateFundView = false
 
@@ -97,6 +97,21 @@ struct GroupsView: View {
                     }
                     .padding(.bottom, 10)
                 }
+                
+//                HStack {
+//                    Spacer()
+//                    NavigationLink(destination: CreateFundView()) {
+//                        Image(systemName: "plus")
+//                            .padding()
+//                            .background(Color.blue)
+//                            .foregroundColor(.white)
+//                            .cornerRadius(10)
+//                            .shadow(radius: 5)
+//                    }
+//                    .padding()
+//                }
+//                Spacer()
+                
             }
         }
     }
@@ -104,6 +119,6 @@ struct GroupsView: View {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView().environmentObject(FinanceViewModel())
+        GroupsView()
     }
 }
