@@ -25,6 +25,8 @@
 		C80D2E402C10BDA80009478D /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E3F2C10BDA80009478D /* ProgressBar.swift */; };
 		C80D2E422C10BEF60009478D /* FundDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E412C10BEF60009478D /* FundDetailViewModel.swift */; };
 		C80D2E442C12F9AF0009478D /* Contribution.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E432C12F9AF0009478D /* Contribution.swift */; };
+		C80D2E482C134AAE0009478D /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E472C134AAE0009478D /* NotificationView.swift */; };
+		C80D2E4B2C13608B0009478D /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = C80D2E4A2C13608B0009478D /* Checkbox.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +68,8 @@
 		C80D2E3F2C10BDA80009478D /* ProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		C80D2E412C10BEF60009478D /* FundDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundDetailViewModel.swift; sourceTree = "<group>"; };
 		C80D2E432C12F9AF0009478D /* Contribution.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contribution.swift; sourceTree = "<group>"; };
+		C80D2E472C134AAE0009478D /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		C80D2E4A2C13608B0009478D /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +106,8 @@
 				A76A93372C10531400DFB084 /* CreateFundView.swift */,
 				A76A93392C10532B00DFB084 /* GroupsView.swift */,
 				A76A933B2C10534900DFB084 /* HomePage.swift */,
+				C80D2E472C134AAE0009478D /* NotificationView.swift */,
+				C80D2E4A2C13608B0009478D /* Checkbox.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -339,10 +345,12 @@
 				A7FE46732C0F554500B3A2FC /* Color+Hex.swift in Sources */,
 				C80D2E422C10BEF60009478D /* FundDetailViewModel.swift in Sources */,
 				A76A933F2C10536E00DFB084 /* FinanceViewModel.swift in Sources */,
+				C80D2E482C134AAE0009478D /* NotificationView.swift in Sources */,
 				A715801E2C10657900477F44 /* MainView.swift in Sources */,
 				A76A93322C10522100DFB084 /* Transaction.swift in Sources */,
 				A76A933A2C10532B00DFB084 /* GroupsView.swift in Sources */,
 				A76A93382C10531400DFB084 /* CreateFundView.swift in Sources */,
+				C80D2E4B2C13608B0009478D /* Checkbox.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
