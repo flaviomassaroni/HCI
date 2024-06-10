@@ -61,14 +61,24 @@ struct HomePage: View {
                                 .padding(.leading)
                                 .bold()
                                 .foregroundColor(Color(hex:"747476"))
+                                .padding(.bottom, 8)
                         Spacer()
                     }.padding(.top, 20)
                     
-                    List(viewModel.transactions) { transaction in
+                    ForEach(viewModel.transactions, id: \.id) { transaction in
 
                         HStack {
-                            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
-                                .frame(width:40 , height: 40)
+                            ZStack{
+                                RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                                    .frame(width:40 , height: 40)
+                                    .padding(.trailing, 10)
+                                    .padding(.leading, 10)
+                                    .padding(.vertical, 12)
+                                    .foregroundColor(transaction.category.colour)
+                                Image(transaction.category.iconName)
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                            }
                             
                             VStack(alignment: .leading) {
                                 Text(transaction.name)
@@ -90,13 +100,17 @@ struct HomePage: View {
                                         .font(.subheadline)
                                         .foregroundColor(.gray)
                                 }
-                            }
-                        }
+                            }.padding(.trailing, 10)
+                        }.background(Color(.white))
+                            .cornerRadius(14)
+                            .padding(.horizontal, 15)
+                            .padding(.vertical, 1)
+                            
                     }
                     .listStyle(PlainListStyle())
-                }
-                // .navigationTitle("HomePage")
-            }
+                }.background(Color(hex:"ECECEE"))
+                Spacer()
+            }.background(Color(hex:"ECECEE"))
         }
     }
 }

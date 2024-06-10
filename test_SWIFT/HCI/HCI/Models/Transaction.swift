@@ -7,6 +7,6 @@ struct Transaction: Identifiable {
     var date: String
     var time: String
     var amount: Double
-    var category: String
+    var category: Category
     var location: String
 }
