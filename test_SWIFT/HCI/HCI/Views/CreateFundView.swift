@@ -8,7 +8,7 @@ struct CreateFundView: View {
     @Environment (\.dismiss) var dismiss
     
     @StateObject private var friendsModel = FriendsModel()
-    @StateObject private var financeModel = FinanceViewModel()
+    @ObservedObject var financeModel: FinanceViewModel
     
     @State private var fundName: String = ""
     @State private var totalAmount: String = ""
@@ -356,7 +356,9 @@ struct CreateFundView: View {
         formatter.dateFormat = "dd/MM/YY"
         
         let newGroup = Group(
+            id:UUID(),
             name: fundName,
+            creationDate: formatter.string(from: Date()),
             startDate: formatter.string(from:startDate),
             endDate: formatter.string(from: endDate),
             period: (selectedNumber, selectedUnit[selectedUnit.startIndex]),
@@ -374,7 +376,7 @@ struct CreateFundView: View {
 
 struct CreateFundView_Previews: PreviewProvider {
     static var previews: some View {
-        CreateFundView()
+        CreateFundView(financeModel: FinanceViewModel())
     }
 }
 
