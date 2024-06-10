@@ -5,13 +5,14 @@ struct FundDetailsView: View {
     
     var body: some View {
         NavigationView{
-            VStack{
+            VStack(spacing:0){
                 ZStack {
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundColor(Color.blue)
                         .frame(height: 280)
                         .padding(.top, -50)
                     VStack {
+                        
                         Text(group.name)
                             .font(.largeTitle)
                             .padding(.top, 20)
@@ -85,63 +86,65 @@ struct FundDetailsView: View {
                         .padding(.top, 30)
                         .frame(height: 50)
                         .padding(.horizontal, 20)
-                        HStack{
-                            Text("Participants")
-                                .padding(.top, 30)
-                                .padding(.leading, 20)
-                                .foregroundColor(Color(hex: "747476"))
-                                .font(.system(size: 20))
-                            Spacer()
-                        }
-                        .padding(.top, 20)
-                        .padding(.bottom , 10)
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 10)
-                                .foregroundColor(.white)
-                            HStack {
-                                Image(systemName: "person.circle.fill")
-                                    .resizable()
-                                    .frame(width: 35, height: 35)
-                                    .padding(.leading, 30)
-                                Text("You")
-                                    .fontWeight(.semibold)
+                        ScrollView{
+                            HStack{
+                                Text("Participants")
+                                    .padding(.top, 30)
+                                    .padding(.leading, 20)
+                                    .foregroundColor(Color(hex: "747476"))
+                                    .font(.system(size: 20))
                                 Spacer()
                             }
-                            .padding(.vertical, 10)
-                        }
-                        .padding(.bottom, 8)
-                        .padding(.horizontal, 20)
-                        
-                        ForEach(group.participants, id: \.id) { participant in
+                            .padding(.top, 20)
+                            .padding(.bottom , 10)
+                            ZStack {
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(.white)
+                                HStack {
+                                    Image(systemName: "person.circle.fill")
+                                        .resizable()
+                                        .frame(width: 35, height: 35)
+                                        .padding(.leading, 30)
+                                    Text("You")
+                                        .fontWeight(.semibold)
+                                    Spacer()
+                                }
+                                .padding(.vertical, 10)
+                            }
+                            .padding(.bottom, 8)
+                            .padding(.horizontal, 20)
                             
-                            NavigationLink(destination: NotificationView(group: Group(name: "Boat", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
-                                Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
-                                Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
-                                Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
-                                Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0)],
-                             participants: [
-                                  Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
-                                  Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
-                                  Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
-                             ]))){
-                                 HStack {
-                                     Image(systemName: "person.circle.fill")
-                                         .resizable()
-                                         .frame(width: 30, height: 30)
-                                         .foregroundColor(participant.colour)
-                                     Text(participant.name)
-                                     Spacer()
-                                     Image(systemName: "chevron.right")
-                                     
-                                 }
-                                 .padding(.horizontal, 33)
-                                 .padding(.vertical, 10)
-                                 .background()
-                                 .cornerRadius(14)
-                                 .padding(.vertical, 1)
-                                 .padding(.horizontal, 20)
-                                 
-                             }
+                            ForEach(group.participants, id: \.id) { participant in
+                                
+                                NavigationLink(destination: NotificationView(group: Group(name: "Boat", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
+                                    Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
+                                    Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
+                                    Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
+                                    Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0)],
+                                                                                          participants: [
+                                                                                            Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
+                                                                                            Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
+                                                                                            Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
+                                                                                          ]))){
+                                                                                              HStack {
+                                                                                                  Image(systemName: "person.circle.fill")
+                                                                                                      .resizable()
+                                                                                                      .frame(width: 30, height: 30)
+                                                                                                      .foregroundColor(participant.colour)
+                                                                                                  Text(participant.name)
+                                                                                                  Spacer()
+                                                                                                  Image(systemName: "chevron.right")
+                                                                                                  
+                                                                                              }
+                                                                                              .padding(.horizontal, 33)
+                                                                                              .padding(.vertical, 10)
+                                                                                              .background()
+                                                                                              .cornerRadius(14)
+                                                                                              .padding(.vertical, 1)
+                                                                                              .padding(.horizontal, 20)
+                                                                                              
+                                                                                          }
+                            }
                         }
                         
                         
@@ -174,7 +177,11 @@ struct FundDetailsView: View {
                     }
                     .background(Color(hex: "ECECEC"))
                 }
+                RoundedRectangle(cornerRadius: 14)
+                    .foregroundColor(Color.blue)
+                    .frame(height: 100)
             }
+            .edgesIgnoringSafeArea(.bottom)
             .background(Color(hex: "ECECEC"))
             
         }.navigationBarHidden(true)
