@@ -60,106 +60,116 @@ struct GroupsView: View {
                         Button(action: {
                             showingSortOptions = true
                         }) {
-                            Image(systemName: "line.horizontal.3.decrease.circle")
-                                .font(.title)
-                                .foregroundColor(.blue)
-                                .padding()
-                        }
+                            VStack(spacing:0){
+                                Image(systemName: "line.horizontal.3.decrease.circle")
+                                    .font(.title)
+                                    .foregroundColor(.blue)
+                                    .padding()
+                                
+                                Text("Sort Groups")
+                                .padding(.top, -17)
+                            }.padding(.trailing, 20)
+                             .padding(.bottom, 10)
+                             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                            
+                        }.padding(.top, -15)
                         .sheet(isPresented: $showingSortOptions) {
                             SortOptionsView(selectedSortOption: $selectedSortOption, selectedSortOrder: $selectedSortOrder)
                                 .presentationDetents([.fraction(0.5)])
                         }
                 }
 
-                    ZStack{
-                    ScrollView{
-                        ForEach(sortedGroups) { group in
-                            ZStack(alignment: .topTrailing) {
-                                NavigationLink(destination: FundDetailsView(group: group)) {
-                                    EmptyView()
-                                }
-                                HStack {
-                                    ZStack{
-                                        RoundedRectangle(cornerRadius: 14)
-                                            .foregroundColor(.white)
-                                            .frame( height: 150)
-                                        VStack(alignment: .leading) {
-                                            HStack{
-                                                Text(group.name)
-                                                    .font(.system(size: 25))
-                                                    .fontWeight(.bold)
-                                                    .padding(.vertical, 5)
-                                                Spacer()
-                                                Image(systemName: "chevron.right")
-                                                    .foregroundColor(.gray)
-                                                    .padding(.trailing, 10)
-                                            }
-
-                                            HStack {
-                                                Text("\(group.startDate) --> \(group.endDate)")
-                                                    .font(.subheadline)
-                                                    .foregroundColor(.gray)
-                                                Spacer()
-                                                Text("\(group.currentAmount, specifier: "%.0f")/\(group.totalAmount, specifier: "%.0f")€")
-                                                    .fontWeight(.bold)
-                                                    .font(.system(size: 17))
-                                            }
-                                            HStack {
-                                                ProgressBar(value: group.currentAmount / group.totalAmount)
-                                                    .scaleEffect(CGSize(width: 1.0, height: 0.8))
-                                                    .cornerRadius(14)
-                                                    .frame(height: 30)
-
-
-                                                Text("\(Int((group.currentAmount / group.totalAmount) * 100))%")
-                                                    .font(.caption)
-                                                    .fontWeight(.bold)
-                                                    .foregroundColor(.black)
-
+                    ZStack {
+                        ScrollView {
+                            ForEach(sortedGroups) { group in
+                                ZStack {
+                                    NavigationLink(destination: FundDetailsView(group: group)) {
+                                        HStack {
+                                            ZStack {
+                                                RoundedRectangle(cornerRadius: 14)
+                                                    .foregroundColor(.white)
+                                                    .frame(height: 150)
+                                                VStack(alignment: .leading) {
+                                                    HStack {
+                                                        Text(group.name)
+                                                            .font(.system(size: 25))
+                                                            .fontWeight(.bold)
+                                                            .padding(.vertical, 5)
+                                                            .foregroundColor(.black)
+                                                        Spacer()
+                                                        Image(systemName: "chevron.right")
+                                                            .foregroundColor(.gray)
+                                                            .padding(.trailing, 10)
                                                     }
-                                                }.padding(.horizontal, 20)
+                                                    
+                                                    HStack {
+                                                        Text("\(group.startDate) --> \(group.endDate)")
+                                                            .font(.subheadline)
+                                                            .foregroundColor(.gray)
+                                                        Spacer()
+                                                        Text("\(group.currentAmount, specifier: "%.0f")/\(group.totalAmount, specifier: "%.0f")€")
+                                                            .fontWeight(.bold)
+                                                            .font(.system(size: 17))
+                                                            .foregroundColor(.black)
+                                                    }
+                                                    
+                                                    HStack {
+                                                        ProgressBar(value: group.currentAmount / group.totalAmount)
+                                                            .scaleEffect(CGSize(width: 1.0, height: 0.8))
+                                                            .cornerRadius(14)
+                                                            .frame(height: 30)
+                                                        
+                                                        Text("\(Int((group.currentAmount / group.totalAmount) * 100))%")
+                                                            .font(.caption)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.black)
+                                                    }
+                                                }
+                                                .padding(.horizontal, 20)
                                             }
                                         }
-
                                         .padding(1)
-                                    }.padding(.horizontal, 15)
-                                        .cornerRadius(8)
-                                        .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
-                                }
-                        }
-                        VStack {
-                            Spacer()
-                            HStack {
-                                Spacer()
-                                Button(action: {
-                                    showingCreateFundView = true
-                                }) {
-                                    Image(systemName: "plus")
-                                        .padding()
-                                        .background(Color.blue)
-                                        .foregroundColor(.white)
-                                        .cornerRadius(90)
-                                        .shadow(radius: 5)
-                                }
-                                .padding()
-                                .sheet(isPresented: $showingCreateFundView) {
-                                    CreateFundView(financeModel: viewModel)
+                                    }
+                                    .padding(.horizontal, 15)
+                                    .cornerRadius(8)
+                                    .shadow(color: Color.black.opacity(0.1), radius: 2, x: 0, y: 1)
                                 }
                             }
-                            .padding(.bottom, 10)
+                            
+                            VStack {
+                                Spacer()
+                                HStack {
+                                    Spacer()
+                                    Button(action: {
+                                        showingCreateFundView = true
+                                    }) {
+                                        Image(systemName: "plus")
+                                            .padding()
+                                            .background(Color.blue)
+                                            .foregroundColor(.white)
+                                            .cornerRadius(90)
+                                            .shadow(radius: 5)
+                                    }
+                                    .padding()
+                                    .sheet(isPresented: $showingCreateFundView) {
+                                        CreateFundView(financeModel: viewModel)
+                                    }
+                                }
+                                .padding(.bottom, 10)
+                            }
                         }
                     }
+
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundColor(Color.blue)
                         .frame(height: 100)
 
                     
                 }.background(Color(hex: "ECECEE"))
-                .navigationTitle("Funds")
-                .navigationBarHidden(true)
+                
                 .edgesIgnoringSafeArea(.bottom)
 
-        }
+        }.navigationBarHidden(true)
     }
 }
 

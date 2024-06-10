@@ -12,12 +12,27 @@ struct FundDetailsView: View {
                         .frame(height: 280)
                         .padding(.top, -50)
                     VStack {
-                        
-                        Text(group.name)
-                            .font(.largeTitle)
-                            .padding(.top, 20)
-                            .foregroundColor(Color.white)
-                            .fontWeight(.semibold)
+                        ZStack{
+                            HStack{
+                                NavigationLink(destination: GroupsView()){
+                                    Image(systemName: "arrow.backward")
+                                        .resizable()
+                                        .frame(width: 25, height: 20)
+                                        .foregroundColor(.white)
+                                        .padding(.leading, 20)
+                                        .padding(.top, 20)
+                                    Spacer()
+                                }
+                            }
+                        Spacer()
+                            Text(group.name)
+                                .font(.largeTitle)
+                                .padding(.top, 20)
+                                .foregroundColor(Color.white)
+                                .fontWeight(.semibold)
+
+                        Spacer()
+                        }
 
                         Text("\(group.startDate) ---> \(group.endDate)")
                             .foregroundColor(.white)
@@ -132,8 +147,10 @@ struct FundDetailsView: View {
                                                 .frame(width: 30, height: 30)
                                                 .foregroundColor(participant.colour)
                                             Text(participant.name)
+                                                .foregroundColor(.black)
                                             Spacer()
                                             Image(systemName: "chevron.right")
+                                                .foregroundColor(.black)
                                             
                                         }
                                         .padding(.horizontal, 33)
