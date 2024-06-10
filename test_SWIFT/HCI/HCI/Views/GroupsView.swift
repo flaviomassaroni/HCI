@@ -1,9 +1,44 @@
 import SwiftUI
 
+enum SortOption: String, CaseIterable{
+    case creationDate = "Creation Date"
+    case startDate = "Start Date"
+    case endDate = "End Date"
+}
+
+enum SortOrder: String, CaseIterable {
+    case ascending = "Ascending"
+    case descending = "Descending"
+}
+
 struct GroupsView: View {
     @StateObject private var viewModel = FinanceViewModel()
-
+    @State private var selectedSortOption: SortOption = .creationDate
+    @State private var selectedSortOrder: SortOrder = .ascending
+    
+    @State private var showingSortOptions = false
     @State private var showingCreateFundView = false
+    
+    var sortedGroups: [Group] {
+        let sortedGroups: [Group]
+        switch selectedSortOption {
+        case .creationDate:
+            sortedGroups = viewModel.groups.sorted(by: { $0.creationDate < $1.creationDate })
+        case .startDate:
+            sortedGroups = viewModel.groups.sorted(by: {
+                guard let date1 = $0.startDateAsDate, let date2 = $1.startDateAsDate else { return false }
+                return date1 < date2
+            })
+        case .endDate:
+            sortedGroups = viewModel.groups.sorted(by: {
+                guard let date1 = $0.endDateAsDate, let date2 = $1.endDateAsDate else { return false }
+                return date1 < date2
+            })
+        }
+        
+        return selectedSortOrder == .ascending ? sortedGroups : sortedGroups.reversed()
+    }
+
 
     var body: some View {
         NavigationView {
@@ -20,17 +55,31 @@ struct GroupsView: View {
                     }
                     .frame(height: 200)
                     .padding(.top, -50)
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            showingSortOptions = true
+                        }) {
+                            Image(systemName: "line.horizontal.3.decrease.circle")
+                                .font(.title)
+                                .foregroundColor(.blue)
+                                .padding()
+                        }
+                        .sheet(isPresented: $showingSortOptions) {
+                            SortOptionsView(selectedSortOption: $selectedSortOption, selectedSortOrder: $selectedSortOrder)
+                                .presentationDetents([.fraction(0.5)])
+                        }
+                }
+
                     ZStack{
                     ScrollView{
-                        ForEach(viewModel.groups) { group in
+                        ForEach(sortedGroups) { group in
                             ZStack(alignment: .topTrailing) {
                                 NavigationLink(destination: FundDetailsView(group: group)) {
                                     EmptyView()
                                 }
                                 HStack {
                                     ZStack{
-                                        
-                                        
                                         RoundedRectangle(cornerRadius: 14)
                                             .foregroundColor(.white)
                                             .frame( height: 150)
@@ -45,6 +94,7 @@ struct GroupsView: View {
                                                     .foregroundColor(.gray)
                                                     .padding(.trailing, 10)
                                             }
+
                                             HStack {
                                                 Text("\(group.startDate) --> \(group.endDate)")
                                                     .font(.subheadline)
@@ -59,10 +109,13 @@ struct GroupsView: View {
                                                     .scaleEffect(CGSize(width: 1.0, height: 0.8))
                                                     .cornerRadius(14)
                                                     .frame(height: 30)
+
+
                                                 Text("\(Int((group.currentAmount / group.totalAmount) * 100))%")
                                                     .font(.caption)
                                                     .fontWeight(.bold)
                                                     .foregroundColor(.black)
+
                                                     }
                                                 }.padding(.horizontal, 20)
                                             }
@@ -90,7 +143,7 @@ struct GroupsView: View {
                                 }
                                 .padding()
                                 .sheet(isPresented: $showingCreateFundView) {
-                                    CreateFundView()
+                                    CreateFundView(financeModel: viewModel)
                                 }
                             }
                             .padding(.bottom, 10)
@@ -105,6 +158,7 @@ struct GroupsView: View {
                 .navigationTitle("Funds")
                 .navigationBarHidden(true)
                 .edgesIgnoringSafeArea(.bottom)
+
         }
     }
 }
@@ -112,5 +166,47 @@ struct GroupsView: View {
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
         GroupsView()
+    }
+}
+
+
+struct SortOptionsView: View {
+    @Binding var selectedSortOption: SortOption
+    @Binding var selectedSortOrder: SortOrder
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section(header: Text("Order By")) {
+                    Picker("Order", selection: $selectedSortOrder) {
+                        ForEach(SortOrder.allCases, id: \.self) { order in
+                            Text(order.rawValue).tag(order)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                }
+                Section(header: Text("Sort by")) {
+                    ForEach(SortOption.allCases, id: \.self) { option in
+                        HStack {
+                            Text(option.rawValue)
+                            Spacer()
+                            if selectedSortOption == option {
+                                Image(systemName: "checkmark")
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            selectedSortOption = option
+                        }
+                    }
+                }
+            }
+            .navigationTitle("Sort Options")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing: Button("Done") {
+                UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
+            })
+        }
     }
 }
