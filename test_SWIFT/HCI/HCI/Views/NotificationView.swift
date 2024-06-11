@@ -11,32 +11,26 @@ struct NotificationView: View {
                         .frame(height: 280)
                         .padding(.top, -50)
                     VStack {
-                        HStack{
-                            NavigationLink(destination: FundDetailsView(group: Group(name: "Boat", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
-                                Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
-                                Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
-                                Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
-                                Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0)],
-                             participants: [
-                                  Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
-                                  Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
-                                  Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
-                             ]))){
-                                 Image(systemName: "arrow.backward")
-                                     .resizable()
-                                     .frame(width: 25, height: 20)
-                                     .foregroundColor(.white)
-                                     .padding(.leading, 20)
-                                     .padding(.top, 20)
-                             }
-                            Spacer()
+                        ZStack{
+                            HStack{
+                                NavigationLink(destination: GroupsView()){
+                                    Image(systemName: "arrow.backward")
+                                        .resizable()
+                                        .frame(width: 25, height: 20)
+                                        .foregroundColor(.white)
+                                        .padding(.leading, 20)
+                                        .padding(.top, 20)
+                                    Spacer()
+                                }
+                            }
+                        Spacer()
                             Text(group.name)
                                 .font(.largeTitle)
                                 .padding(.top, 20)
-                                .padding(.trailing, 180)
                                 .foregroundColor(Color.white)
                                 .fontWeight(.semibold)
-                            
+
+                        Spacer()
                         }
                         Text("\(group.startDate) ---> \(group.endDate)")
                             .foregroundColor(.white)
@@ -162,7 +156,7 @@ struct NotificationView: View {
 }
 struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationView(group: Group(name: "Boat", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
+        NotificationView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),

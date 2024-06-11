@@ -131,16 +131,7 @@ struct FundDetailsView: View {
                             
                             ForEach(group.participants, id: \.id) { participant in
                                 
-                                NavigationLink(destination: NotificationView(group: Group(name: "Boat", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
-                                Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
-                                Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
-                                Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
-                                Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0)],
-                                    participants: [
-                                        Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
-                                        Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
-                                        Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
-                                    ]))){
+                                NavigationLink(destination: NotificationView(group: group)){
                                         HStack {
                                             Image(systemName: "person.circle.fill")
                                                 .resizable()
@@ -207,7 +198,7 @@ struct FundDetailsView: View {
 
 struct FundDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        FundDetailsView(group: Group(name: "Boat", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
+        FundDetailsView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
