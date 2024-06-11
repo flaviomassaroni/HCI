@@ -9,7 +9,7 @@ import SwiftUI
 
 struct FriendNotificationView: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
-    
+    var participant: Participant
     var group: Group
     
     var body: some View {
@@ -163,7 +163,7 @@ struct FriendNotificationView: View {
 
 struct FriendNotificationView_Previews: PreviewProvider {
     static var previews: some View {
-        FriendNotificationView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
+        FriendNotificationView(participant: Participant(name:"Marcooo", colour: Color(hex: "FF5733")), group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionAmount: 90, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),

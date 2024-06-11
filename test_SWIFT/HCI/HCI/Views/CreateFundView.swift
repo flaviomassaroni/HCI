@@ -18,7 +18,7 @@ struct CreateFundView: View {
     @State private var selectedUnit = "Day"
     @State private var computedAmount: Double = 0.0
     @State private var newFriend: String = ""
-    @State private var participants: [Participant] = []
+    @State private var participants: [Participant] = [Participant(name: "You", colour: .black)]
     
     
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
@@ -157,6 +157,7 @@ struct CreateFundView: View {
                                         DatePicker(
                                             "",
                                             selection: $startDate,
+                                            in: Date()...,
                                             displayedComponents: .date
                                         )
                                         .datePickerStyle(.compact)
