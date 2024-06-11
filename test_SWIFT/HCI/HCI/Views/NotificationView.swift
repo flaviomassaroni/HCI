@@ -172,8 +172,9 @@ func contributionsToPay(contributionsHistory: [Contribution], participant: Parti
         }
         return notPaidContributions
     }
-func totalToPay(contributions:[Contribution], amount:Double)-> Double{
-    return Double(contributions.count)*amount
+func totalToPay(contributions: [Contribution], amount: Double) -> Double {
+    let unpaidContributions = contributions.filter { !$0.paid && comesBeforeToday(dateString: $0.date) }
+    return Double(unpaidContributions.count) * amount
 }
 
 func comesBeforeToday(dateString: String) -> Bool {
