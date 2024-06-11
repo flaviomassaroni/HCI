@@ -143,25 +143,9 @@ struct FundDetailsView: View {
                                     .padding(.horizontal, 20)
                                     
                                 }
+                        
                             
-//                            ZStack {
-//                                RoundedRectangle(cornerRadius: 10)
-//                                    .foregroundColor(.white)
-//                                HStack {
-//                                    Image(systemName: "person.circle.fill")
-//                                        .resizable()
-//                                        .frame(width: 35, height: 35)
-//                                        .padding(.leading, 30)
-//                                    Text("You")
-//                                        .fontWeight(.semibold)
-//                                    Spacer()
-//                                }
-//                                .padding(.vertical, 10)
-//                            }
-//                            .padding(.bottom, 8)
-//                            .padding(.horizontal, 20)
-                            
-                            ForEach(group.participants, id: \.id) { participant in
+                            ForEach(group.participants.dropFirst(), id: \.id) { participant in
                                 
                                 NavigationLink(destination: FriendNotificationView(participant: participant, group: group)){
                                         HStack {
@@ -198,7 +182,7 @@ struct FundDetailsView: View {
                         }
                         .padding(.top, 20)
                         .padding(.bottom , 10)
-                        ForEach(group.contributionHistory, id: \.id) { contribution in
+                        ForEach(group.contributionHistory.filter{$0.paid}, id: \.id) { contribution in
                             HStack {
                                 RoundedRectangle(cornerRadius: 25.0)
                                     .frame(width: 20, height: 20) // Adjust height as needed
@@ -226,16 +210,13 @@ struct FundDetailsView: View {
             
         }
         .navigationBarHidden(true)
+        .toolbar(.hidden, for: .tabBar)
     }
 }
 
 struct FundDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        FundDetailsView(financeModel: FinanceViewModel(), group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "M"), totalAmount: 6000,  currentAmount: 550, contributionAmount: 100, contributionHistory: [
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
-            Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
-            Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0)],
+        FundDetailsView(financeModel: FinanceViewModel(), group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "M"), totalAmount: 6000,  currentAmount: 550, contributionAmount: 100, contributionHistory: [],
          participants: [
               Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
               Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),

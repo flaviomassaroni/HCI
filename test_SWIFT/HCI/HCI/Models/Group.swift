@@ -37,10 +37,109 @@ struct Group: Identifiable {
         self.period = period
         self.totalAmount = totalAmount
         self.currentAmount = currentAmount
-        self.contributionHistory = contributionHistory
         self.participants = participants
         self.contributionAmount = contributionAmount
+        self.contributionHistory = []
+        self.contributionHistory = generateContributionHistory(for: self)
     }
 }
+
+func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Date, selectedNumber: Int, selectedUnit: String, partNumb: Int) -> Double {
+    var divideBy = 1
+    if partNumb != 0 {divideBy = partNumb}
+    // Calculate the total number of days between start and end date
+    let calendar = Calendar.current
+    guard let totalDays = calendar.dateComponents([.day], from: startDate, to: endDate).day else {
+        return totalAmount/Double(divideBy)
+    }
+
+    // Calculate the number of recurrences based on the frequency
+    var numberOfRecurrences: Int?
+    switch selectedUnit {
+    case "Day", "Days":
+        numberOfRecurrences = totalDays / selectedNumber
+    case "Week", "Weeks":
+        numberOfRecurrences = totalDays / (7 * selectedNumber)
+    case "Month", "Months":
+        numberOfRecurrences = calendar.dateComponents([.month], from: startDate, to: endDate).month! / selectedNumber
+    case "Year", "Years":
+        numberOfRecurrences = calendar.dateComponents([.year], from: startDate, to: endDate).year! / selectedNumber
+    default:
+        return totalAmount/Double(divideBy)
+    }
+
+    guard let recurrences = numberOfRecurrences, recurrences > 0 else {
+        return totalAmount/Double(divideBy)
+    }
+
+    // Calculate the amount to be put on each recurrence
+    let amountPerRecurrence = Double(totalAmount) / Double(recurrences + 1)
+    return amountPerRecurrence/Double(divideBy)
+}
+
+// Function to add the period to a given date
+func addPeriodToDate(date: Date, period: (Int, Character)) -> Date? {
+    var dateComponent = DateComponents()
+    
+    switch period.1 {
+    case "D": // Days
+        dateComponent.day = period.0
+    case "W": // Weeks
+        dateComponent.weekOfYear = period.0
+    case "M": // Months
+        dateComponent.month = period.0
+    case "Y": // Years
+        dateComponent.year = period.0
+    default:
+        return nil
+    }
+    
+    return Calendar.current.date(byAdding: dateComponent, to: date)
+}
+
+// Function to convert a date string to a Date object
+func dateFromString(dateString: String) -> Date? {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd/MM/yy"
+    return formatter.date(from: dateString)
+}
+
+// Function to convert a Date object to a date string
+func stringFromDate(date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd/MM/yy"
+    return formatter.string(from: date)
+}
+
+// Function to generate the contribution history
+func generateContributionHistory(for group: Group) -> [Contribution] {
+    guard let startDate = dateFromString(dateString: group.startDate),
+          let endDate = dateFromString(dateString: group.endDate) else {
+        return []
+    }
+    
+    var currentDate = startDate
+    var contributions = [Contribution]()
+    
+    while currentDate <= endDate {
+        for participant in group.participants {
+            let contribution = Contribution(
+                owner: participant,
+                date: stringFromDate(date: currentDate),
+                amount: group.contributionAmount,
+                paid: false
+            )
+            contributions.append(contribution)
+        }
+        if let nextDate = addPeriodToDate(date: currentDate, period: group.period) {
+            currentDate = nextDate
+        } else {
+            break
+        }
+    }
+    return contributions
+}
+
+
 
 

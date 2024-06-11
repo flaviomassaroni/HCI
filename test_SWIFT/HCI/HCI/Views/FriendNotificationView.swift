@@ -94,7 +94,7 @@ struct FriendNotificationView: View {
                                     Spacer()
                                 }
                                 .padding(.leading, 40)
-                                Text("Your friend is not up to date with his contributions")
+                                Text("This participant is not up to date with contributions")
                                     .foregroundColor(Color(hex: "FFB800"))
                                     .fontWeight(.semibold)
                                     .multilineTextAlignment(.center)
@@ -113,7 +113,7 @@ struct FriendNotificationView: View {
                             .foregroundColor(Color(hex: "6C6C6C"))
                         .font(.system(size: 20))
                         Spacer(minLength: -5)
-                        ForEach(group.contributionHistory, id: \.id) { contribution in
+                        ForEach(group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}, id: \.id) { contribution in
                             HStack {
                                 Text("\(contribution.amount, specifier: "%.0f")€")
                                     .fontWeight(.bold)
@@ -150,11 +150,6 @@ struct FriendNotificationView: View {
                     
                 }.background(Color(hex:"ECECEC"))
                 
-//                RoundedRectangle(cornerRadius: 14)
-//                    .foregroundColor(Color.blue)
-//                    .frame(height: 100)
-//                    .padding(.bottom, -34)
-                
             }.background(Color(hex:"ECECEC"))
         }.navigationBarHidden(true)
 
@@ -164,10 +159,10 @@ struct FriendNotificationView: View {
 struct FriendNotificationView_Previews: PreviewProvider {
     static var previews: some View {
         FriendNotificationView(participant: Participant(name:"Marcooo", colour: Color(hex: "FF5733")), group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionAmount: 90, contributionHistory: [
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
-            Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
-            Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0)],
+            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
+            Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
+            Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
+            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)],
          participants: [
               Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
               Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),

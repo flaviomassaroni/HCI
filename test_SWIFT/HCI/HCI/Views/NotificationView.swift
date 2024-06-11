@@ -107,7 +107,7 @@ struct PersonalNotificationView: View {
                         .foregroundColor(Color(hex: "6C6C6C"))
                         .font(.system(size: 20))
                     
-                    ForEach(contributionsToPay(contributionsHistory: group.contributionHistory, participant:participant), id: \.id) { contribution in
+                    ForEach(group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}, id: \.id) { contribution in
                         HStack {
                             Text("\(contribution.amount, specifier: "%.0f")€")
                                 .fontWeight(.bold)
@@ -155,11 +155,6 @@ struct PersonalNotificationView: View {
                     
                 }.background(Color(hex:"ECECEC"))
                 
-//                RoundedRectangle(cornerRadius: 14)
-//                    .foregroundColor(Color.blue)
-//                    .frame(height: 100)
-//                    .padding(.bottom, -34)
-                
             }.background(Color(hex:"ECECEC"))
         }.navigationBarHidden(true)
 
@@ -178,18 +173,32 @@ func contributionsToPay(contributionsHistory: [Contribution], participant: Parti
         return notPaidContributions
     }
 func totalToPay(contributions:[Contribution], amount:Double)-> Double{
-    var total: Double = 0.0
-    for i in 0...contributions.count{total += amount}
-    return total
+    return Double(contributions.count)*amount
+}
+
+func comesBeforeToday(dateString: String) -> Bool {
+    let currentDate = Date()
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd-MM-yy"
+    
+    guard let date = dateFormatter.date(from: dateString) else {
+        // If conversion fails, return false
+        return false
+    }
+    
+    // Format the current date string using the same format as dateString
+    let formattedCurrentDate = dateFormatter.string(from: currentDate)
+
+    return date <= dateFormatter.date(from: formattedCurrentDate)!
 }
 
 struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {
         PersonalNotificationView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550,contributionAmount: 100, contributionHistory: [
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
-            Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
-            Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0)],
+            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
+            Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
+            Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
+            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)],
          participants: [
               Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
               Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),

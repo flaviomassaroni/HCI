@@ -313,7 +313,6 @@ struct CreateFundView: View {
                                 Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
                                     .font(.body)
                                     .fontWeight(.semibold)
-//                                    .padding(.top, 10)
                                 
                                 
                                 Button(action: createGroup) {
@@ -373,6 +372,8 @@ struct CreateFundView: View {
             contributionHistory: [],
             participants: participants
         )
+//        var updatedGroup = newGroup
+//        updatedGroup.contributionHistory = generateContributionHistory(for: newGroup)
         print("group \(newGroup)")
         financeModel.addGroup(newGroup)
         dismiss()
@@ -387,35 +388,3 @@ struct CreateFundView_Previews: PreviewProvider {
 }
 
 
-func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Date, selectedNumber: Int, selectedUnit: String, partNumb: Int) -> Double {
-    var divideBy = 1
-    if partNumb != 0 {divideBy = partNumb}
-    // Calculate the total number of days between start and end date
-    let calendar = Calendar.current
-    guard let totalDays = calendar.dateComponents([.day], from: startDate, to: endDate).day else {
-        return totalAmount/Double(divideBy)
-    }
-
-    // Calculate the number of recurrences based on the frequency
-    var numberOfRecurrences: Int?
-    switch selectedUnit {
-    case "Day", "Days":
-        numberOfRecurrences = totalDays / selectedNumber
-    case "Week", "Weeks":
-        numberOfRecurrences = totalDays / (7 * selectedNumber)
-    case "Month", "Months":
-        numberOfRecurrences = calendar.dateComponents([.month], from: startDate, to: endDate).month! / selectedNumber
-    case "Year", "Years":
-        numberOfRecurrences = calendar.dateComponents([.year], from: startDate, to: endDate).year! / selectedNumber
-    default:
-        return totalAmount/Double(divideBy)
-    }
-
-    guard let recurrences = numberOfRecurrences, recurrences > 0 else {
-        return totalAmount/Double(divideBy)
-    }
-
-    // Calculate the amount to be put on each recurrence
-    let amountPerRecurrence = Double(totalAmount) / Double(recurrences + 1)
-    return amountPerRecurrence/Double(divideBy)
-}

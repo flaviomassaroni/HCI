@@ -6,4 +6,5 @@ struct Contribution: Identifiable {
     var owner: Participant
     var date: String
     var amount: Double
+    var paid: Bool
 }

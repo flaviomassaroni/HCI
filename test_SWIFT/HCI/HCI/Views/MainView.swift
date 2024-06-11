@@ -15,7 +15,6 @@ private func setupTabBarAppearance() {
         UITabBar.appearance().scrollEdgeAppearance = appearance
         appearance.shadowImage = UIImage()
     }
-
 struct MainView: View {
 //    init() {
 //            setupTabBarAppearance()
