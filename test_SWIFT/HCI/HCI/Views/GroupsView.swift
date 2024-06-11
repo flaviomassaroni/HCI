@@ -215,7 +215,7 @@ struct SortOptionsView: View {
             .navigationTitle("Sort Options")
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(trailing: Button("Done") {
-                UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
+//                UIApplication.shared.windows.first?.rootViewController?.dismiss(animated: true, completion: nil)
             })
         }
     }

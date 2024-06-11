@@ -57,7 +57,7 @@ class FinanceViewModel: ObservableObject {
             Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")),
             Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF"))
         ]),
-        Group(id: UUID(), name: "Graduation Present", creationDate: "15/02/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "W"), totalAmount: 300, currentAmount: 250,contributionAmount: 100, contributionHistory: [
+        Group(id: UUID(), name: "Graduation Present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "W"), totalAmount: 300, currentAmount: 250,contributionAmount: 100, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
