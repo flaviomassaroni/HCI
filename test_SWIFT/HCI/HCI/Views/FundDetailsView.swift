@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct FundDetailsView: View {
+    
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @ObservedObject var financeModel: FinanceViewModel
+    
     var group: Group
     
     var body: some View {
@@ -13,16 +17,18 @@ struct FundDetailsView: View {
                         .padding(.top, -50)
                     VStack {
                         ZStack{
-                            HStack{
-                                NavigationLink(destination: GroupsView()){
+                            HStack {
+                                Button(action: {
+                                    presentationMode.wrappedValue.dismiss()
+                                }, label: {
                                     Image(systemName: "arrow.backward")
                                         .resizable()
                                         .frame(width: 25, height: 20)
                                         .foregroundColor(.white)
                                         .padding(.leading, 20)
                                         .padding(.top, 20)
-                                    Spacer()
-                                }
+                                })
+                                Spacer()
                             }
                         Spacer()
                             Text(group.name)
@@ -112,22 +118,48 @@ struct FundDetailsView: View {
                             }
                             .padding(.top, 20)
                             .padding(.bottom , 10)
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .foregroundColor(.white)
-                                HStack {
-                                    Image(systemName: "person.circle.fill")
-                                        .resizable()
-                                        .frame(width: 35, height: 35)
-                                        .padding(.leading, 30)
-                                    Text("You")
-                                        .fontWeight(.semibold)
-                                    Spacer()
+                            
+                            NavigationLink(destination: PersonalNotificationView(group: group)){
+                                    HStack {
+                                        Image(systemName: "person.circle.fill")
+                                            .resizable()
+                                            .frame(width: 35, height: 35)
+                                            .padding(.leading)
+                                            .foregroundColor(Color.black)
+                                        Text("You")
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.black)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.black)
+                                            .padding(.trailing, 18)
+                                        
+                                    }
+                                    .padding(.horizontal, 15)
+                                    .padding(.vertical, 11)
+                                    .background()
+                                    .cornerRadius(14)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal, 20)
+                                    
                                 }
-                                .padding(.vertical, 10)
-                            }
-                            .padding(.bottom, 8)
-                            .padding(.horizontal, 20)
+                            
+//                            ZStack {
+//                                RoundedRectangle(cornerRadius: 10)
+//                                    .foregroundColor(.white)
+//                                HStack {
+//                                    Image(systemName: "person.circle.fill")
+//                                        .resizable()
+//                                        .frame(width: 35, height: 35)
+//                                        .padding(.leading, 30)
+//                                    Text("You")
+//                                        .fontWeight(.semibold)
+//                                    Spacer()
+//                                }
+//                                .padding(.vertical, 10)
+//                            }
+//                            .padding(.bottom, 8)
+//                            .padding(.horizontal, 20)
                             
                             ForEach(group.participants, id: \.id) { participant in
                                 
@@ -185,9 +217,9 @@ struct FundDetailsView: View {
                     }
                     .background(Color(hex: "ECECEC"))
                 }
-                RoundedRectangle(cornerRadius: 14)
-                    .foregroundColor(Color.blue)
-                    .frame(height: 100)
+//                RoundedRectangle(cornerRadius: 14)
+//                    .foregroundColor(Color.blue)
+//                    .frame(height: 100)
             }
             .edgesIgnoringSafeArea(.bottom)
             .background(Color(hex: "ECECEC"))

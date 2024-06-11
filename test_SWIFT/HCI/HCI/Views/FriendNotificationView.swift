@@ -1,11 +1,16 @@
+//
+//  FriendNotificationView.swift
+//  HCI
+//
+//  Created by Lorenzo Ugolini on 11/06/24.
+//
+
 import SwiftUI
 
-struct PersonalNotificationView: View {
-    
+struct FriendNotificationView: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     
     var group: Group
-    var participant: Participant
     
     var body: some View {
         NavigationView{
@@ -89,7 +94,7 @@ struct PersonalNotificationView: View {
                                     Spacer()
                                 }
                                 .padding(.leading, 40)
-                                Text("You are not up to date with contributions")
+                                Text("Your friend is not up to date with his contributions")
                                     .foregroundColor(Color(hex: "FFB800"))
                                     .fontWeight(.semibold)
                                     .multilineTextAlignment(.center)
@@ -100,56 +105,46 @@ struct PersonalNotificationView: View {
                         .foregroundColor(.white)
                         .padding(.top, 20)
                     
-                    Text("Contributions To Pay")
-                        .padding(.trailing, 180)
-                        .padding()
-                        .fontWeight(.semibold)
-                        .foregroundColor(Color(hex: "6C6C6C"))
+                    VStack {
+                        Text("Contributions To Pay")
+                            .padding(.trailing, 180)
+                            .padding(.vertical, 10)
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color(hex: "6C6C6C"))
                         .font(.system(size: 20))
-                    
-                    ForEach(contributionsToPay(contributionsHistory: group.contributionHistory, participant:participant), id: \.id) { contribution in
-                        HStack {
-                            Text("\(contribution.amount, specifier: "%.0f")€")
-                                .fontWeight(.bold)
-                                .font(.system(size: 20))
-                            Spacer()
-                            Text("\(contribution.date)")
-                                .font(.system(size: 17))
-                            
-                        }
-                        .padding(.horizontal, 40)
-                        .padding(.vertical, 10)
-                        .background(Color.white) // Background color
-                        .cornerRadius(14) // Apply corner radius to the background
-                        
-                        .padding(.horizontal, 20)
-                    }
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 14)
-                        HStack {
-                            Text("Total: \(totalToPay(contributions: contributionsToPay(contributionsHistory: group.contributionHistory, participant:participant), amount:group.contributionAmount), specifier: "%.0f")€")
-                                .foregroundColor(Color(.black))
-                                .fontWeight(.semibold)
-                                .font(.system(size: 28))
-                                .multilineTextAlignment(.center)
-                                .padding(.leading, 35)
-                            Spacer()
-                            Button("Add Missing Contribution") {
+                        Spacer(minLength: -5)
+                        ForEach(group.contributionHistory, id: \.id) { contribution in
+                            HStack {
+                                Text("\(contribution.amount, specifier: "%.0f")€")
+                                    .fontWeight(.bold)
+                                    .font(.system(size: 20))
+                                Spacer()
+                                Text("\(contribution.date)")
+                                    .font(.system(size: 17))
+                                
+                                
                             }
-                            .frame(width: 140, height: 55)
-                            .background(Color(hex:"62DF57"))
-                            .cornerRadius(14)
-                            .padding(.trailing, 15)
-                            .fontWeight(.bold)
-                            .shadow(color: .gray, radius: 5, x: 0, y: 1)
-                            
-                            
-                            
+                            .padding(.horizontal, 40)
+                            .padding(.vertical, 10)
+                            .background(Color.white) // Background color
+                            .cornerRadius(14) // Apply corner radius to the background
+
+                            .padding(.horizontal, 20)
                         }
-                        
-                    }.frame(width: 380, height: 80)
-                        .foregroundColor(.white)
-                        .padding(.top, 10)
+
+                    }
+                    
+                    HStack {
+                        Button("Send\n Remainder") {
+                        }
+                        .frame(width: 140, height: 55)
+                        .background(Color(hex:"FFB800"))
+                        .foregroundColor(Color.white)
+                        .cornerRadius(14)
+                        .padding(.vertical, 10)
+                        .fontWeight(.bold)
+                        .shadow(color: .gray, radius: 5, x: 0, y: 1)
+                    }
                     
                     
                     
@@ -166,26 +161,9 @@ struct PersonalNotificationView: View {
     }
 }
 
-func contributionsToPay(contributionsHistory: [Contribution], participant: Participant) -> [Contribution] {
-        // Calculate total contributions by this participant
-    var notPaidContributions: [Contribution] = []
-        for contribution in contributionsHistory{
-            if contribution.owner.id == participant.id{
-                notPaidContributions.append(contribution)
-            }
-                
-        }
-        return notPaidContributions
-    }
-func totalToPay(contributions:[Contribution], amount:Double)-> Double{
-    var total: Double = 0.0
-    for i in 0...contributions.count{total += amount}
-    return total
-}
-
-struct NotificationView_Previews: PreviewProvider {
+struct FriendNotificationView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550,contributionAmount: 100, contributionHistory: [
+        FriendNotificationView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
@@ -194,7 +172,6 @@ struct NotificationView_Previews: PreviewProvider {
               Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
               Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
               Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
-        ]), participant: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")))
+        ]))
     }
 }
-

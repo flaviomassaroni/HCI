@@ -83,7 +83,7 @@ struct GroupsView: View {
                         ScrollView {
                             ForEach(sortedGroups) { group in
                                 ZStack {
-                                    NavigationLink(destination: FundDetailsView(group: group)) {
+                                    NavigationLink(destination: FundDetailsView(financeModel: viewModel, group: group)) {
                                         HStack {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 14)
