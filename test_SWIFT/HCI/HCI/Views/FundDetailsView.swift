@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct FundDetailsView: View {
+    
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    
     var group: Group
     
     var body: some View {
@@ -13,16 +16,29 @@ struct FundDetailsView: View {
                         .padding(.top, -50)
                     VStack {
                         ZStack{
-                            HStack{
-                                NavigationLink(destination: GroupsView()){
+//                            HStack{
+//                                NavigationLink(destination: GroupsView()){
+//                                    Image(systemName: "arrow.backward")
+//                                        .resizable()
+//                                        .frame(width: 25, height: 20)
+//                                        .foregroundColor(.white)
+//                                        .padding(.leading, 20)
+//                                        .padding(.top, 20)
+//                                    Spacer()
+//                                }
+//                            }
+                            HStack {
+                                Button(action: {
+                                    presentationMode.wrappedValue.dismiss()
+                                }, label: {
                                     Image(systemName: "arrow.backward")
                                         .resizable()
                                         .frame(width: 25, height: 20)
                                         .foregroundColor(.white)
                                         .padding(.leading, 20)
                                         .padding(.top, 20)
-                                    Spacer()
-                                }
+                                })
+                                Spacer()
                             }
                         Spacer()
                             Text(group.name)

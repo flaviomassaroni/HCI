@@ -1,7 +1,11 @@
 import SwiftUI
 
 struct NotificationView: View {
+    
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    
     var group: Group
+    
     var body: some View {
         NavigationView{
             VStack(spacing:0){
@@ -12,16 +16,29 @@ struct NotificationView: View {
                         .padding(.top, -50)
                     VStack {
                         ZStack{
-                            HStack{
-                                NavigationLink(destination: FundDetailsView(group:group)){
+//                            HStack{
+//                                NavigationLink(destination: FundDetailsView(group:group)){
+//                                    Image(systemName: "arrow.backward")
+//                                        .resizable()
+//                                        .frame(width: 25, height: 20)
+//                                        .foregroundColor(.white)
+//                                        .padding(.leading, 20)
+//                                        .padding(.top, 20)
+//                                    Spacer()
+//                                }
+//                            }
+                            HStack {
+                                Button(action: {
+                                    presentationMode.wrappedValue.dismiss()
+                                }, label: {
                                     Image(systemName: "arrow.backward")
                                         .resizable()
                                         .frame(width: 25, height: 20)
                                         .foregroundColor(.white)
                                         .padding(.leading, 20)
                                         .padding(.top, 20)
-                                    Spacer()
-                                }
+                                })
+                                Spacer()
                             }
                         Spacer()
                             Text(group.name)
@@ -149,10 +166,10 @@ struct NotificationView: View {
                     
                 }.background(Color(hex:"ECECEC"))
                 
-                RoundedRectangle(cornerRadius: 14)
-                    .foregroundColor(Color.blue)
-                    .frame(height: 100)
-                    .padding(.bottom, -34)
+//                RoundedRectangle(cornerRadius: 14)
+//                    .foregroundColor(Color.blue)
+//                    .frame(height: 100)
+//                    .padding(.bottom, -34)
                 
             }.background(Color(hex:"ECECEC"))
         }.navigationBarHidden(true)
