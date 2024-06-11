@@ -13,7 +13,7 @@ struct NotificationView: View {
                     VStack {
                         ZStack{
                             HStack{
-                                NavigationLink(destination: GroupsView()){
+                                NavigationLink(destination: FundDetailsView(group:group)){
                                     Image(systemName: "arrow.backward")
                                         .resizable()
                                         .frame(width: 25, height: 20)
@@ -148,7 +148,12 @@ struct NotificationView: View {
                     
                     
                 }.background(Color(hex:"ECECEC"))
-                 
+                
+                RoundedRectangle(cornerRadius: 14)
+                    .foregroundColor(Color.blue)
+                    .frame(height: 100)
+                    .padding(.bottom, -34)
+                
             }.background(Color(hex:"ECECEC"))
         }.navigationBarHidden(true)
 
