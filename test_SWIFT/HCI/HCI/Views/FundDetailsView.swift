@@ -3,6 +3,7 @@ import SwiftUI
 struct FundDetailsView: View {
     
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @ObservedObject var financeModel: FinanceViewModel
     
     var group: Group
     
@@ -16,17 +17,6 @@ struct FundDetailsView: View {
                         .padding(.top, -50)
                     VStack {
                         ZStack{
-//                            HStack{
-//                                NavigationLink(destination: GroupsView()){
-//                                    Image(systemName: "arrow.backward")
-//                                        .resizable()
-//                                        .frame(width: 25, height: 20)
-//                                        .foregroundColor(.white)
-//                                        .padding(.leading, 20)
-//                                        .padding(.top, 20)
-//                                    Spacer()
-//                                }
-//                            }
                             HStack {
                                 Button(action: {
                                     presentationMode.wrappedValue.dismiss()
@@ -128,26 +118,52 @@ struct FundDetailsView: View {
                             }
                             .padding(.top, 20)
                             .padding(.bottom , 10)
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .foregroundColor(.white)
-                                HStack {
-                                    Image(systemName: "person.circle.fill")
-                                        .resizable()
-                                        .frame(width: 35, height: 35)
-                                        .padding(.leading, 30)
-                                    Text("You")
-                                        .fontWeight(.semibold)
-                                    Spacer()
+                            
+                            NavigationLink(destination: PersonalNotificationView(group: group)){
+                                    HStack {
+                                        Image(systemName: "person.circle.fill")
+                                            .resizable()
+                                            .frame(width: 35, height: 35)
+                                            .padding(.leading)
+                                            .foregroundColor(Color.black)
+                                        Text("You")
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.black)
+                                        Spacer()
+                                        Image(systemName: "chevron.right")
+                                            .foregroundColor(.black)
+                                            .padding(.trailing, 18)
+                                        
+                                    }
+                                    .padding(.horizontal, 15)
+                                    .padding(.vertical, 11)
+                                    .background()
+                                    .cornerRadius(14)
+                                    .padding(.vertical, 10)
+                                    .padding(.horizontal, 20)
+                                    
                                 }
-                                .padding(.vertical, 10)
-                            }
-                            .padding(.bottom, 8)
-                            .padding(.horizontal, 20)
+                            
+//                            ZStack {
+//                                RoundedRectangle(cornerRadius: 10)
+//                                    .foregroundColor(.white)
+//                                HStack {
+//                                    Image(systemName: "person.circle.fill")
+//                                        .resizable()
+//                                        .frame(width: 35, height: 35)
+//                                        .padding(.leading, 30)
+//                                    Text("You")
+//                                        .fontWeight(.semibold)
+//                                    Spacer()
+//                                }
+//                                .padding(.vertical, 10)
+//                            }
+//                            .padding(.bottom, 8)
+//                            .padding(.horizontal, 20)
                             
                             ForEach(group.participants, id: \.id) { participant in
                                 
-                                NavigationLink(destination: NotificationView(group: group)){
+                                NavigationLink(destination: FriendNotificationView(group: group)){
                                         HStack {
                                             Image(systemName: "person.circle.fill")
                                                 .resizable()
@@ -201,9 +217,9 @@ struct FundDetailsView: View {
                     }
                     .background(Color(hex: "ECECEC"))
                 }
-                RoundedRectangle(cornerRadius: 14)
-                    .foregroundColor(Color.blue)
-                    .frame(height: 100)
+//                RoundedRectangle(cornerRadius: 14)
+//                    .foregroundColor(Color.blue)
+//                    .frame(height: 100)
             }
             .edgesIgnoringSafeArea(.bottom)
             .background(Color(hex: "ECECEC"))
@@ -214,7 +230,7 @@ struct FundDetailsView: View {
 
 struct FundDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        FundDetailsView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
+        FundDetailsView(financeModel: FinanceViewModel(), group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
