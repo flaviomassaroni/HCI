@@ -37,7 +37,7 @@ class FinanceViewModel: ObservableObject {
     ]
     
     @Published var groups: [Group] = [
-        Group(id: UUID(), name: "Boat", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1,"M"), totalAmount: 6000, currentAmount: 550, contributionHistory: [
+        Group(id: UUID(), name: "Boat", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1,"M"), totalAmount: 6000, currentAmount: 550, contributionAmount: 100, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
@@ -47,7 +47,7 @@ class FinanceViewModel: ObservableObject {
             Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")),
             Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF"))
         ]),
-        Group(id: UUID(), name: "Spain Holidays", creationDate: "20/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (2,"M"), totalAmount: 2000, currentAmount: 850, contributionHistory: [
+        Group(id: UUID(), name: "Spain Holidays", creationDate: "20/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (2,"M"), totalAmount: 2000, currentAmount: 850,contributionAmount: 100, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
@@ -57,7 +57,7 @@ class FinanceViewModel: ObservableObject {
             Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")),
             Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF"))
         ]),
-        Group(id: UUID(), name: "Graduation Present", creationDate: "15/02/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "W"), totalAmount: 300, currentAmount: 250, contributionHistory: [
+        Group(id: UUID(), name: "Graduation Present", creationDate: "15/02/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "W"), totalAmount: 300, currentAmount: 250,contributionAmount: 100, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),

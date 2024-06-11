@@ -2,6 +2,8 @@ import SwiftUI
 
 struct NotificationView: View {
     var group: Group
+    var participant: Participant
+    
     var body: some View {
         NavigationView{
             VStack(spacing:0){
@@ -100,7 +102,7 @@ struct NotificationView: View {
                         .foregroundColor(Color(hex: "6C6C6C"))
                         .font(.system(size: 20))
                     
-                    ForEach(group.contributionHistory, id: \.id) { contribution in
+                    ForEach(contributionsToPay(contributionsHistory: group.contributionHistory, participant:participant), id: \.id) { contribution in
                         HStack {
                             Text("\(contribution.amount, specifier: "%.0f")€")
                                 .fontWeight(.bold)
@@ -108,7 +110,6 @@ struct NotificationView: View {
                             Spacer()
                             Text("\(contribution.date)")
                                 .font(.system(size: 17))
-                            
                             
                         }
                         .padding(.horizontal, 40)
@@ -121,7 +122,7 @@ struct NotificationView: View {
                     ZStack{
                         RoundedRectangle(cornerRadius: 14)
                         HStack {
-                            Text("Total: \(10.0, specifier: "%.0f")€")
+                            Text("Total: \(totalToPay(contributions: contributionsToPay(contributionsHistory: group.contributionHistory, participant:participant), amount:group.contributionAmount), specifier: "%.0f")€")
                                 .foregroundColor(Color(.black))
                                 .fontWeight(.semibold)
                                 .font(.system(size: 28))
@@ -159,9 +160,27 @@ struct NotificationView: View {
 
     }
 }
+
+func contributionsToPay(contributionsHistory: [Contribution], participant: Participant) -> [Contribution] {
+        // Calculate total contributions by this participant
+    var notPaidContributions: [Contribution] = []
+        for contribution in contributionsHistory{
+            if contribution.owner.id == participant.id{
+                notPaidContributions.append(contribution)
+            }
+                
+        }
+        return notPaidContributions
+    }
+func totalToPay(contributions:[Contribution], amount:Double)-> Double{
+    var total: Double = 0.0
+    for i in 0...contributions.count{total += amount}
+    return total
+}
+
 struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550, contributionHistory: [
+        NotificationView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550,contributionAmount: 100, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0),
@@ -170,7 +189,7 @@ struct NotificationView_Previews: PreviewProvider {
               Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
               Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
               Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
-        ]))
+        ]), participant: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")))
     }
 }
 

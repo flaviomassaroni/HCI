@@ -20,6 +20,7 @@ struct CreateFundView: View {
     @State private var newFriend: String = ""
     @State private var participants: [Participant] = []
     
+    
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
     @State var screenHeight: CGFloat = UIScreen.main.bounds.height
     
@@ -212,10 +213,7 @@ struct CreateFundView: View {
                                     }
                                     .padding(.top, -10)
                                     
-                                    Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
-                                        .font(.body)
-                                        .fontWeight(.semibold)
-                                        .padding()
+
                                 }
                                 .onChange(of: selectedNumber) { _ in
                                     // Update selectedUnit to ensure it matches the correct plurality
@@ -243,7 +241,7 @@ struct CreateFundView: View {
                         }
                         .frame(width: screenWidth - 28, height: 86)
                         .padding(.horizontal, 14)
-                        .padding(.vertical, 140)
+                        .padding(.vertical, 110)
                         
                         //                Friends adding section
                         ZStack(alignment: .center) {
@@ -255,7 +253,7 @@ struct CreateFundView: View {
                                 )
                                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
                             
-                            VStack{
+                            VStack(){
                                 Text("Participants")
                                     .font(.title3)
                                     .fontWeight(.semibold)
@@ -279,8 +277,10 @@ struct CreateFundView: View {
                                             .foregroundColor(.white)
                                             .cornerRadius(10)
                                     }
+                                    
                                 }
                                 .padding(.horizontal)
+                                
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 10) {
@@ -309,8 +309,11 @@ struct CreateFundView: View {
                                     }
                                     .padding()
                                 }
+                                Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
+                                    .font(.body)
+                                    .fontWeight(.semibold)
+//                                    .padding(.top, 10)
                                 
-                                Spacer()
                                 
                                 Button(action: createGroup) {
                                     Text("Create Fund")
@@ -320,8 +323,9 @@ struct CreateFundView: View {
                                         .background(Color.green)
                                         .cornerRadius(10)
                                 }
-                                .padding()
-                            }
+                                .padding(10)
+                            }.onChange(of: participants) { _ in
+                                updateComputedAmount()}
                             
                         }
                         .frame(width: screenWidth - 28, height: 86)
@@ -347,7 +351,7 @@ struct CreateFundView: View {
             return
         }
         
-        computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit)
+        computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
     }
     
     func createGroup(){
@@ -364,6 +368,7 @@ struct CreateFundView: View {
             period: (selectedNumber, selectedUnit[selectedUnit.startIndex]),
             totalAmount: amountD,
             currentAmount: 0.0,
+            contributionAmount: calculateRecurringAmount(totalAmount: Double(totalAmount)!, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count),
             contributionHistory: [],
             participants: participants
         )
@@ -381,11 +386,13 @@ struct CreateFundView_Previews: PreviewProvider {
 }
 
 
-func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Date, selectedNumber: Int, selectedUnit: String) -> Double {
+func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Date, selectedNumber: Int, selectedUnit: String, partNumb: Int) -> Double {
+    var divideBy = 1
+    if partNumb != 0 {divideBy = partNumb}
     // Calculate the total number of days between start and end date
     let calendar = Calendar.current
     guard let totalDays = calendar.dateComponents([.day], from: startDate, to: endDate).day else {
-        return 0.0
+        return totalAmount/Double(divideBy)
     }
 
     // Calculate the number of recurrences based on the frequency
@@ -400,14 +407,14 @@ func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Dat
     case "Year", "Years":
         numberOfRecurrences = calendar.dateComponents([.year], from: startDate, to: endDate).year! / selectedNumber
     default:
-        return 0.0
+        return totalAmount/Double(divideBy)
     }
 
     guard let recurrences = numberOfRecurrences, recurrences > 0 else {
-        return 0.0
+        return totalAmount/Double(divideBy)
     }
 
     // Calculate the amount to be put on each recurrence
     let amountPerRecurrence = Double(totalAmount) / Double(recurrences + 1)
-    return amountPerRecurrence
+    return amountPerRecurrence/Double(divideBy)
 }

@@ -9,9 +9,11 @@ struct Group: Identifiable {
     let period: (Int, Character)
     let totalAmount: Double
     let currentAmount: Double
+    let contributionAmount: Double
     var contributionHistory: [Contribution]
     var participants: [Participant]
     let creationDate: String
+
 
     var startDateAsDate: Date? {
         let formatter = DateFormatter()
@@ -26,7 +28,7 @@ struct Group: Identifiable {
     }
 
     // Ensure that all initializers are defined explicitly.
-    init(id: UUID = UUID(), name: String, creationDate: String, startDate: String, endDate: String, period: (Int, Character), totalAmount: Double, currentAmount: Double, contributionHistory: [Contribution], participants: [Participant]) {
+    init(id: UUID = UUID(), name: String, creationDate: String, startDate: String, endDate: String, period: (Int, Character), totalAmount: Double, currentAmount: Double,contributionAmount: Double, contributionHistory: [Contribution], participants: [Participant]) {
         self.id = id
         self.name = name
         self.creationDate = creationDate
@@ -37,6 +39,8 @@ struct Group: Identifiable {
         self.currentAmount = currentAmount
         self.contributionHistory = contributionHistory
         self.participants = participants
+        self.contributionAmount = contributionAmount
     }
 }
+
 
