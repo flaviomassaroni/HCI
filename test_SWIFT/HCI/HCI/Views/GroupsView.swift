@@ -43,7 +43,7 @@ struct GroupsView: View {
     var body: some View {
         NavigationView {
                 VStack(spacing: 0) {
-                    ZStack {
+                    ZStack() {
                         RoundedRectangle(cornerRadius: 14)
                             .foregroundColor(Color.blue)
                             .padding(.bottom, 10)
@@ -55,32 +55,32 @@ struct GroupsView: View {
                     }
                     .frame(height: 200)
                     .padding(.top, -50)
-                    HStack {
-                        Spacer()
-                        Button(action: {
-                            showingSortOptions = true
-                        }) {
-                            VStack(spacing:0){
-                                Image(systemName: "line.horizontal.3.decrease.circle")
-                                    .font(.title)
-                                    .foregroundColor(.blue)
-                                    .padding()
-                                
-                                Text("Sort Groups")
-                                .padding(.top, -17)
-                            }.padding(.trailing, 20)
-                             .padding(.bottom, 10)
-                             .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                            
-                        }.padding(.top, -15)
-                        .sheet(isPresented: $showingSortOptions) {
-                            SortOptionsView(selectedSortOption: $selectedSortOption, selectedSortOrder: $selectedSortOrder)
-                                .presentationDetents([.fraction(0.5)])
-                        }
-                }
 
                     ZStack {
-                        ScrollView {
+                        ScrollView() {
+                            HStack {
+                                Spacer()
+                                Button(action: {
+                                    showingSortOptions = true
+                                }) {
+                                    VStack(spacing:0){
+                                        Image(systemName: "line.horizontal.3.decrease.circle")
+                                            .font(.title)
+                                            .foregroundColor(.blue)
+                                            .padding()
+                                        
+                                        Text("Sort Groups")
+                                        .padding(.top, -17)
+                                    }.padding(.trailing, 20)
+                                     .padding(.bottom, 10)
+                                     .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                                    
+                                }.padding(.top, -15)
+                                .sheet(isPresented: $showingSortOptions) {
+                                    SortOptionsView(selectedSortOption: $selectedSortOption, selectedSortOrder: $selectedSortOrder)
+                                        .presentationDetents([.fraction(0.5)])
+                                }
+                        }
                             ForEach(sortedGroups) { group in
                                 ZStack {
                                     NavigationLink(destination: FundDetailsView(financeModel: viewModel, group: group)) {
@@ -136,29 +136,31 @@ struct GroupsView: View {
                                 }
                             }
                             
-                            VStack {
+                        }
+                        VStack{
+                            Spacer()
+                            HStack{
                                 Spacer()
-                                HStack {
-                                    Spacer()
-                                    Button(action: {
-                                        showingCreateFundView = true
-                                    }) {
-                                        Image(systemName: "plus")
-                                            .padding()
-                                            .background(Color.blue)
-                                            .foregroundColor(.white)
-                                            .cornerRadius(90)
-                                            .shadow(radius: 5)
-                                    }
-                                    .padding()
-                                    .sheet(isPresented: $showingCreateFundView) {
-                                        CreateFundView(financeModel: viewModel)
-                                    }
+                                Button(action: {
+                                    showingCreateFundView = true
+                                }) {
+                                    Image(systemName: "plus")
+                                        .padding()
+                                        .background(Color.blue)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(90)
+                                        .shadow(radius: 5)
                                 }
-                                .padding(.bottom, 10)
+                                .padding()
+                                .sheet(isPresented: $showingCreateFundView) {
+                                    CreateFundView(financeModel: viewModel)
+                                }
+
+                                }
                             }
                         }
-                    }
+
+
 
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundColor(Color.blue)

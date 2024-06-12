@@ -33,6 +33,8 @@ func addPeriodToDate(dateString: String, period: (Int, Character)) -> String? {
     switch periodUnit {
     case "D":
         newDate = Calendar.current.date(byAdding: .day, value: periodValue, to: date)
+    case "W":
+        newDate = Calendar.current.date(byAdding: .weekOfYear, value: periodValue, to: date)
     case "M":
         newDate = Calendar.current.date(byAdding: .month, value: periodValue, to: date)
     case "Y":

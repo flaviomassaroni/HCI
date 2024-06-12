@@ -145,7 +145,7 @@ struct FundDetailsView: View {
                                 }
                         
                             
-                            ForEach(group.participants.dropFirst(), id: \.id) { participant in
+                            ForEach(group.participants.filter{$0.name != "You"}, id: \.id) { participant in
                                 
                                 NavigationLink(destination: FriendNotificationView(participant: participant, group: group)){
                                         HStack {

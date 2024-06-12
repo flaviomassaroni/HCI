@@ -59,7 +59,7 @@ func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Dat
     case "Day", "Days":
         numberOfRecurrences = totalDays / selectedNumber
     case "Week", "Weeks":
-        numberOfRecurrences = totalDays / (7 * selectedNumber)
+        numberOfRecurrences = calendar.dateComponents([.weekOfYear], from: startDate, to: endDate).weekOfYear! / selectedNumber
     case "Month", "Months":
         numberOfRecurrences = calendar.dateComponents([.month], from: startDate, to: endDate).month! / selectedNumber
     case "Year", "Years":
