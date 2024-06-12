@@ -19,6 +19,7 @@ struct CreateFundView: View {
     @State private var computedAmount: Double = 0.0
     @State private var newFriend: String = ""
     @State private var participants: [Participant] = [Participant(name: "You", colour: .black)]
+    @State private var error: String = ""
     
     
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
@@ -60,6 +61,8 @@ struct CreateFundView: View {
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundColor(Color.white)
                                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
+                                
+                                
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("Fund Name")
                                     .font(.title3)
@@ -93,9 +96,11 @@ struct CreateFundView: View {
                         
                         //          Amount
                         ZStack {
+                            // borderColor red if error else white
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundColor(Color.white)
                                 .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
+                                
                             
                             VStack(alignment: .leading, spacing: 5) {
                                 Text("Total amount to save")
@@ -112,7 +117,7 @@ struct CreateFundView: View {
                                         
                                         TextField("6000", text: $totalAmount)
                                             .padding()
-                                            .background(Color(.systemGray6))
+                                            .background(error.isEmpty ? Color(.systemGray6) : Color.red.opacity(0.2))
                                             .cornerRadius(10)
                                             .padding(.horizontal, 5)
                                             .keyboardType(.numberPad)
@@ -128,6 +133,14 @@ struct CreateFundView: View {
                                     .padding(.horizontal)
                                 }
                                 .padding(.trailing, 14)
+                                
+                                if !error.isEmpty {
+                                    Text(error)
+                                        .foregroundColor(.red)
+                                        .font(.caption)
+                                        .padding(.leading)
+                                }
+
                             }
                             .padding(.horizontal, 5)
                             .padding(.vertical, 10)
@@ -347,12 +360,26 @@ struct CreateFundView: View {
     
     func updateComputedAmount() {
         guard let totalAmountDouble = Double(totalAmount) else {
-            computedAmount = 0.0
+            if totalAmount.isEmpty {
+                error = ""
+            } else {
+                error = "Invalid character"
+            }
+            let totalAmountDouble  = Double(0)
+            computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
             return
         }
-        
+        if totalAmountDouble <= 0 {
+            error = "Amount must be a greater than 0"
+            let totalAmountDouble  = Double(0)
+            computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
+            return
+        }
+
+        error = ""
         computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
     }
+    
     
     func createGroup(){
         let amountD = Double(totalAmount)!
