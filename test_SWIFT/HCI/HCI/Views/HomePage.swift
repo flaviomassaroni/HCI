@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct HomePage: View {
-    @ObservedObject var viewModel: FinanceViewModel
+    @StateObject var financeModel = FinanceViewModel()
     @State private var isShowingCategoryView = false
     @State private var selectedTransaction: Transaction?
     @State private var offset: CGFloat = 0
@@ -10,7 +10,7 @@ struct HomePage: View {
     var body: some View {
         ZStack{
             if isShowingGroupsView{
-                GroupsView(isShowingGroupsView: $isShowingGroupsView)
+                GroupsView(financeModel: financeModel, isShowingGroupsView: $isShowingGroupsView)
                     .zIndex(1.0)
             }
             NavigationView {
@@ -49,7 +49,7 @@ struct HomePage: View {
                                             
                                             Spacer()
                                         }
-                                        Text("€\(viewModel.balance, specifier: "%.2f")")
+                                        Text("€\(financeModel.balance, specifier: "%.2f")")
                                             .font(.largeTitle)
                                             .foregroundColor(.white)
                                             .padding(.top, 1)
@@ -74,7 +74,7 @@ struct HomePage: View {
                                 }
                                 .padding(.top, 20)
                                 
-                                ForEach(viewModel.transactions, id: \.id) { transaction in
+                                ForEach(financeModel.transactions, id: \.id) { transaction in
                                     Button(action: {
                                         self.selectedTransaction = transaction
                                         self.isShowingCategoryView = true
@@ -174,7 +174,7 @@ struct HomePage: View {
                                 }
                             }
                         
-                        CategoryView(selectedTransaction: .constant(selectedTransaction), isShowing: $isShowingCategoryView, financeModel: viewModel)
+                        CategoryView(selectedTransaction: .constant(selectedTransaction), isShowing: $isShowingCategoryView, financeModel: financeModel)
                             .offset(y: offset)
                             .gesture(DragGesture()
                                 .onChanged { gesture in
@@ -203,6 +203,6 @@ struct HomePage: View {
 
 struct HomePage_Previews: PreviewProvider {
     static var previews: some View {
-        HomePage(viewModel: FinanceViewModel()).environmentObject(FinanceViewModel())
+        HomePage(financeModel: FinanceViewModel())
     }
 }
