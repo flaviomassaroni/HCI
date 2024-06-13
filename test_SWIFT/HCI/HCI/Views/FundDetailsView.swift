@@ -119,7 +119,7 @@ struct FundDetailsView: View {
                             .padding(.top, 20)
                             .padding(.bottom , 10)
                             
-                            NavigationLink(destination: PersonalNotificationView(group: .constant(group), participant: group.participants[0])){
+                            NavigationLink(destination: PersonalNotificationView(financeModel: financeModel, group: .constant(group), participant: group.participants[0])){
                                     HStack {
                                         Image(systemName: "person.circle.fill")
                                             .resizable()
@@ -130,7 +130,7 @@ struct FundDetailsView: View {
                                             .fontWeight(.semibold)
                                             .foregroundColor(.black)
                                         Spacer()
-                                        if (group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner.name != "You"}.count != 0){
+                                        if (group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner.name == "You"}.count != 0){
                                             Image(systemName: "exclamationmark.triangle")
                                                 .resizable()
                                                 .frame(width:28, height:25)
@@ -157,11 +157,13 @@ struct FundDetailsView: View {
                                     .padding(.horizontal, 20)
                                     
                                 }
+                                .disabled(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner.name == "You" }.count == 0)
+
                         
                             
                             ForEach(group.participants.filter{$0.name != "You"}, id: \.id) { participant in
                                 
-                                NavigationLink(destination: FriendNotificationView(participant: participant, group: group)){
+                                NavigationLink(destination: FriendNotificationView(financeModel: financeModel, participant: participant, group: group)){
                                         HStack {
                                             Image(systemName: "person.circle.fill")
                                                 .resizable()
@@ -197,6 +199,7 @@ struct FundDetailsView: View {
                                         .padding(.horizontal, 20)
                                         
                                     }
+                                    .disabled(group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}.count != 0)
                             }
                         }
                         
@@ -245,11 +248,15 @@ struct FundDetailsView: View {
 
 struct FundDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        FundDetailsView(financeModel: FinanceViewModel(), group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "M"), totalAmount: 6000,  currentAmount: 550, contributionAmount: 100, contributionHistory: [],
-         participants: [
-              Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
-              Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
-              Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
+        FundDetailsView(
+            financeModel: FinanceViewModel(),
+            group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "M"), totalAmount: 6000,  currentAmount: 550, contributionAmount: 100, contributionHistory: [
+                Contribution(owner: Participant(name:"You", colour: Color(hex: "000000")), date: "01/05/24", amount: 100.0, paid: false)
+                ],
+                participants: [
+                  Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
+                  Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
+                  Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
         ]))
     }
 }

@@ -39,10 +39,12 @@ class FinanceViewModel: ObservableObject {
     @Published var groups: [Group] = [
         Group(id: UUID(), name: "Boat", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1,"M"), totalAmount: 6000, currentAmount: 550, contributionAmount: 100, contributionHistory: [
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
+            Contribution(owner: Participant(name:"You", colour: Color(hex: "000000")), date: "01/05/24", amount: 100.0, paid: false),
             Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)],
               participants: [
+            Participant(name:"You", colour: Color(hex: "000000")),
             Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
             Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")),
             Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF"))
@@ -53,6 +55,7 @@ class FinanceViewModel: ObservableObject {
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)],
               participants: [
+            Participant(name:"You", colour: Color(hex: "FFA533")),
             Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
             Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")),
             Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF"))
@@ -63,6 +66,7 @@ class FinanceViewModel: ObservableObject {
             Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
             Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)],
               participants: [
+            Participant(name:"You", colour: Color(hex: "FFA533")),
             Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
             Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")),
             Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF"))
@@ -74,6 +78,20 @@ class FinanceViewModel: ObservableObject {
         print(group)
         groups.append(group)
     }
+    
+    func payContributions(for groupID: UUID, checkedContributions: Set<UUID>) {
+        guard let groupIndex = groups.firstIndex(where: { $0.id == groupID }) else {
+            return
+        }
+        
+        
+        balance -= groups[groupIndex].payContributions(checkedContributions: checkedContributions)
+        
+        // Notify SwiftUI about the state change
+        objectWillChange.send()
+    }
+    
+    
     
     func editCategory(newCategory: Category, transaction:Transaction){
         for index in transactions.indices {

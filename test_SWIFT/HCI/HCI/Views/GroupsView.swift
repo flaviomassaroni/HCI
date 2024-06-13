@@ -12,7 +12,8 @@ enum SortOrder: String, CaseIterable {
 }
 
 struct GroupsView: View {
-    @StateObject private var viewModel = FinanceViewModel()
+    @ObservedObject var financeModel: FinanceViewModel
+//    @StateObject private var financeModel = FinanceViewModel()
     @State private var selectedSortOption: SortOption = .creationDate
     @State private var selectedSortOrder: SortOrder = .ascending
     @State private var showingSortOptions = false
@@ -23,14 +24,14 @@ struct GroupsView: View {
         let sortedGroups: [Group]
         switch selectedSortOption {
         case .creationDate:
-            sortedGroups = viewModel.groups.sorted(by: { $0.creationDate < $1.creationDate })
+            sortedGroups = financeModel.groups.sorted(by: { $0.creationDate < $1.creationDate })
         case .startDate:
-            sortedGroups = viewModel.groups.sorted(by: {
+            sortedGroups = financeModel.groups.sorted(by: {
                 guard let date1 = $0.startDateAsDate, let date2 = $1.startDateAsDate else { return false }
                 return date1 < date2
             })
         case .endDate:
-            sortedGroups = viewModel.groups.sorted(by: {
+            sortedGroups = financeModel.groups.sorted(by: {
                 guard let date1 = $0.endDateAsDate, let date2 = $1.endDateAsDate else { return false }
                 return date1 < date2
             })
@@ -83,7 +84,7 @@ struct GroupsView: View {
                         }
                             ForEach(sortedGroups) { group in
                                 ZStack {
-                                    NavigationLink(destination: FundDetailsView(financeModel: viewModel, group: group)) {
+                                    NavigationLink(destination: FundDetailsView(financeModel: financeModel, group: group)) {
                                         HStack {
                                             ZStack {
                                                 RoundedRectangle(cornerRadius: 14)
@@ -153,7 +154,7 @@ struct GroupsView: View {
                                 }
                                 .padding()
                                 .sheet(isPresented: $showingCreateFundView) {
-                                    CreateFundView(financeModel: viewModel)
+                                    CreateFundView(financeModel: financeModel)
                                 }
 
                                 }
@@ -210,7 +211,7 @@ struct GroupsView: View {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView(isShowingGroupsView: .constant(true))
+        GroupsView(financeModel: FinanceViewModel(), isShowingGroupsView: .constant(true))
     }
 }
 

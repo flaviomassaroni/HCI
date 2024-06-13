@@ -22,13 +22,13 @@ struct MainView: View {
     
     var body: some View {
         TabView {
-            HomePage(viewModel: FinanceViewModel())
+            HomePage(financeModel: FinanceViewModel())
                 .tabItem {
                     Image(systemName: "person")
                     Text("Personal")
                 }
             
-            GroupsView(isShowingGroupsView: .constant(true))
+            GroupsView(financeModel: FinanceViewModel(), isShowingGroupsView: .constant(true))
                 .tabItem {
                     Image(systemName: "person.3")
                     Text("Groups")

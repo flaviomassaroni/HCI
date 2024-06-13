@@ -8,19 +8,26 @@ struct Group: Identifiable {
     let endDate: String
     let period: (Int, Character)
     let totalAmount: Double
-    let currentAmount: Double
+    var currentAmount: Double
     let contributionAmount: Double
     var contributionHistory: [Contribution]
     var participants: [Participant]
     let creationDate: String
     
-    mutating func payContributions(checkedContributions: Set<UUID>)->() {
-            for index in self.contributionHistory.indices {
-                if checkedContributions.contains(self.contributionHistory[index].id) {
-                    self.contributionHistory[index].paid = true
-                }
+    mutating func payContributions(checkedContributions: Set<UUID>)->Double {
+        var paidAmount = 0.0
+        for index in self.contributionHistory.indices {
+//            print("checking contribution: \(self.contributionHistory[index].id)")
+            if checkedContributions.contains(self.contributionHistory[index].id) {
+                self.contributionHistory[index].paid = true
+                self.currentAmount += self.contributionHistory[index].amount
+//                print("contribution: \(self.contributionHistory[index])")
+//                print("group amount: \(self.currentAmount)")
+                paidAmount += self.contributionHistory[index].amount
             }
         }
+        return paidAmount
+    }
 
 
     var startDateAsDate: Date? {

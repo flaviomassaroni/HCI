@@ -2,6 +2,8 @@ import SwiftUI
 
 struct PersonalNotificationView: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @Environment (\.dismiss) var dismiss
+    @ObservedObject var financeModel: FinanceViewModel
     
     @Binding var group: Group
     var participant: Participant
@@ -116,7 +118,7 @@ struct PersonalNotificationView: View {
                                 .font(.system(size: 17))
                             
                             Checkbox(isChecked: Binding(
-                                get: { selectedContributions[contribution.id] ?? true },
+                                get: { selectedContributions[contribution.id] ?? false },
                                 set: { selectedContributions[contribution.id] = $0 }
                             ))
                         }
@@ -130,7 +132,7 @@ struct PersonalNotificationView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 14)
                         HStack {
-                            Text("Total: \(totalToPay(contributions: contributionsToPay(contributionsHistory: group.contributionHistory, participant: participant), amount: group.contributionAmount), specifier: "%.0f")€")
+                            Text("Total: \(totalToPay(contributions: selectedContributions, amount: group.contributionAmount), specifier: "%.0f")€")
                                 .foregroundColor(Color(.black))
                                 .fontWeight(.semibold)
                                 .font(.system(size: 28))
@@ -159,11 +161,20 @@ struct PersonalNotificationView: View {
         .navigationBarHidden(true)
     }
     func addMissingContributions() {
+        print("Selected contributions dictionary before filtering: \(selectedContributions)\n")
         let checkedContributions = Set(selectedContributions.filter { $0.value }.keys)
-        group.payContributions(checkedContributions: checkedContributions)
+        print("group id: \(group.id)\n")
+        print("checked contributions: \(checkedContributions)\n")
+        
+        if !checkedContributions.isEmpty {
+            financeModel.payContributions(for: group.id, checkedContributions: checkedContributions)
+        }
         // Clear selected contributions after updating
-    //    selectedContributions.removeAll()
+        selectedContributions.removeAll()
+        dismiss()
+        
     }
+
     
 }
 
@@ -187,9 +198,9 @@ func contributionsToPay(contributionsHistory: [Contribution], participant: Parti
     return contributionsHistory.filter { $0.owner.id == participant.id }
 }
 
-func totalToPay(contributions: [Contribution], amount: Double) -> Double {
-    let unpaidContributions = contributions.filter { !$0.paid && comesBeforeToday(dateString: $0.date) }
-    return Double(unpaidContributions.count) * amount
+func totalToPay(contributions: [UUID: Bool], amount: Double) -> Double {
+//    let unpaidContributions = contributions.filter { !$0.paid && comesBeforeToday(dateString: $0.date) }
+    return Double(contributions.count) * amount
 }
 
 func comesBeforeToday(dateString: String) -> Bool {
@@ -214,6 +225,7 @@ func comesBeforeToday(dateString: String) -> Bool {
 struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {
         PersonalNotificationView(
+            financeModel: FinanceViewModel(),
             group: .constant(Group(
                 name: "Graduation present",
                 creationDate: "23/05/24",
@@ -224,6 +236,7 @@ struct NotificationView_Previews: PreviewProvider {
                 currentAmount: 550,
                 contributionAmount: 100,
                 contributionHistory: [
+                    Contribution(owner: Participant(name: "You", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
                     Contribution(owner: Participant(name: "Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
                     Contribution(owner: Participant(name: "Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
                     Contribution(owner: Participant(name: "Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
@@ -235,7 +248,7 @@ struct NotificationView_Previews: PreviewProvider {
                     Participant(name: "Andrea Salinetti", colour: Color(hex: "3357FF"))
                 ]
             )),
-            participant: Participant(name: "Andrea Salinetti", colour: Color(hex: "FF5733"))
+            participant: Participant(name: "You", colour: Color(hex: "FF5733"))
         )
     }
 }
