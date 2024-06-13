@@ -308,15 +308,17 @@ struct CreateFundView: View {
                                                         .foregroundColor(.white)
                                                         .padding(.leading, 10)
                                                     Spacer()
-                                                    Button(action: {
-                                                        if let index = participants.firstIndex(of: participant) {
-                                                            participants.remove(at: index)
+                                                    if participant.name != "You"{
+                                                        Button(action: {
+                                                            if let index = participants.firstIndex(of: participant) {
+                                                                participants.remove(at: index)
+                                                            }
+                                                        }) {
+                                                            Image(systemName: "xmark.circle.fill")
+                                                                .foregroundColor(.white)
                                                         }
-                                                    }) {
-                                                        Image(systemName: "xmark.circle.fill")
-                                                            .foregroundColor(.white)
+                                                        .padding(.trailing, 10)
                                                     }
-                                                    .padding(.trailing, 10)
                                                 }
                                             }
                                         }

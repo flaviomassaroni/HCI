@@ -12,53 +12,64 @@ struct CategoryView: View {
     
     var body: some View {
         if isShowing {
-            VStack{
-                Spacer()
-                ZStack {
-                    VStack {
-                        RoundedRectangle(cornerRadius: 25.0)
-                            .frame(width: 40, height: 5)
-                            .foregroundColor(Color(hex: "747476"))
-                            .padding(.vertical, 10)
-                        
-                        ScrollView {
-                            ForEach(categories, id: \.id) { category in
-                                Button(action: {
-                                    financeModel.editCategory(newCategory:category, transaction: selectedTransaction)
-                                    isShowing = false
-                                }) {
-                                    ZStack {
-                                        RoundedRectangle(cornerRadius: 10.0)
-                                            .frame(width: 380, height: 50)
-                                            .foregroundColor(.white)
-                                        HStack {
-                                            ZStack {
-                                                RoundedRectangle(cornerRadius: 25.0)
-                                                    .frame(width: 35, height: 35)
-                                                    .foregroundColor(category.colour)
-                                                Image(category.iconName)
-                                                    .resizable()
-                                                    .frame(width: 25, height: 25)
+            ZStack{
+                RoundedRectangle(cornerRadius: 14)
+                    .frame(width: 428, height: 105)
+                    .foregroundColor(Color(hex:"ECECEC"))
+                VStack{
+                    Spacer()
+                    ZStack {
+                        VStack {
+                            RoundedRectangle(cornerRadius: 25.0)
+                                .frame(width: 40, height: 5)
+                                .foregroundColor(Color(hex: "747476"))
+                                .padding(.vertical, 10)
+                            HStack{
+                                Text("Choose a new Category")
+                                    .fontWeight(.semibold)
+                                    .foregroundColor(Color(hex: "747476"))
+                                Spacer()
+                            }.padding(.leading, 25)
+                            
+                            ScrollView {
+                                ForEach(categories, id: \.id) { category in
+                                    Button(action: {
+                                        financeModel.editCategory(newCategory:category, transaction: selectedTransaction)
+                                        isShowing = false
+                                    }) {
+                                        ZStack {
+                                            RoundedRectangle(cornerRadius: 10.0)
+                                                .frame(width: 380, height: 50)
+                                                .foregroundColor(.white)
+                                            HStack {
+                                                ZStack {
+                                                    RoundedRectangle(cornerRadius: 25.0)
+                                                        .frame(width: 35, height: 35)
+                                                        .foregroundColor(category.colour)
+                                                    Image(category.iconName)
+                                                        .resizable()
+                                                        .frame(width: 25, height: 25)
+                                                }
+                                                .frame(width: 35, height: 35)
+                                                Text(category.name)
+                                                    .foregroundColor(.black)
+                                                Spacer()
                                             }
-                                            .frame(width: 35, height: 35)
-                                            Text(category.name)
-                                                .foregroundColor(.black)
-                                            Spacer()
+                                            .padding(.leading, 40)
                                         }
-                                        .padding(.leading, 40)
                                     }
                                 }
+                                Spacer()
                             }
-                            Spacer()
+                            .background(Color(hex: "ECECEC"))
+                            .frame(maxWidth: .infinity, maxHeight: 400)
                         }
                         .background(Color(hex: "ECECEC"))
-                        .frame(maxWidth: .infinity, maxHeight: 400)
+                        .animation(.easeInOut, value: isShowing)
+                        
                     }
-                    .background(Color(hex: "ECECEC"))
-                    .animation(.easeInOut, value: isShowing)
-                    
                 }
-            }.toolbar(.hidden, for: .tabBar)
+            }
         }
     }
 }

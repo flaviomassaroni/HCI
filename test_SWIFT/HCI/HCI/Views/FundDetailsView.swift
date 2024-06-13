@@ -130,9 +130,23 @@ struct FundDetailsView: View {
                                             .fontWeight(.semibold)
                                             .foregroundColor(.black)
                                         Spacer()
-                                        Image(systemName: "chevron.right")
-                                            .foregroundColor(.black)
-                                            .padding(.trailing, 18)
+                                        if (group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner.name != "You"}.count != 0){
+                                            Image(systemName: "exclamationmark.triangle")
+                                                .resizable()
+                                                .frame(width:28, height:25)
+                                                .foregroundColor(Color(hex:"FFB800"))
+                                            Image(systemName: "chevron.right")
+                                                .foregroundColor(.black)
+                                                .padding(.trailing, 17)
+                                        } else {
+                                            Image(systemName: "checkmark.circle")
+                                                .resizable()
+                                                .frame(width:28, height:25)
+                                                .foregroundColor(Color(hex:"62DF57"))
+                                                .padding(.trailing, 17)
+
+                                        }
+
                                         
                                     }
                                     .padding(.horizontal, 15)
@@ -153,11 +167,26 @@ struct FundDetailsView: View {
                                                 .resizable()
                                                 .frame(width: 30, height: 30)
                                                 .foregroundColor(participant.colour)
+                                            
                                             Text(participant.name)
                                                 .foregroundColor(.black)
                                             Spacer()
-                                            Image(systemName: "chevron.right")
-                                                .foregroundColor(.black)
+                                            if (group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}.count != 0){
+                                                Image(systemName: "exclamationmark.triangle")
+                                                    .resizable()
+                                                    .frame(width:28, height:25)
+                                                    .foregroundColor(Color(hex:"FFB800"))
+                                                Image(systemName: "chevron.right")
+                                                    .foregroundColor(.black)
+                                            } else {
+                                                Image(systemName: "checkmark.circle")
+                                                    .resizable()
+                                                    .frame(width:28, height:25)
+                                                    .foregroundColor(Color(hex:"62DF57"))
+
+                                            }
+                                            
+                                            
                                             
                                         }
                                         .padding(.horizontal, 33)
