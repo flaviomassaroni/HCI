@@ -119,7 +119,7 @@ struct FundDetailsView: View {
                             .padding(.top, 20)
                             .padding(.bottom , 10)
                             
-                            NavigationLink(destination: PersonalNotificationView(group: group, participant: group.participants[0])){
+                            NavigationLink(destination: PersonalNotificationView(group: .constant(group), participant: group.participants[0])){
                                     HStack {
                                         Image(systemName: "person.circle.fill")
                                             .resizable()

@@ -13,6 +13,14 @@ struct Group: Identifiable {
     var contributionHistory: [Contribution]
     var participants: [Participant]
     let creationDate: String
+    
+    mutating func payContributions(checkedContributions: Set<UUID>)->() {
+            for index in self.contributionHistory.indices {
+                if checkedContributions.contains(self.contributionHistory[index].id) {
+                    self.contributionHistory[index].paid = true
+                }
+            }
+        }
 
 
     var startDateAsDate: Date? {

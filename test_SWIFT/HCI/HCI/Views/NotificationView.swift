@@ -1,22 +1,23 @@
 import SwiftUI
 
 struct PersonalNotificationView: View {
-    
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     
-    var group: Group
+    @Binding var group: Group
     var participant: Participant
     
+    @State private var selectedContributions: [UUID: Bool] = [:]
+    
     var body: some View {
-        NavigationView{
-            VStack(spacing:0){
+        NavigationView {
+            VStack(spacing: 0) {
                 ZStack {
                     RoundedRectangle(cornerRadius: 14)
                         .foregroundColor(Color.blue)
                         .frame(height: 280)
                         .padding(.top, -50)
                     VStack {
-                        ZStack{
+                        ZStack {
                             HStack {
                                 Button(action: {
                                     presentationMode.wrappedValue.dismiss()
@@ -30,14 +31,13 @@ struct PersonalNotificationView: View {
                                 })
                                 Spacer()
                             }
-                        Spacer()
+                            Spacer()
                             Text(group.name)
                                 .font(.largeTitle)
                                 .padding(.top, 20)
                                 .foregroundColor(Color.white)
                                 .fontWeight(.semibold)
-
-                        Spacer()
+                            Spacer()
                         }
                         Text("\(group.startDate) ---> \(group.endDate)")
                             .foregroundColor(.white)
@@ -67,21 +67,19 @@ struct PersonalNotificationView: View {
                         }
                     }
                 }
-                ScrollView{
-                    ZStack{
+                ScrollView {
+                    ZStack {
                         RoundedRectangle(cornerRadius: 14)
-                        
-                        
                         HStack {
                             Image(systemName: "exclamationmark.triangle")
                                 .resizable()
                                 .frame(width: 75, height: 70)
                                 .foregroundColor(Color(hex: "FFB800"))
-                                .padding(.vertical,10)
+                                .padding(.vertical, 10)
                                 .padding(.horizontal, 20)
                             Spacer()
                             VStack(alignment: .leading) {
-                                HStack{
+                                HStack {
                                     Text("Warning")
                                         .foregroundColor(Color(hex: "6C6C6C"))
                                         .fontWeight(.bold)
@@ -96,9 +94,10 @@ struct PersonalNotificationView: View {
                                     .padding(.leading, -20)
                             }
                         }
-                    }.frame(width: 380, height: 80)
-                        .foregroundColor(.white)
-                        .padding(.top, 20)
+                    }
+                    .frame(width: 380, height: 80)
+                    .foregroundColor(.white)
+                    .padding(.top, 20)
                     
                     Text("Contributions To Pay")
                         .padding(.trailing, 180)
@@ -107,7 +106,7 @@ struct PersonalNotificationView: View {
                         .foregroundColor(Color(hex: "6C6C6C"))
                         .font(.system(size: 20))
                     
-                    ForEach(group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}, id: \.id) { contribution in
+                    ForEach(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant }, id: \.id) { contribution in
                         HStack {
                             Text("\(contribution.amount, specifier: "%.0f")€")
                                 .fontWeight(.bold)
@@ -116,18 +115,22 @@ struct PersonalNotificationView: View {
                             Text("\(contribution.date)")
                                 .font(.system(size: 17))
                             
+                            Checkbox(isChecked: Binding(
+                                get: { selectedContributions[contribution.id] ?? false },
+                                set: { selectedContributions[contribution.id] = $0 }
+                            ))
                         }
                         .padding(.horizontal, 40)
                         .padding(.vertical, 10)
-                        .background(Color.white) // Background color
-                        .cornerRadius(14) // Apply corner radius to the background
-                        
+                        .background(Color.white)
+                        .cornerRadius(14)
                         .padding(.horizontal, 20)
                     }
-                    ZStack{
+                    
+                    ZStack {
                         RoundedRectangle(cornerRadius: 14)
                         HStack {
-                            Text("Total: \(totalToPay(contributions: contributionsToPay(contributionsHistory: group.contributionHistory, participant:participant), amount:group.contributionAmount), specifier: "%.0f")€")
+                            Text("Total: \(totalToPay(contributions: contributionsToPay(contributionsHistory: group.contributionHistory, participant: participant), amount: group.contributionAmount), specifier: "%.0f")€")
                                 .foregroundColor(Color(.black))
                                 .fontWeight(.semibold)
                                 .font(.system(size: 28))
@@ -135,43 +138,55 @@ struct PersonalNotificationView: View {
                                 .padding(.leading, 35)
                             Spacer()
                             Button("Add Missing Contribution") {
+                                addMissingContributions()
                             }
                             .frame(width: 140, height: 55)
-                            .background(Color(hex:"62DF57"))
+                            .background(Color(hex: "62DF57"))
                             .cornerRadius(14)
                             .padding(.trailing, 15)
                             .fontWeight(.bold)
                             .shadow(color: .gray, radius: 5, x: 0, y: 1)
-                            
-                            
-                            
                         }
-                        
-                    }.frame(width: 380, height: 80)
-                        .foregroundColor(.white)
-                        .padding(.top, 10)
-                    
-                    
-                    
-                }.background(Color(hex:"ECECEC"))
-                
-            }.background(Color(hex:"ECECEC"))
-        }.navigationBarHidden(true)
+                    }
+                    .frame(width: 380, height: 80)
+                    .foregroundColor(.white)
+                    .padding(.top, 10)
+                }
+                .background(Color(hex: "ECECEC"))
+            }
+            .background(Color(hex: "ECECEC"))
+        }
+        .navigationBarHidden(true)
+    }
+    func addMissingContributions() {
+        let checkedContributions = Set(selectedContributions.filter { $0.value }.keys)
+        group.payContributions(checkedContributions: checkedContributions)
+        // Clear selected contributions after updating
+    //    selectedContributions.removeAll()
+    }
+    
+}
 
+
+struct Checkbox: View {
+    @Binding var isChecked: Bool
+    
+    var body: some View {
+        Button(action: {
+            isChecked.toggle()
+        }) {
+            Image(systemName: isChecked ? "checkmark.square" : "square")
+                .resizable()
+                .frame(width: 24, height: 24)
+                .foregroundColor(isChecked ? .blue : .gray)
+        }
     }
 }
 
 func contributionsToPay(contributionsHistory: [Contribution], participant: Participant) -> [Contribution] {
-        // Calculate total contributions by this participant
-    var notPaidContributions: [Contribution] = []
-        for contribution in contributionsHistory{
-            if contribution.owner.id == participant.id{
-                notPaidContributions.append(contribution)
-            }
-                
-        }
-        return notPaidContributions
-    }
+    return contributionsHistory.filter { $0.owner.id == participant.id }
+}
+
 func totalToPay(contributions: [Contribution], amount: Double) -> Double {
     let unpaidContributions = contributions.filter { !$0.paid && comesBeforeToday(dateString: $0.date) }
     return Double(unpaidContributions.count) * amount
@@ -193,18 +208,35 @@ func comesBeforeToday(dateString: String) -> Bool {
     return date <= dateFormatter.date(from: formattedCurrentDate)!
 }
 
+
+
+
 struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {
-        PersonalNotificationView(group: Group(name: "Graduation present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period:(1, "M"), totalAmount: 6000,  currentAmount: 550,contributionAmount: 100, contributionHistory: [
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)],
-         participants: [
-              Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
-              Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
-              Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
-        ]), participant: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")))
+        PersonalNotificationView(
+            group: .constant(Group(
+                name: "Graduation present",
+                creationDate: "23/05/24",
+                startDate: "23/05/24",
+                endDate: "30/06/25",
+                period: (1, "M"),
+                totalAmount: 6000,
+                currentAmount: 550,
+                contributionAmount: 100,
+                contributionHistory: [
+                    Contribution(owner: Participant(name: "Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
+                    Contribution(owner: Participant(name: "Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
+                    Contribution(owner: Participant(name: "Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
+                    Contribution(owner: Participant(name: "Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)
+                ],
+                participants: [
+                    Participant(name: "Andrea Salinetti", colour: Color(hex: "FF5733")),
+                    Participant(name: "Andrea Salinetti", colour: Color(hex: "33FF57")),
+                    Participant(name: "Andrea Salinetti", colour: Color(hex: "3357FF"))
+                ]
+            )),
+            participant: Participant(name: "Andrea Salinetti", colour: Color(hex: "FF5733"))
+        )
     }
 }
 

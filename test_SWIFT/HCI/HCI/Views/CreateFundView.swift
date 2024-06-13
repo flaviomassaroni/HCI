@@ -38,7 +38,7 @@ struct CreateFundView: View {
                     
                 VStack {
                     RoundedRectangle(cornerRadius: 20)
-                        .frame(width: 100, height: 5)
+                        .frame(width: 80, height: 5)
                         .padding(.top, 5)
                         .foregroundColor(Color.gray)
                     Text("Create New Fund")

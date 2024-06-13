@@ -6,7 +6,7 @@ struct HCIApp: App {
         
         var body: some Scene {
             WindowGroup {
-                MainView()
+                HomePage(viewModel: viewModel)
                     .environmentObject(viewModel)
             }
         }

@@ -15,9 +15,9 @@ struct GroupsView: View {
     @StateObject private var viewModel = FinanceViewModel()
     @State private var selectedSortOption: SortOption = .creationDate
     @State private var selectedSortOrder: SortOrder = .ascending
-    
     @State private var showingSortOptions = false
     @State private var showingCreateFundView = false
+    @Binding var isShowingGroupsView: Bool
     
     var sortedGroups: [Group] {
         let sortedGroups: [Group]
@@ -162,9 +162,42 @@ struct GroupsView: View {
 
 
 
-                    RoundedRectangle(cornerRadius: 14)
-                        .foregroundColor(Color.blue)
-                        .frame(height: 100)
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 14)
+                            .foregroundColor(Color.blue)
+                            .frame(height: 100)
+                        HStack{
+                            Button(action: {
+                                isShowingGroupsView = false
+                                
+                            }){
+                                VStack{
+                                    Image(systemName: "person")
+                                        .resizable()
+                                        .frame(width:22, height:22)
+                                        .foregroundColor(.white)
+                                    Text("Personal")
+                                        .foregroundColor(.white)
+                                }
+                            }
+                            Spacer()
+                            RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                                .frame(width: 1, height: 40)
+                                .foregroundColor(.white)
+                            Spacer()
+                            
+                                VStack{
+                                    Image(systemName: "person.3.fill")
+                                        .resizable()
+                                        .frame(width:42, height:24)
+                                        .foregroundColor(.white)
+                                    Text("Groups")
+                                        .foregroundColor(.white)
+                                        .fontWeight(.semibold)
+                                }
+                            
+                        }.padding(.horizontal, 80)
+                    }
 
                     
                 }.background(Color(hex: "ECECEE"))
@@ -177,7 +210,7 @@ struct GroupsView: View {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView()
+        GroupsView(isShowingGroupsView: .constant(true))
     }
 }
 

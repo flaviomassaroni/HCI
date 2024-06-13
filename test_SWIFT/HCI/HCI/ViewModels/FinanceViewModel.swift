@@ -17,12 +17,12 @@ var technologyCategory = Category(name: "Technology", colour: Color(hex:"FF7A00"
 var transportationCategory = Category(name: "Transportation", colour: Color(hex:"FB9DCB"), iconName: "transportation")
 var entertainmentCategory = Category(name: "Entertainment", colour: Color(hex:"8ECB8D"), iconName: "entertainment")
 var subscriptionsCategory = Category(name: "Subscriptions", colour: Color(hex:"9B675C"), iconName: "subscriptions")
-var educationCategory = Category(name: "Gifts and Donations", colour: Color(hex:"FD3496"), iconName: "education")
+var educationCategory = Category(name: "Gifts and Donations", colour: Color(hex:"FD3496"), iconName: "gift")
 var moneyTransfersCategory = Category(name: "Money Transfers", colour: Color(hex:"EFF187"), iconName: "moneyTransfers")
 var carpentryCategory = Category(name: "Carpentry", colour: Color(hex:"C99D5B"), iconName: "hammer")
 
+
 class FinanceViewModel: ObservableObject {
-    
     
     @Published var balance: Double = 1927.56
     @Published var transactions: [Transaction] = [
@@ -73,6 +73,16 @@ class FinanceViewModel: ObservableObject {
     func addGroup(_ group:Group){
         print(group)
         groups.append(group)
+    }
+    
+    func editCategory(newCategory: Category, transaction:Transaction){
+        for index in transactions.indices {
+            if transactions[index].id == transaction.id{
+                print("old: ", transactions[index].category)
+                transactions[index].category = newCategory
+                print("new: ", transactions[index].category)
+            }
+        }
     }
 }
 
