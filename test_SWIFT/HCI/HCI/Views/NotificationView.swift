@@ -116,15 +116,15 @@ struct PersonalNotificationView: View {
                                 .font(.system(size: 17))
                             
                             Checkbox(isChecked: Binding(
-                                get: { selectedContributions[contribution.id] ?? false },
+                                get: { selectedContributions[contribution.id] ?? true },
                                 set: { selectedContributions[contribution.id] = $0 }
                             ))
                         }
-                        .padding(.horizontal, 40)
+                        .padding(.horizontal, 18)
                         .padding(.vertical, 10)
                         .background(Color.white)
                         .cornerRadius(14)
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal, 25)
                     }
                     
                     ZStack {
@@ -175,9 +175,9 @@ struct Checkbox: View {
         Button(action: {
             isChecked.toggle()
         }) {
-            Image(systemName: isChecked ? "checkmark.square" : "square")
+            Image(systemName: isChecked ? "checkmark.square.fill" : "square")
                 .resizable()
-                .frame(width: 24, height: 24)
+                .frame(width: 30, height: 30)
                 .foregroundColor(isChecked ? .blue : .gray)
         }
     }
