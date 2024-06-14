@@ -157,7 +157,7 @@ struct FundDetailsView: View {
                                     .padding(.horizontal, 20)
                                     
                                 }
-                                .disabled(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner.name == "You" }.count == 0)
+                            .disabled(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner.name == "You" }.isEmpty)
 
                         
                             
@@ -199,7 +199,7 @@ struct FundDetailsView: View {
                                         .padding(.horizontal, 20)
                                         
                                     }
-                                    .disabled(group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}.count != 0)
+                                    .disabled(group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}.isEmpty)
                             }
                         }
                         
