@@ -308,7 +308,7 @@ struct CreateFundView: View {
                                                         .foregroundColor(.white)
                                                         .padding(.leading, 10)
                                                     Spacer()
-                                                    if participant.name != "You"{
+                                                    if participant != participants[0]{
                                                         Button(action: {
                                                             if let index = participants.firstIndex(of: participant) {
                                                                 participants.remove(at: index)

@@ -10,6 +10,7 @@ struct PersonalNotificationView: View {
     
     @State private var selectedContributions: [UUID: Bool] = [:]
     
+    
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
@@ -118,7 +119,7 @@ struct PersonalNotificationView: View {
                                 .font(.system(size: 17))
                             
                             Checkbox(isChecked: Binding(
-                                get: { selectedContributions[contribution.id] ?? false },
+                                get: { selectedContributions[contribution.id] ?? true },
                                 set: { selectedContributions[contribution.id] = $0 }
                             ))
                         }
@@ -141,9 +142,9 @@ struct PersonalNotificationView: View {
                             Spacer()
                             Button("Add Missing Contribution") {
                                 addMissingContributions()
-                            }
+                            }.disabled(totalToPay(contributions: selectedContributions, amount: group.contributionAmount) == 0)
                             .frame(width: 140, height: 55)
-                            .background(Color(hex: "62DF57"))
+                            .background(totalToPay(contributions: selectedContributions, amount: group.contributionAmount) != 0 ? Color(hex: "62DF57") : Color.gray)
                             .cornerRadius(14)
                             .padding(.trailing, 15)
                             .fontWeight(.bold)
@@ -157,9 +158,15 @@ struct PersonalNotificationView: View {
                 .background(Color(hex: "ECECEC"))
             }
             .background(Color(hex: "ECECEC"))
+            
+            .onAppear {
+                self.selectedContributions = fillMap(contributions: group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant })
+            }
+                
         }
         .navigationBarHidden(true)
     }
+    
     func addMissingContributions() {
         print("Selected contributions dictionary before filtering: \(selectedContributions)\n")
         let checkedContributions = Set(selectedContributions.filter { $0.value }.keys)
@@ -199,8 +206,13 @@ func contributionsToPay(contributionsHistory: [Contribution], participant: Parti
 }
 
 func totalToPay(contributions: [UUID: Bool], amount: Double) -> Double {
-//    let unpaidContributions = contributions.filter { !$0.paid && comesBeforeToday(dateString: $0.date) }
-    return Double(contributions.count) * amount
+    var total: Double = 0
+    for (_, isSelected) in contributions{
+        if isSelected{
+            total += amount
+        }
+    }
+    return total
 }
 
 func comesBeforeToday(dateString: String) -> Bool {
@@ -219,8 +231,13 @@ func comesBeforeToday(dateString: String) -> Bool {
     return date <= dateFormatter.date(from: formattedCurrentDate)!
 }
 
-
-
+func fillMap(contributions: [Contribution])->[UUID:Bool]{
+    var selectedContributions: [UUID: Bool] = [:]
+    for contr in contributions{
+        selectedContributions[contr.id] = true
+    }
+    return selectedContributions
+}
 
 struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {
