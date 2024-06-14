@@ -102,6 +102,29 @@ class FinanceViewModel: ObservableObject {
             }
         }
     }
+    let profileColors: [Color] = [
+        Color.black,           // Black
+        Color(hex: "FFD700"),  // Gold
+        Color(hex: "FF1493"),  // Deep Pink
+        Color(hex: "FF7F11"),  // Bright Orange
+        Color(hex: "1AAB9B"),  // Turquoise
+        Color(hex: "FF66C4"),  // Pink
+        Color(hex: "8B008B"),  // Dark Magenta
+        Color(hex: "5F9EA0"),  // Cadet Blue
+        Color(hex: "FF4500"),  // Orange Red
+        Color(hex: "708090"),  // Slate Gray
+        Color(hex: "CD853F"),  // Peru
+        Color(hex: "483D8B"),  // Dark Slate Blue
+        Color(hex: "008080"),  // Teal
+        Color(hex: "800080"),  // Purple
+        Color(hex: "008B8B"),  // Dark Cyan
+        Color(hex: "FF6347"),  // Tomato
+        Color(hex: "4B0082"),  // Indigo
+        Color(hex: "7FFFD4"),  // Aquamarine
+        Color(hex: "00A572")   // Emerald Green
+    ]
+
+
 }
 
 struct Participant: Identifiable, Hashable{
@@ -109,3 +132,59 @@ struct Participant: Identifiable, Hashable{
     var name: String
     var colour: Color
 }
+
+import Foundation
+import SwiftUI
+
+func addPeriodToDate(dateString: String, period: (Int, Character)) -> String? {
+    // Create a date formatter to parse the input date string
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd/MM/yy"
+    
+    // Parse the input date string
+    guard let date = dateFormatter.date(from: dateString) else {
+        return nil // Return nil if the input date string is invalid
+    }
+    
+    let periodValue = period.0
+    let periodUnit = period.1
+
+    // Example validation: Ensure periodValue is greater than zero
+    guard periodValue > 0 else {
+        // Handle invalid periodValue
+        print("Invalid periodValue")
+        return nil
+    }
+    
+    let validUnits: Set<Character> = ["D", "W", "M", "Y"]
+    guard validUnits.contains(periodUnit) else {
+        // Handle invalid periodUnit
+        print("Invalid periodUnit")
+        return nil
+    }
+    
+    // Calculate the new date based on the period unit
+    var newDate: Date?
+    switch periodUnit {
+    case "D":
+        newDate = Calendar.current.date(byAdding: .day, value: periodValue, to: date)
+    case "W":
+        newDate = Calendar.current.date(byAdding: .weekOfYear, value: periodValue, to: date)
+    case "M":
+        newDate = Calendar.current.date(byAdding: .month, value: periodValue, to: date)
+    case "Y":
+        newDate = Calendar.current.date(byAdding: .year, value: periodValue, to: date)
+    default:
+        break
+    }
+    
+    // Format the new date back to the string with the same format
+    if let newDate = newDate {
+        return dateFormatter.string(from: newDate)
+    } else {
+        return nil // Return nil if the calculation fails
+    }
+}
+
+
+

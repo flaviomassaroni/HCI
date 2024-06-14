@@ -20,6 +20,7 @@ struct CreateFundView: View {
     @State private var newFriend: String = ""
     @State private var participants: [Participant] = [Participant(name: "You", colour: .black)]
     @State private var error: String = ""
+    @State private var participantIndex: Int = 1
     
     
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
@@ -281,8 +282,9 @@ struct CreateFundView: View {
                                     
                                     Button(action: {
                                         if !newFriend.isEmpty {
-                                            participants.append(Participant(id: UUID(), name: newFriend, colour: Color(hex: "FF5733")))
+                                            participants.append(Participant(id: UUID(), name: newFriend, colour: financeModel.profileColors[participantIndex]))
                                             newFriend = ""
+                                            participantIndex += 1
                                         }
                                     }) {
                                         Image(systemName: "plus")
