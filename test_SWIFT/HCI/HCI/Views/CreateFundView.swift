@@ -292,9 +292,8 @@ struct CreateFundView: View {
                                     
                                     Button(action: {
                                         if !newFriend.isEmpty {
-                                            participants.append(Participant(id: UUID(), name: newFriend, colour: financeModel.profileColors[participantIndex]))
+                                            participants.append(Participant(id: UUID(), name: newFriend, colour: Color(hex: "FF5733")))
                                             newFriend = ""
-                                            participantIndex += 1
                                         }
                                     }) {
                                         Image(systemName: "plus")
@@ -320,7 +319,7 @@ struct CreateFundView: View {
                                                         .foregroundColor(.white)
                                                         .padding(.leading, 10)
                                                     Spacer()
-                                                    if participant != participants[0]{
+                                                    if participant.name != "You"{
                                                         Button(action: {
                                                             if let index = participants.firstIndex(of: participant) {
                                                                 participants.remove(at: index)
