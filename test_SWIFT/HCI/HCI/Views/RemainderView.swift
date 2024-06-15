@@ -38,8 +38,6 @@ struct RemainderView: View {
     }
 }
 
-struct RemainderView_Previews: PreviewProvider {
-    static var previews: some View {
-        RemainderView(recipient: .constant("Marco"))
-    }
-}
+//#Preview {
+//    RemainderView(recipient: .constant("Marco"))
+//}
