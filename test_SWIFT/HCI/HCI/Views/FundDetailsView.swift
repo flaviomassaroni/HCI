@@ -104,7 +104,7 @@ struct FundDetailsView: View {
                                 Spacer()
                             }
                         }
-                        .padding(.top, 30)
+                        .padding(.top, 45)
                         .frame(height: 50)
                         .padding(.horizontal, 20)
                         ScrollView{
@@ -116,8 +116,8 @@ struct FundDetailsView: View {
                                     .font(.system(size: 20))
                                 Spacer()
                             }
-                            .padding(.top, 20)
-                            .padding(.bottom , 10)
+                            .padding(.top, 15)
+                            .padding(.bottom , -1)
                             
                             NavigationLink(destination: PersonalNotificationView(financeModel: financeModel, group: .constant(group), participant: group.participants[0])){
                                     HStack {
@@ -155,6 +155,7 @@ struct FundDetailsView: View {
                                     .cornerRadius(14)
                                     .padding(.vertical, 10)
                                     .padding(.horizontal, 20)
+                                    .padding(.bottom, -5)
                                     
                                 }
                             .disabled(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner.name == "You" }.isEmpty)
@@ -201,6 +202,7 @@ struct FundDetailsView: View {
                                     }
                                     .disabled(group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}.isEmpty)
                             }
+                            .padding(.top, -5)
                         }
                         
                         
@@ -226,7 +228,7 @@ struct FundDetailsView: View {
                             .padding(.vertical, 10)
                             .background(Color.white) // Background color
                             .cornerRadius(14) // Apply corner radius to the background
-                            .padding(.vertical, 1)
+                            .padding(.vertical, 2)
                             .padding(.horizontal, 20)
                         }
                         

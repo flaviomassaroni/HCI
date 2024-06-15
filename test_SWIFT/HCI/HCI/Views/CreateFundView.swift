@@ -119,6 +119,8 @@ struct CreateFundView: View {
                         .frame(width: screenWidth - 28, height: 86)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 10)
+                        .padding(.top)
+                        .padding(.bottom)
                         .onTapGesture {
                             isFriendsInputFocused = false
                             newParticipant = ""
@@ -178,6 +180,7 @@ struct CreateFundView: View {
                         .frame(width: screenWidth - 28, height: 86)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 10)
+                        .padding(.bottom)
                         .onTapGesture {
                             isFriendsInputFocused = false
                             newParticipant = ""
@@ -290,6 +293,7 @@ struct CreateFundView: View {
                         .frame(width: screenWidth - 28, height: 86)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 110)
+                        .padding(.bottom)
                         .onTapGesture {
                             isFriendsInputFocused = false
                             newParticipant = ""
@@ -321,7 +325,8 @@ struct CreateFundView: View {
                                     
                                     Button(action: {
                                         if !newParticipant.isEmpty {
-                                            participants.insert(Participant(id: UUID(), name: newParticipant, colour: Color(hex: "FF5733")), at: 0)
+                                            addParticipantIfNotExists(Participant(id: UUID(), name: newParticipant, colour: Color(hex: "FF5733")))
+//                                            participants.insert(Participant(id: UUID(), name: newParticipant, colour: Color(hex: "FF5733")), at: 0)
                                             newParticipant = ""
                                         }
                                     }) {
@@ -396,7 +401,9 @@ struct CreateFundView: View {
                                     List(filteredFriends, id: \.id) { friend in
                                         Text(friend.name)
                                             .onTapGesture {
-                                                participants.append(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
+                                                addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
+//                                                participants.insert(, at: 0) : none }
+//                                                participants.append(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
                                                 newParticipant = ""
                                             }
                                     }
@@ -413,6 +420,7 @@ struct CreateFundView: View {
                         .padding(.horizontal, 14)
                         .padding(.top, 90)
                         .padding(.vertical, 10)
+                        .padding(.bottom)
                         
                         Spacer()
                         Spacer()
@@ -422,11 +430,13 @@ struct CreateFundView: View {
                     .frame(minHeight: geometry.size.height)
                 }
                 .navigationTitle("New shared fund")
-//                .onTapGesture {
-//                    isFriendsInputFocused = false
-//                    newParticipant = ""
-//                }
             }
+        }
+    }
+    
+    func addParticipantIfNotExists(_ participant: Participant) {
+        if !participants.contains(where: { $0.name.lowercased() == participant.name.lowercased() }) {
+            participants.insert(participant, at: 0)
         }
     }
     
