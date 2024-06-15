@@ -17,14 +17,25 @@ struct CreateFundView: View {
     @State private var selectedNumber = 1
     @State private var selectedUnit = "Day"
     @State private var computedAmount: Double = 0.0
-    @State private var newFriend: String = ""
+    @State private var newParticipant: String = ""
     @State private var participants: [Participant] = [Participant(name: "You", colour: .black)]
     @State private var error: [String] = ["", ""] // Errors section error[0] = Name, error[1] Total Amount
-    @State private var missingValues: Bool = false
+    
+    @State private var isFriendsInputFocused: Bool = false
     
     
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
     @State var screenHeight: CGFloat = UIScreen.main.bounds.height
+    
+//    @State private var filteredFriends: [Friend] = []
+    var filteredFriends: [Friend] {
+        if newParticipant.isEmpty {
+            return friendsModel.friends
+        } else {
+//            print("friends: \(friendsModel.friends.filter { $0.name.lowercased().contains(newFriend.lowercased()) })")
+            return friendsModel.friends.filter { $0.name.lowercased().contains(newParticipant.lowercased()) }
+        }
+    }
     
     let numbers = Array(1...30)
     let unitOptions = ["Day", "Week", "Month", "Year"]
@@ -53,6 +64,10 @@ struct CreateFundView: View {
             }
             .frame(width: screenWidth, height: 110)
             .padding(.top, -10)
+            .onTapGesture {
+                isFriendsInputFocused = false
+                newParticipant = ""
+            }
             
             GeometryReader { geometry in
                 ScrollView {
@@ -106,6 +121,10 @@ struct CreateFundView: View {
                         .padding(.vertical, 10)
                         .padding(.top)
                         .padding(.bottom)
+                        .onTapGesture {
+                            isFriendsInputFocused = false
+                            newParticipant = ""
+                        }
                         
                         //          Amount
                         ZStack {
@@ -162,9 +181,10 @@ struct CreateFundView: View {
                         .padding(.horizontal, 14)
                         .padding(.vertical, 10)
                         .padding(.bottom)
+                            isFriendsInputFocused = false
+                        }
                         
                         //          Date Picking
-                        ZStack(alignment: .center) {
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundColor(Color.white)
                                 .overlay(
@@ -270,16 +290,17 @@ struct CreateFundView: View {
                         .padding(.horizontal, 14)
                         .padding(.vertical, 110)
                         .padding(.bottom)
+                        .onTapGesture {
+                            isFriendsInputFocused = false
+                            newParticipant = ""
+                        }
                         
                         // Friends adding section
-                        ZStack(alignment: .center) {
                             RoundedRectangle(cornerRadius: 14)
-                                .foregroundColor(Color.white)
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 14)
                                         .stroke(Color.white, lineWidth: 2)
                                 )
-                                .shadow(color: Color.black.opacity(0.2), radius: 10, x: 0, y: 3)
                             
                             VStack(){
                                 Text("Participants")
@@ -288,15 +309,17 @@ struct CreateFundView: View {
                                     .padding(.top)
                                 
                                 HStack {
-                                    TextField("Enter your friend's name", text: $newFriend)
+                                    TextField("Enter your friend's name", text: $newParticipant, onEditingChanged: { isEditing in
+                                        isFriendsInputFocused = true
+                                    })
                                         .padding()
                                         .background(Color(.systemGray6))
                                         .cornerRadius(10)
                                     
                                     Button(action: {
-                                        if !newFriend.isEmpty {
-                                            participants.append(Participant(id: UUID(), name: newFriend, colour: Color(hex: "FF5733")))
-                                            newFriend = ""
+                                        if !newParticipant.isEmpty {
+                                            participants.insert(Participant(id: UUID(), name: newParticipant, colour: Color(hex: "FF5733")), at: 0)
+                                            newParticipant = ""
                                         }
                                     }) {
                                         Image(systemName: "plus")
@@ -308,8 +331,6 @@ struct CreateFundView: View {
                                     
                                 }
                                 .padding(.horizontal)
-                                
-                                
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 10) {
@@ -344,9 +365,6 @@ struct CreateFundView: View {
                                     .font(.body)
                                     .fontWeight(.semibold)
                                 
-                                
-                                
-                                
                                 Button(action: createGroup) {
                                     Text("Create Fund")
                                         .font(.headline)
@@ -356,8 +374,36 @@ struct CreateFundView: View {
                                         .cornerRadius(10)
                                 }
                                 .padding(10)
-                            }.onChange(of: participants) { _ in
+                            }
+                            .onChange(of: participants) { _ in
                                 updateComputedAmount()}
+                            .onTapGesture {
+                                isFriendsInputFocused = false
+                                newParticipant = ""
+                            }
+                            
+                            if isFriendsInputFocused && !filteredFriends.isEmpty{
+//                            if true {
+                                ZStack {
+                                    RoundedRectangle(cornerRadius: 10)
+                                        .frame(width: screenWidth - 50, height: 210) // Set the desired width and height
+                                        .foregroundColor(.white)
+                                        .shadow(radius: 5)
+                                        .offset(y: -210)
+                                    List(filteredFriends, id: \.id) { friend in
+                                        Text(friend.name)
+                                            .onTapGesture {
+                                                participants.append(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
+                                                newParticipant = ""
+                                            }
+                                    }
+                                    .frame(height: 200)
+                                    .padding(.horizontal)
+                                    .listStyle(.inset)
+                                    .cornerRadius(10)
+                                    .offset(y: -210)
+                                } // Adjust this value based on your layout
+                            }
                             
                         }
                         .frame(width: screenWidth - 28, height: 86)
@@ -374,6 +420,10 @@ struct CreateFundView: View {
                     .frame(minHeight: geometry.size.height)
                 }
                 .navigationTitle("New shared fund")
+//                .onTapGesture {
+//                    isFriendsInputFocused = false
+//                    newParticipant = ""
+//                }
             }
         }
     }
