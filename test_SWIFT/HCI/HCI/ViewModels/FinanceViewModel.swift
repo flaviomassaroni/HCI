@@ -17,9 +17,10 @@ var technologyCategory = Category(name: "Technology", colour: Color(hex:"FF7A00"
 var transportationCategory = Category(name: "Transportation", colour: Color(hex:"FB9DCB"), iconName: "transportation")
 var entertainmentCategory = Category(name: "Entertainment", colour: Color(hex:"8ECB8D"), iconName: "entertainment")
 var subscriptionsCategory = Category(name: "Subscriptions", colour: Color(hex:"9B675C"), iconName: "subscriptions")
-var educationCategory = Category(name: "Gifts and Donations", colour: Color(hex:"FD3496"), iconName: "gift")
+var giftsCategory = Category(name: "Gifts and Donations", colour: Color(hex:"FD3496"), iconName: "gift")
 var moneyTransfersCategory = Category(name: "Money Transfers", colour: Color(hex:"EFF187"), iconName: "moneyTransfers")
 var carpentryCategory = Category(name: "Carpentry", colour: Color(hex:"C99D5B"), iconName: "hammer")
+var educationCategory = Category(name: "Education", colour: Color(hex:"428364"), iconName: "education")
 
 
 class FinanceViewModel: ObservableObject {
@@ -27,11 +28,13 @@ class FinanceViewModel: ObservableObject {
     @Published var balance: Double = 1927.56
     @Published var transactions: [Transaction] = [
         Transaction(id: UUID(), name: "Patches", date: "20/05/24", time: "19:34", amount: 3.20, category: healthCategory, location: "Farmacia Igea"),
-        Transaction(id: UUID(), name: "Coffee", date: "12/05/24", time: "08:52", amount: 1.10, category: diningCategory, location: "Bar Buongiorno"),
+        Transaction(id: UUID(), name: "Birthday Present", date: "03/04/24", time: "10:20", amount: 200.00, category: giftsCategory, location: "Rome", sign: "+"),
         Transaction(id: UUID(), name: "Groceries", date: "15/04/24", time: "12:44", amount: 24.60, category: groceriesCategory, location: "Eurospin"),
         Transaction(id: UUID(), name: "Headphones", date: "11/04/24", time: "16:22", amount: 199.90, category: technologyCategory, location: "Mediaworld Roma"),
+        Transaction(id: UUID(), name: "Monthly Salary", date: "10/04/24", time: "19:22", amount: 1800.00, category: moneyTransfersCategory, location: "Milan", sign: "+"),
         Transaction(id: UUID(), name: "Pet Food", date: "10/04/24", time: "18:55", amount: 6.30, category: petsCategory, location: "L'Arca"),
         Transaction(id: UUID(), name: "Groceries", date: "06/04/24", time: "09:14", amount: 57.20, category: groceriesCategory, location: "Conad"),
+        Transaction(id: UUID(), name: "Coffee", date: "12/05/24", time: "08:52", amount: 1.10, category: diningCategory, location: "Bar Buongiorno"),
         Transaction(id: UUID(), name: "Enterogermina", date: "01/04/24", time: "11:23", amount: 15.70, category: healthCategory, location: "Farmacia Comunale"),
         Transaction(id: UUID(), name: "Oki", date: "25/03/24", time: "14:34", amount: 12.30, category: healthCategory, location: "Se Non Muori Ritorni")
     ]
@@ -58,12 +61,16 @@ class FinanceViewModel: ObservableObject {
     }
     
     func deleteFund(groupName:String){
+        print("I'm deleting the group")
         var total: Double = 0
         for index in groups.indices{
+            print("groups[index].name", groups[index].name)
             if groups[index].name == groupName{
                 for contribution in groups[index].contributionHistory{
+                    print(contribution)
                     if contribution.paid && contribution.owner.name == "You"{
                         total += contribution.amount
+                        
                     }
                 }
                 balance += total

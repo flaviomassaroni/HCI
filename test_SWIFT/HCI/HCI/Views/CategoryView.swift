@@ -7,7 +7,7 @@ struct CategoryView: View {
     let categories: [Category] = [
         healthCategory, diningCategory, groceriesCategory, petsCategory, housingCategory,
         technologyCategory, transportationCategory, entertainmentCategory, subscriptionsCategory,
-        educationCategory, moneyTransfersCategory, carpentryCategory
+        giftsCategory, moneyTransfersCategory, carpentryCategory, educationCategory
     ]
     
     var body: some View {

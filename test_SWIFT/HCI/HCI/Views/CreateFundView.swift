@@ -58,9 +58,10 @@ struct CreateFundView: View {
                     
                 VStack {
                     RoundedRectangle(cornerRadius: 20)
-                        .frame(width: 80, height: 5)
+                        .frame(width: 70, height: 5)
                         .padding(.top, 5)
                         .foregroundColor(Color.gray)
+                        .padding(.top, 5)
                     Text("Create New Fund")
                         .font(.largeTitle)
                         .padding()
@@ -110,9 +111,9 @@ struct CreateFundView: View {
                                     }) {
                                         Image(systemName: "xmark.circle.fill")
                                             .foregroundColor(.gray)
-                                            .padding(.trailing, 10)
                                     }
                                     .padding(.horizontal)
+                                    
                                 }
                                 .toolbar {
                                     ToolbarItem(placement: .keyboard) {
@@ -337,10 +338,11 @@ struct CreateFundView: View {
                                     Button(action: {
 
                                         if !newParticipant.isEmpty {
-                                            addParticipantIfNotExists(Participant(id: UUID(), name: newParticipant, colour: Color(hex: "FF5733")))
+                                            addParticipantIfNotExists(Participant(id: UUID(), name: newParticipant, colour:financeModel.profileColors[colorIndex] ))
+                                            colorIndex += 1
 //                                            participants.insert(Participant(id: UUID(), name: newParticipant, colour: Color(hex: "FF5733")), at: 0)
                                             newParticipant = ""
-                                            colorIndex += 1
+                                            
                                         }
                                     }) {
                                         Image(systemName: "plus")
@@ -349,6 +351,8 @@ struct CreateFundView: View {
                                             .foregroundColor(.white)
                                             .cornerRadius(10)
                                     }
+//                                    .opacity(fundName.isEmpty ? 0.5 : 1)
+//                                     .disabled(fundName.isEmpty ? true : false)
                                     
                                 }
                                 .padding(.horizontal)
@@ -375,7 +379,7 @@ struct CreateFundView: View {
                                                                 .foregroundColor(.white)
                                                         }
                                                         .padding(.trailing, 10)
-                                                        .padding(.trailing, 10)
+                                                        
                                                     }
                                                 }
                                             }
@@ -418,7 +422,8 @@ struct CreateFundView: View {
                                             .foregroundColor(participants.contains { $0.name == friend.name } ? .gray : .black)
 //                                            .background(participants.contains { $0.name == friend.name } ? Color.gray : Color.white)
                                             .onTapGesture {
-                                                addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
+                                                addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: financeModel.profileColors[colorIndex]))
+                                                colorIndex += 1
 //                                                participants.insert(, at: 0) : none }
 //                                                participants.append(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
                                                 newParticipant = ""
@@ -453,7 +458,7 @@ struct CreateFundView: View {
     
     func addParticipantIfNotExists(_ participant: Participant) {
         if !participants.contains(where: { $0.name.lowercased() == participant.name.lowercased() }) {
-            participants.insert(participant, at: 0)
+            participants.insert(participant, at: 1)
         }
     }
     
