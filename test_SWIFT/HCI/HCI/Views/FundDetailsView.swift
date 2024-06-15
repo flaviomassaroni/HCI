@@ -91,7 +91,6 @@ struct FundDetailsView: View {
                                     }
                                     .padding(.leading, 110)
                                     
-                                    
                                     if let nextContribution = addPeriodToDate(dateString: group.startDate, period: group.period) {
                                         Text("Next Contribution: \(nextContribution)")
                                             .fontWeight(.semibold)
@@ -105,11 +104,9 @@ struct FundDetailsView: View {
                                 Spacer()
                             }
                         }
-                        .padding(.top, 45)
+                        .padding(.top, 30)
                         .frame(height: 50)
                         .padding(.horizontal, 20)
-                        
-                        
                         ScrollView{
                             HStack{
                                 Text("Participants")
@@ -119,8 +116,8 @@ struct FundDetailsView: View {
                                     .font(.system(size: 20))
                                 Spacer()
                             }
-                            .padding(.top, 15)
-                            .padding(.bottom , -1)
+                            .padding(.top, 20)
+                            .padding(.bottom , 10)
                             
                             NavigationLink(destination: PersonalNotificationView(financeModel: financeModel, group: .constant(group), participant: group.participants[0])){
                                     HStack {
@@ -158,8 +155,6 @@ struct FundDetailsView: View {
                                     .cornerRadius(14)
                                     .padding(.vertical, 10)
                                     .padding(.horizontal, 20)
-                                    .padding(.bottom, -5)
-                                    
                                     
                                 }
                             .disabled(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner.name == "You" }.isEmpty)
@@ -204,12 +199,9 @@ struct FundDetailsView: View {
                                         .padding(.horizontal, 20)
                                         
                                     }
-                                    
                                     .disabled(group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}.isEmpty)
                             }
-                            .padding(.top, -5) // lista nadrea
                         }
-                        
                         
                         
                         HStack{
@@ -222,9 +214,6 @@ struct FundDetailsView: View {
                         }
                         .padding(.top, 20)
                         .padding(.bottom , 10)
-                        
-                        
-                        
                         ForEach(group.contributionHistory.filter{$0.paid}, id: \.id) { contribution in
                             HStack {
                                 RoundedRectangle(cornerRadius: 25.0)
@@ -237,13 +226,9 @@ struct FundDetailsView: View {
                             .padding(.vertical, 10)
                             .background(Color.white) // Background color
                             .cornerRadius(14) // Apply corner radius to the background
-                            .padding(.vertical, 2)
+                            .padding(.vertical, 1)
                             .padding(.horizontal, 20)
-                            
-                            
                         }
-                        
-                        
                         
                     }
                     .background(Color(hex: "ECECEC"))
@@ -275,5 +260,3 @@ struct FundDetailsView_Previews: PreviewProvider {
         ]))
     }
 }
-
-//lorenzo
