@@ -23,6 +23,10 @@ struct CreateFundView: View {
     
     @State private var isFriendsInputFocused: Bool = false
     
+    private enum Field: Int, CaseIterable {
+        case name, amount
+    }
+    @FocusState private var focusedField: Field?
     
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
     @State var screenHeight: CGFloat = UIScreen.main.bounds.height
@@ -93,6 +97,7 @@ struct CreateFundView: View {
                                         .background(error[0].isEmpty ? Color(.systemGray6) : Color.red.opacity(0.2))
                                         .cornerRadius(10)
                                         .padding(.horizontal)
+                                        .focused($focusedField, equals: .name)
                                         .onChange(of: fundName) { _ in
                                             checkFundName()
                                         }
@@ -105,6 +110,13 @@ struct CreateFundView: View {
                                             .padding(.trailing, 10)
                                     }
                                     .padding(.horizontal)
+                                }
+                                .toolbar {
+                                    ToolbarItem(placement: .keyboard) {
+                                        Button("Done") {
+                                            focusedField = nil
+                                        }
+                                    }
                                 }
                                 if !error[0].isEmpty {
                                     Text(error[0])
