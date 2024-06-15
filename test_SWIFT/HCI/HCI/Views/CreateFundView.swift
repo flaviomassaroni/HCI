@@ -19,8 +19,8 @@ struct CreateFundView: View {
     @State private var computedAmount: Double = 0.0
     @State private var newFriend: String = ""
     @State private var participants: [Participant] = [Participant(name: "You", colour: .black)]
-    @State private var error: String = ""
-    @State private var participantIndex: Int = 1
+    @State private var error: [String] = ["", ""] // Errors section error[0] = Name, error[1] Total Amount
+    @State private var missingValues: Bool = false
     
     
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
@@ -70,13 +70,17 @@ struct CreateFundView: View {
                                     .fontWeight(.semibold)
                                     .padding(.leading)
                                     .foregroundColor(Color.black)
+                                    
                                 
                                 ZStack(alignment: .trailing) {
                                     TextField("Fuerteventura's Trip", text: $fundName)
                                         .padding()
-                                        .background(Color(.systemGray6))
+                                        .background(error[0].isEmpty ? Color(.systemGray6) : Color.red.opacity(0.2))
                                         .cornerRadius(10)
                                         .padding(.horizontal)
+                                        .onChange(of: fundName) { _ in
+                                            checkFundName()
+                                        }
                                     
                                     Button(action: {
                                         fundName = ""
@@ -86,6 +90,12 @@ struct CreateFundView: View {
                                             .padding(.trailing, 10)
                                     }
                                     .padding(.horizontal)
+                                }
+                                if !error[0].isEmpty {
+                                    Text(error[0])
+                                        .foregroundColor(.red)
+                                        .font(.caption)
+                                        .padding(.leading)
                                 }
                             }
                             .padding(.horizontal, 5)
@@ -118,7 +128,7 @@ struct CreateFundView: View {
                                         
                                         TextField("6000", text: $totalAmount)
                                             .padding()
-                                            .background(error.isEmpty ? Color(.systemGray6) : Color.red.opacity(0.2))
+                                            .background(error[1].isEmpty ? Color(.systemGray6) : Color.red.opacity(0.2))
                                             .cornerRadius(10)
                                             .padding(.horizontal, 5)
                                             .keyboardType(.numberPad)
@@ -135,8 +145,8 @@ struct CreateFundView: View {
                                 }
                                 .padding(.trailing, 14)
                                 
-                                if !error.isEmpty {
-                                    Text(error)
+                                if !error[1].isEmpty {
+                                    Text(error[1])
                                         .foregroundColor(.red)
                                         .font(.caption)
                                         .padding(.leading)
@@ -282,9 +292,8 @@ struct CreateFundView: View {
                                     
                                     Button(action: {
                                         if !newFriend.isEmpty {
-                                            participants.append(Participant(id: UUID(), name: newFriend, colour: financeModel.profileColors[participantIndex]))
+                                            participants.append(Participant(id: UUID(), name: newFriend, colour: Color(hex: "FF5733")))
                                             newFriend = ""
-                                            participantIndex += 1
                                         }
                                     }) {
                                         Image(systemName: "plus")
@@ -310,7 +319,7 @@ struct CreateFundView: View {
                                                         .foregroundColor(.white)
                                                         .padding(.leading, 10)
                                                     Spacer()
-                                                    if participant != participants[0]{
+                                                    if participant.name != "You"{
                                                         Button(action: {
                                                             if let index = participants.firstIndex(of: participant) {
                                                                 participants.remove(at: index)
@@ -330,6 +339,8 @@ struct CreateFundView: View {
                                 Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
                                     .font(.body)
                                     .fontWeight(.semibold)
+                                
+                                
                                 
                                 
                                 Button(action: createGroup) {
@@ -365,49 +376,69 @@ struct CreateFundView: View {
     func updateComputedAmount() {
         guard let totalAmountDouble = Double(totalAmount) else {
             if totalAmount.isEmpty {
-                error = ""
+                error[1] = ""
             } else {
-                error = "Invalid character"
+                error[1] = "Invalid character"
             }
             let totalAmountDouble  = Double(0)
             computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
             return
         }
         if totalAmountDouble <= 0 {
-            error = "Amount must be a greater than 0"
+            error[1] = "Amount must be a greater than 0"
             let totalAmountDouble  = Double(0)
             computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
             return
         }
 
-        error = ""
+        error[1] = ""
         computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
+    }
+    
+    func checkFundName() {
+        if !fundName.isEmpty {
+            error[0] = ""
+        }
+        
     }
     
     
     func createGroup(){
-        let amountD = Double(totalAmount)!
-        let formatter = DateFormatter()
-        formatter.dateFormat = "dd/MM/YY"
+        if !totalAmount.isEmpty && !fundName.isEmpty && error[0].isEmpty && error[1].isEmpty {
+            let amountD = Double(totalAmount)!
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd/MM/YY"
+            
+            
+            let newGroup = Group(
+                id:UUID(),
+                name: fundName,
+                creationDate: formatter.string(from: Date()),
+                startDate: formatter.string(from:startDate),
+                endDate: formatter.string(from: endDate),
+                period: (selectedNumber, selectedUnit[selectedUnit.startIndex]),
+                totalAmount: amountD,
+                currentAmount: 0.0,
+                contributionAmount: calculateRecurringAmount(totalAmount: Double(totalAmount)!, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count),
+                contributionHistory: [],
+                participants: participants
+            )
+    //        var updatedGroup = newGroup
+    //        updatedGroup.contributionHistory = generateContributionHistory(for: newGroup)
+            print("group \(newGroup)")
+            financeModel.addGroup(newGroup)
+            dismiss()
+        } else {
+            if fundName.isEmpty {
+                error[0] = "Missing"
+            }
+            if totalAmount.isEmpty {
+               error[1] = "Missing"
+            }
+            
+        }
         
-        let newGroup = Group(
-            id:UUID(),
-            name: fundName,
-            creationDate: formatter.string(from: Date()),
-            startDate: formatter.string(from:startDate),
-            endDate: formatter.string(from: endDate),
-            period: (selectedNumber, selectedUnit[selectedUnit.startIndex]),
-            totalAmount: amountD,
-            currentAmount: 0.0,
-            contributionAmount: calculateRecurringAmount(totalAmount: Double(totalAmount)!, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count),
-            contributionHistory: [],
-            participants: participants
-        )
-//        var updatedGroup = newGroup
-//        updatedGroup.contributionHistory = generateContributionHistory(for: newGroup)
-        print("group \(newGroup)")
-        financeModel.addGroup(newGroup)
-        dismiss()
+        
         
     }
 }
