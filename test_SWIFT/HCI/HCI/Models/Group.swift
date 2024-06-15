@@ -57,7 +57,9 @@ struct Group: Identifiable {
         self.contributionHistory = []
         self.contributionHistory = generateContributionHistory(for: self)
     }
-}
+            
+    }
+
 
 func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Date, selectedNumber: Int, selectedUnit: String, partNumb: Int) -> Double {
     var divideBy = 1

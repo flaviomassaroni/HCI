@@ -1,8 +1,10 @@
 import SwiftUI
 
+
 // Custom shape for rounding only top corners
 struct TopRoundedRectangle: Shape {
     var cornerRadius: CGFloat
+    
     
     func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -39,6 +41,8 @@ struct BottomRoundedRectangle: Shape {
 
 struct GroupMenuView: View {
     @Binding var isVisible: Bool
+    @ObservedObject var financeModel: FinanceViewModel
+    @Binding var group: Group
     var body: some View {
         VStack {
             HStack {
@@ -62,7 +66,7 @@ struct GroupMenuView: View {
                         }
                     }
                 }
-                    Button(action:{}){
+                    Button(action:{financeModel.deleteFund(groupName: group.name )}){
                         ZStack {
                             BottomRoundedRectangle(cornerRadius: 20)
                                 .frame(width: 250, height: 50)
@@ -94,5 +98,5 @@ struct GroupMenuView: View {
 }
 
 #Preview {
-    GroupMenuView(isVisible: .constant(true))
+    GroupMenuView(isVisible: .constant(true), financeModel: FinanceViewModel(), group: .constant(Group(name: "String", creationDate: "11/02/23", startDate: "11/02/23", endDate: "30/06/23", period: (1, "M"), totalAmount: 1000, currentAmount: 0, contributionAmount: 75, contributionHistory: [], participants: [])))
 }

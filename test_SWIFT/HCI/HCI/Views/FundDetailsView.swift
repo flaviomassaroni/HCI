@@ -13,7 +13,7 @@ struct FundDetailsView: View {
                     .edgesIgnoringSafeArea(.all)
 
                 
-                GroupMenuView(isVisible: $showOverlay)
+                GroupMenuView(isVisible: $showOverlay, financeModel: financeModel, group:.constant(group))
                     .zIndex(1.0)
             }
             NavigationView {
@@ -60,7 +60,7 @@ struct FundDetailsView: View {
                                 .foregroundColor(.white)
                                 .font(.system(size: 18))
                                 .fontWeight(.semibold)
-                            Text("\(group.currentAmount, specifier: "%.0f")/\(group.totalAmount, specifier: "%.0f")€")
+                            Text("\(group.currentAmount, specifier: "%.2f")/\(group.totalAmount, specifier: "%.2f")€")
                                 .font(.system(size: 35))
                                 .padding(.top, 20)
                                 .foregroundColor(Color.white)
@@ -221,7 +221,7 @@ struct FundDetailsView: View {
                                     RoundedRectangle(cornerRadius: 25.0)
                                         .frame(width: 20, height: 20) // Adjust height as needed
                                         .foregroundColor(contribution.owner.colour) // Provide a color here
-                                    Text("\(contribution.date): \(contribution.amount, specifier: "%.0f")€")
+                                    Text("\(contribution.date): \(contribution.amount, specifier: "%.2f")€")
                                     Spacer()
                                 }
                                 .padding(.horizontal, 40)

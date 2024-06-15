@@ -21,6 +21,7 @@ struct CreateFundView: View {
     @State private var participants: [Participant] = [Participant(name: "You", colour: .black)]
     @State private var error: [String] = ["", ""] // Errors section error[0] = Name, error[1] Total Amount
     @State private var missingValues: Bool = false
+    @State private var colorIndex: Int = 1
     
     
     @State var screenWidth: CGFloat = UIScreen.main.bounds.width
@@ -292,8 +293,9 @@ struct CreateFundView: View {
                                     
                                     Button(action: {
                                         if !newFriend.isEmpty {
-                                            participants.append(Participant(id: UUID(), name: newFriend, colour: Color(hex: "FF5733")))
+                                            participants.append(Participant(id: UUID(), name: newFriend, colour: financeModel.profileColors[colorIndex]))
                                             newFriend = ""
+                                            colorIndex += 1
                                         }
                                     }) {
                                         Image(systemName: "plus")
@@ -328,6 +330,7 @@ struct CreateFundView: View {
                                                             Image(systemName: "xmark.circle.fill")
                                                                 .foregroundColor(.white)
                                                         }
+                                                        .padding(.trailing, 10)
                                                         .padding(.trailing, 10)
                                                     }
                                                 }

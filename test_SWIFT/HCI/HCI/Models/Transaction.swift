@@ -9,4 +9,5 @@ struct Transaction: Identifiable {
     var amount: Double
     var category: Category
     var location: String
+    var sign: String = "-"
 }

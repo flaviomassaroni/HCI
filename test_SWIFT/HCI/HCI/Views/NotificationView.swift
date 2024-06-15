@@ -46,7 +46,7 @@ struct PersonalNotificationView: View {
                             .foregroundColor(.white)
                             .font(.system(size: 18))
                             .fontWeight(.semibold)
-                        Text("\(group.currentAmount, specifier: "%.0f")/\(group.totalAmount, specifier: "%.0f")€")
+                        Text("\(group.currentAmount, specifier: "%.2f")/\(group.totalAmount, specifier: "%.2f")€")
                             .font(.system(size: 35))
                             .padding(.top, 20)
                             .foregroundColor(Color.white)
@@ -109,39 +109,44 @@ struct PersonalNotificationView: View {
                         .foregroundColor(Color(hex: "6C6C6C"))
                         .font(.system(size: 20))
                     
-                    ForEach(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant }, id: \.id) { contribution in
-                        HStack {
-                            Text("\(contribution.amount, specifier: "%.0f")€")
-                                .fontWeight(.bold)
-                                .font(.system(size: 20))
-                            Spacer()
-                            Text("\(contribution.date)")
-                                .font(.system(size: 17))
-                            
-                            Checkbox(isChecked: Binding(
-                                get: { selectedContributions[contribution.id] ?? true },
-                                set: { selectedContributions[contribution.id] = $0 }
-                            ))
+                    if group.name == "Graduation Present" || group.name == "Spain Holidays"{} else{
+                        ForEach(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant }, id: \.id) { contribution in
+                            HStack {
+                                Text("\(contribution.amount, specifier: "%.2f")€")
+                                    .fontWeight(.bold)
+                                    .font(.system(size: 20))
+                                Spacer()
+                                Text("\(contribution.date)")
+                                    .font(.system(size: 17))
+                                
+                                Checkbox(isChecked: Binding(
+                                    get: { selectedContributions[contribution.id] ?? true },
+                                    set: { selectedContributions[contribution.id] = $0 }
+                                ))
+                            }
+                            .padding(.horizontal, 18)
+                            .padding(.vertical, 10)
+                            .background(Color.white)
+                            .cornerRadius(14)
+                            .padding(.horizontal, 25)
                         }
-                        .padding(.horizontal, 18)
-                        .padding(.vertical, 10)
-                        .background(Color.white)
-                        .cornerRadius(14)
-                        .padding(.horizontal, 25)
                     }
                     
                     ZStack {
                         RoundedRectangle(cornerRadius: 14)
                         HStack {
-                            Text("Total: \(totalToPay(contributions: selectedContributions, amount: group.contributionAmount), specifier: "%.0f")€")
+                            Text("Total: \(totalToPay(contributions: selectedContributions, amount: group.contributionAmount), specifier: "%.2f")€")
                                 .foregroundColor(Color(.black))
                                 .fontWeight(.semibold)
                                 .font(.system(size: 28))
                                 .multilineTextAlignment(.center)
                                 .padding(.leading, 35)
                             Spacer()
-                            Button("Add Missing Contribution") {
+                            Button("Add Missing Contributions") {
+                                financeModel.addTransaction(name: "Contribution to \(group.name)", amount: totalToPay(contributions: selectedContributions, amount: group.contributionAmount))
                                 addMissingContributions()
+
+                                
                             }.disabled(totalToPay(contributions: selectedContributions, amount: group.contributionAmount) == 0)
                             .frame(width: 140, height: 55)
                             .background(totalToPay(contributions: selectedContributions, amount: group.contributionAmount) != 0 ? Color(hex: "62DF57") : Color.gray)

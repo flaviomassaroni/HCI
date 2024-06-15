@@ -26,54 +26,22 @@ class FinanceViewModel: ObservableObject {
     
     @Published var balance: Double = 1927.56
     @Published var transactions: [Transaction] = [
-        Transaction(id: UUID(), name: "Patches", date: "25/05/24", time: "09:34", amount: 3.20, category: healthCategory, location: "Farmacia Igea"),
-        Transaction(id: UUID(), name: "Coffee", date: "25/05/24", time: "09:34", amount: 1.10, category: diningCategory, location: "Bar Buongiorno"),
-        Transaction(id: UUID(), name: "Groceries", date: "25/05/24", time: "09:34", amount: 24.60, category: groceriesCategory, location: "Eurospin"),
-        Transaction(id: UUID(), name: "Headphones", date: "25/05/24", time: "09:34", amount: 199.90, category: technologyCategory, location: "Mediaworld Roma"),
-        Transaction(id: UUID(), name: "Pet Food", date: "16/05/24", time: "09:34", amount: 6.30, category: petsCategory, location: "L'Arca"),
-        Transaction(id: UUID(), name: "Groceries", date: "25/05/24", time: "09:34", amount: 57.20, category: groceriesCategory, location: "Conad"),
-        Transaction(id: UUID(), name: "Enterogermina", date: "25/05/24", time: "09:34", amount: 15.70, category: healthCategory, location: "Farmacia Comunale"),
-        Transaction(id: UUID(), name: "Oki", date: "25/05/24", time: "09:34", amount: 12.30, category: healthCategory, location: "Se Non Muori Ritorni")
+        Transaction(id: UUID(), name: "Patches", date: "20/05/24", time: "19:34", amount: 3.20, category: healthCategory, location: "Farmacia Igea"),
+        Transaction(id: UUID(), name: "Coffee", date: "12/05/24", time: "08:52", amount: 1.10, category: diningCategory, location: "Bar Buongiorno"),
+        Transaction(id: UUID(), name: "Groceries", date: "15/04/24", time: "12:44", amount: 24.60, category: groceriesCategory, location: "Eurospin"),
+        Transaction(id: UUID(), name: "Headphones", date: "11/04/24", time: "16:22", amount: 199.90, category: technologyCategory, location: "Mediaworld Roma"),
+        Transaction(id: UUID(), name: "Pet Food", date: "10/04/24", time: "18:55", amount: 6.30, category: petsCategory, location: "L'Arca"),
+        Transaction(id: UUID(), name: "Groceries", date: "06/04/24", time: "09:14", amount: 57.20, category: groceriesCategory, location: "Conad"),
+        Transaction(id: UUID(), name: "Enterogermina", date: "01/04/24", time: "11:23", amount: 15.70, category: healthCategory, location: "Farmacia Comunale"),
+        Transaction(id: UUID(), name: "Oki", date: "25/03/24", time: "14:34", amount: 12.30, category: healthCategory, location: "Se Non Muori Ritorni")
     ]
     
-    @Published var groups: [Group] = [
-        Group(id: UUID(), name: "Boat", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1,"M"), totalAmount: 6000, currentAmount: 550, contributionAmount: 100, contributionHistory: [
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner: Participant(name:"You", colour: Color(hex: "000000")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)],
-              participants: [
-            Participant(name:"You", colour: Color(hex: "000000")),
-            Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
-            Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")),
-            Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF"))
-        ]),
-        Group(id: UUID(), name: "Spain Holidays", creationDate: "20/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (2,"M"), totalAmount: 2000, currentAmount: 850,contributionAmount: 100, contributionHistory: [
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)],
-              participants: [
-            Participant(name:"You", colour: Color(hex: "FFA533")),
-            Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
-            Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")),
-            Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF"))
-        ]),
-        Group(id: UUID(), name: "Graduation Present", creationDate: "23/05/24", startDate: "23/05/24", endDate: "30/06/25", period: (1, "W"), totalAmount: 300, currentAmount: 250,contributionAmount: 100, contributionHistory: [
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner: Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner:Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")), date: "01/05/24", amount: 100.0, paid: false),
-            Contribution(owner: Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")), date: "01/05/24", amount: 100.0, paid: false)],
-              participants: [
-            Participant(name:"You", colour: Color(hex: "FFA533")),
-            Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
-            Participant(name:"Leonardo Scappatura", colour: Color(hex: "33FF57")),
-            Participant(name:"Flavio Massaroni", colour: Color(hex: "3357FF"))
-        ]),
-    ]
+    @Published var groups: [Group] = []
     
-    
+    func addTransaction(name:String, amount:Double, sign:String="-")->(){
+
+        transactions.insert(Transaction(name: name, date:currentDate(), time:currentTime(), amount:amount, category: moneyTransfersCategory, location: "Rome"),  at: 0)
+    }
     func addGroup(_ group:Group){
         print(group)
         groups.append(group)
@@ -83,13 +51,30 @@ class FinanceViewModel: ObservableObject {
         guard let groupIndex = groups.firstIndex(where: { $0.id == groupID }) else {
             return
         }
-        
-        
         balance -= groups[groupIndex].payContributions(checkedContributions: checkedContributions)
         
         // Notify SwiftUI about the state change
         objectWillChange.send()
     }
+    
+    func deleteFund(groupName:String){
+        var total: Double = 0
+        for index in groups.indices{
+            if groups[index].name == groupName{
+                for contribution in groups[index].contributionHistory{
+                    if contribution.paid && contribution.owner.name == "You"{
+                        total += contribution.amount
+                    }
+                }
+                balance += total
+                if total > 0.0{
+                    transactions.insert(Transaction(name: "Refund to \(groups[index].name)", date:currentDate(), time:currentTime(), amount:total, category: moneyTransfersCategory, location: "Rome", sign: "+"),  at: 0)
+                }
+                    
+                    groups.remove(at: index)
+                }
+            }
+        }
     
     
     
@@ -185,6 +170,19 @@ func addPeriodToDate(dateString: String, period: (Int, Character)) -> String? {
         return nil // Return nil if the calculation fails
     }
 }
+func currentTime()->(String){
+    let currentTime = Date()
+    let timeFormatter = DateFormatter()
+    timeFormatter.dateFormat = "HH:mm"
+    let formattedTime = timeFormatter.string(from: currentTime)
+    return formattedTime
+}
 
-
+func currentDate()->(String){
+    let currentDate = Date()
+    let DateFormatter = DateFormatter()
+    DateFormatter.dateFormat = "dd/MM/yy"
+    let formattedDate = DateFormatter.string(from: currentDate)
+    return formattedDate
+}
 

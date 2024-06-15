@@ -61,26 +61,29 @@ struct GroupsView: View {
                         ScrollView() {
                             HStack {
                                 Spacer()
-                                Button(action: {
-                                    showingSortOptions = true
-                                }) {
-                                    VStack(spacing:0){
-                                        Image(systemName: "line.horizontal.3.decrease.circle")
-                                            .font(.title)
-                                            .foregroundColor(.blue)
-                                            .padding()
-                                        
-                                        Text("Sort Groups")
-                                        .padding(.top, -17)
-                                    }.padding(.trailing, 20)
-                                     .padding(.bottom, 10)
-                                     .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                                if !financeModel.groups.isEmpty{
                                     
-                                }.padding(.top, -15)
-                                .sheet(isPresented: $showingSortOptions) {
-                                    SortOptionsView(selectedSortOption: $selectedSortOption, selectedSortOrder: $selectedSortOrder)
-                                        .presentationDetents([.fraction(0.5)])
-                                }
+                                    Button(action: {
+                                        showingSortOptions = true
+                                    }) {
+                                        VStack(spacing:0){
+                                            Image(systemName: "line.horizontal.3.decrease.circle")
+                                                .font(.title)
+                                                .foregroundColor(.blue)
+                                                .padding()
+                                            
+                                            Text("Sort Groups")
+                                                .padding(.top, -17)
+                                        }.padding(.trailing, 20)
+                                            .padding(.bottom, 10)
+                                            .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                                        
+                                    }.padding(.top, -15)
+                                    
+                                        .sheet(isPresented: $showingSortOptions) {
+                                            SortOptionsView(selectedSortOption: $selectedSortOption, selectedSortOrder: $selectedSortOrder)
+                                                .presentationDetents([.fraction(0.5)])
+                                        }}
                         }
                             ForEach(sortedGroups) { group in
                                 ZStack {

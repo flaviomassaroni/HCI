@@ -104,9 +104,9 @@ struct HomePage: View {
                                             VStack {
                                                 HStack {
                                                     Spacer()
-                                                    Text("\(transaction.amount, specifier: "%.2f")€")
+                                                    Text("\(transaction.sign)\(transaction.amount, specifier: "%.2f")€")
                                                         .font(.headline)
-                                                        .foregroundColor(.black)
+                                                        .foregroundColor(transaction.sign == "+" ? .green : .red)
                                                 }
                                                 HStack {
                                                     Spacer()
