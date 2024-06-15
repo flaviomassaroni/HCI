@@ -40,7 +40,7 @@ struct CreateFundView: View {
             return friendsModel.friends
         } else {
 //            print("friends: \(friendsModel.friends.filter { $0.name.lowercased().contains(newFriend.lowercased()) })")
-            return friendsModel.friends.filter { $0.name.lowercased().contains(newParticipant.lowercased()) }
+            return friendsModel.friends.filter { $0.name.lowercased().contains(newParticipant.lowercased())}
         }
     }
     
@@ -309,10 +309,6 @@ struct CreateFundView: View {
                         .padding(.horizontal, 14)
                         .padding(.vertical, 110)
                         .padding(.bottom)
-                        .onTapGesture {
-                            isFriendsInputFocused = false
-                            newParticipant = ""
-                        }
                         
                         //                Friends adding section
                         ZStack(alignment: .center) {
@@ -418,6 +414,9 @@ struct CreateFundView: View {
                                         .offset(y: -210)
                                     List(filteredFriends, id: \.id) { friend in
                                         Text(friend.name)
+                                            .fontWeight(participants.contains { $0.name == friend.name } ? .regular : .semibold)
+                                            .foregroundColor(participants.contains { $0.name == friend.name } ? .gray : .black)
+//                                            .background(participants.contains { $0.name == friend.name } ? Color.gray : Color.white)
                                             .onTapGesture {
                                                 addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
 //                                                participants.insert(, at: 0) : none }

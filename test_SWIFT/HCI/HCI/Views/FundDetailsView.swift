@@ -4,6 +4,7 @@ struct FundDetailsView: View {
     
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @ObservedObject var financeModel: FinanceViewModel
+    @State var showOverlay: Bool = false
     
     var group: Group
     
@@ -12,7 +13,6 @@ struct FundDetailsView: View {
             if showOverlay {
                 Color.black.opacity(0.5)
                     .edgesIgnoringSafeArea(.all)
-
                 
                 GroupMenuView(isVisible: $showOverlay, financeModel: financeModel, group:.constant(group))
                     .zIndex(1.0)
@@ -25,6 +25,7 @@ struct FundDetailsView: View {
                             .frame(height: 280)
                             .padding(.top, -50)
                         VStack {
+                            ZStack{
                             HStack {
                                 Button(action: {
                                     presentationMode.wrappedValue.dismiss()
@@ -37,17 +38,26 @@ struct FundDetailsView: View {
                                         .padding(.top, 20)
                                 })
                                 Spacer()
+                                Text(group.name)
+                                    .font(.largeTitle)
+                                    .padding(.top, 20)
+                                    .foregroundColor(Color.white)
+                                    .fontWeight(.semibold)
+                                Spacer()
+                                Button(action:{showOverlay = true}){
+                                    Image(systemName: "ellipsis")
+                                        .resizable()
+                                        .frame(width: 30, height: 7)
+                                        .rotationEffect(.degrees(90))
+                                        .padding(.trailing, 20)
+                                        .padding(.top, 20)
+                                        .foregroundColor(.white)
+                                }
+                                    
                             }
-                        Spacer()
-                            Text(group.name)
-                                .font(.largeTitle)
-                                .padding(.top, 20)
-                                .foregroundColor(Color.white)
-                                .fontWeight(.semibold)
-
-                        Spacer()
+                            Spacer()
                         }
-
+                        
                         Text("\(group.startDate) ---> \(group.endDate)")
                             .foregroundColor(.white)
                             .font(.system(size: 18))
@@ -254,6 +264,7 @@ struct FundDetailsView: View {
         .navigationBarHidden(true)
         .toolbar(.hidden, for: .tabBar)
     }
+}
 }
 
 struct FundDetailsView_Previews: PreviewProvider {
