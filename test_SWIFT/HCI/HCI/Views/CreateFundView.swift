@@ -104,6 +104,8 @@ struct CreateFundView: View {
                         .frame(width: screenWidth - 28, height: 86)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 10)
+                        .padding(.top)
+                        .padding(.bottom)
                         
                         //          Amount
                         ZStack {
@@ -159,7 +161,7 @@ struct CreateFundView: View {
                         .frame(width: screenWidth - 28, height: 86)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 10)
-                        
+                        .padding(.bottom)
                         
                         //          Date Picking
                         ZStack(alignment: .center) {
@@ -267,8 +269,9 @@ struct CreateFundView: View {
                         .frame(width: screenWidth - 28, height: 86)
                         .padding(.horizontal, 14)
                         .padding(.vertical, 110)
+                        .padding(.bottom)
                         
-                        //                Friends adding section
+                        // Friends adding section
                         ZStack(alignment: .center) {
                             RoundedRectangle(cornerRadius: 14)
                                 .foregroundColor(Color.white)
@@ -305,6 +308,7 @@ struct CreateFundView: View {
                                     
                                 }
                                 .padding(.horizontal)
+                                
                                 
                                 
                                 ScrollView(.horizontal, showsIndicators: false) {
@@ -360,6 +364,7 @@ struct CreateFundView: View {
                         .padding(.horizontal, 14)
                         .padding(.top, 90)
                         .padding(.vertical, 10)
+                        .padding(.bottom)
                         
                         Spacer()
                         Spacer()

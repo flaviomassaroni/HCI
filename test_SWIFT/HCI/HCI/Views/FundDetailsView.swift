@@ -84,8 +84,60 @@ struct FundDetailsView: View {
                             }
                         }
                     }
-                    ScrollView {
-                        VStack(spacing: 0) {
+                }
+                ScrollView {
+                    VStack(spacing: 0) {
+                        
+                        ZStack {
+                            RoundedRectangle(cornerRadius: 20)
+                                .foregroundColor(Color.white)
+                            HStack {
+                                Image(systemName: "info.circle.fill")
+                                    .resizable()
+                                    .frame(width: 40, height: 40)
+                                    .foregroundColor(.blue)
+                                    .padding()
+                                Spacer()
+                                VStack(alignment: .leading) {
+                                    HStack{
+                                        Text("Info")
+                                            .foregroundColor(Color(hex: "6C6C6C"))
+                                            .fontWeight(.bold)
+                                            .font(.system(size: 20))
+                                        Spacer()
+                                    }
+                                    .padding(.leading, 110)
+                                    
+                                    
+                                    if let nextContribution = addPeriodToDate(dateString: group.startDate, period: group.period) {
+                                        Text("Next Contribution: \(nextContribution)")
+                                            .fontWeight(.semibold)
+                                            .padding(.leading, 20)
+                                        
+                                    } else {
+                                        Text("Invalid date or period")
+                                    }
+                                }
+                                .padding(.trailing, 20)
+                                Spacer()
+                            }
+                        }
+                        .padding(.top, 45)
+                        .frame(height: 50)
+                        .padding(.horizontal, 20)
+                        
+                        
+                        ScrollView{
+                            HStack{
+                                Text("Participants")
+                                    .padding(.top, 30)
+                                    .padding(.leading, 20)
+                                    .foregroundColor(Color(hex: "747476"))
+                                    .font(.system(size: 20))
+                                Spacer()
+                            }
+                            .padding(.top, 15)
+                            .padding(.bottom , -1)
                             
                             ZStack {
                                 RoundedRectangle(cornerRadius: 20)
@@ -167,6 +219,9 @@ struct FundDetailsView: View {
                                     .cornerRadius(14)
                                     .padding(.vertical, 10)
                                     .padding(.horizontal, 20)
+                                    .padding(.bottom, -5)
+                                    
+                                    
                                 }
                                 .disabled(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner.name == "You" }.isEmpty)
                                 
@@ -202,10 +257,28 @@ struct FundDetailsView: View {
                                         .padding(.vertical, 1)
                                         .padding(.horizontal, 20)
                                     }
-                                    .disabled(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant }.isEmpty)
-                                }
+                                    
+                                    .disabled(group.contributionHistory.filter{!$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant}.isEmpty)
                             }
-                            
+                            .padding(.top, -5) // lista nadrea
+                        }
+                        
+                        
+                        
+                        HStack{
+                            Text("Contribution History")
+                                .padding(.top, 10)
+                                .padding(.leading, 20)
+                                .foregroundColor(Color(hex: "747476"))
+                                .font(.system(size: 20))
+                            Spacer()
+                        }
+                        .padding(.top, 20)
+                        .padding(.bottom , 10)
+                        
+                        
+                        
+                        ForEach(group.contributionHistory.filter{$0.paid}, id: \.id) { contribution in
                             HStack {
                                 Text("Contribution History")
                                     .padding(.top, 10)
@@ -214,25 +287,18 @@ struct FundDetailsView: View {
                                     .font(.system(size: 20))
                                 Spacer()
                             }
-                            .padding(.top, 20)
-                            .padding(.bottom, 10)
-                            ForEach(group.contributionHistory.filter { $0.paid }, id: \.id) { contribution in
-                                HStack {
-                                    RoundedRectangle(cornerRadius: 25.0)
-                                        .frame(width: 20, height: 20) // Adjust height as needed
-                                        .foregroundColor(contribution.owner.colour) // Provide a color here
-                                    Text("\(contribution.date): \(contribution.amount, specifier: "%.0f")€")
-                                    Spacer()
-                                }
-                                .padding(.horizontal, 40)
-                                .padding(.vertical, 10)
-                                .background(Color.white) // Background color
-                                .cornerRadius(14) // Apply corner radius to the background
-                                .padding(.vertical, 1)
-                                .padding(.horizontal, 20)
-                            }
+                            .padding(.horizontal, 40)
+                            .padding(.vertical, 10)
+                            .background(Color.white) // Background color
+                            .cornerRadius(14) // Apply corner radius to the background
+                            .padding(.vertical, 2)
+                            .padding(.horizontal, 20)
+                            
+                            
                         }
-                        .background(Color(hex: "ECECEC"))
+                        
+                        
+                        
                     }
                 }
                 .edgesIgnoringSafeArea(.bottom)

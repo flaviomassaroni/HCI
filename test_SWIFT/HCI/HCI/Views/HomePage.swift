@@ -120,7 +120,7 @@ struct HomePage: View {
                                         .background(Color.white)
                                         .cornerRadius(14)
                                         .padding(.horizontal, 15)
-                                        .padding(.vertical, 1)
+                                        .padding(.vertical, -1)
                                     }
                                 }
                                 .listStyle(PlainListStyle())
