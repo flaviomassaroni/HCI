@@ -347,7 +347,7 @@ struct CreateFundView: View {
                                     }) {
                                         Image(systemName: "plus")
                                             .padding()
-                                            .background(Color.blue)
+                                            .background(newParticipant.isEmpty ? Color.blue.opacity(0.5) : Color.blue)
                                             .foregroundColor(.white)
                                             .cornerRadius(10)
                                     }
