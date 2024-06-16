@@ -390,22 +390,16 @@ struct CreateFundView: View {
                                 Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
                                     .font(.body)
                                     .fontWeight(.semibold)
+                                    .padding(.bottom)
                                 
-                                Button(action: createGroup) {
-                                    Text("Create Fund")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                        .padding()
-                                        .background(Color.green)
-                                        .cornerRadius(10)
-                                }
-                                .padding(10)
                             }
                             .onChange(of: participants) { _ in
                                 updateComputedAmount()}
                             .onTapGesture {
                                 isFriendsInputFocused = false
                                 newParticipant = ""
+                                
+                                
                             }
                             
                             if isFriendsInputFocused && !filteredFriends.isEmpty{
@@ -440,14 +434,26 @@ struct CreateFundView: View {
                         }
                         .frame(width: screenWidth - 28, height: 86)
                         .padding(.horizontal, 14)
-                        .padding(.top, 90)
+                        .padding(.top, 63)
                         .padding(.vertical, 10)
                         .padding(.bottom)
                         
                         Spacer()
                         Spacer()
                         Spacer()
-                        Spacer()
+                        
+                        ZStack (alignment: .center) {
+                            Button(action: createGroup) {
+                                Text("Create Fund")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(!fundName.isEmpty && !totalAmount.isEmpty && error[0].isEmpty && error[1].isEmpty ? Color.green : Color.green.opacity(0.5))
+                                    .cornerRadius(10)
+                            }
+                            .padding(10)
+                        }
+                        
                     }
                     .frame(minHeight: geometry.size.height)
                 }
