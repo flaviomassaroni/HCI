@@ -6,12 +6,23 @@ struct HomePage: View {
     @State private var selectedTransaction: Transaction?
     @State private var offset: CGFloat = 0
     @State private var isShowingGroupsView: Bool = false
+    @State var showCard: Bool = false
     
     var body: some View {
         ZStack{
             if isShowingGroupsView{
                 GroupsView(financeModel: financeModel, isShowingGroupsView: $isShowingGroupsView)
                     .zIndex(1.0)
+            }
+            if showCard {
+                CardView()
+//                     .transition(.move(edge: .bottom))
+                    .transition(.scale.combined(with: .opacity))
+                    .animation(.easeInOut)
+                    .zIndex(1.0)
+                    .onTapGesture {
+                        showCard = false
+                    }
             }
             NavigationView {
                 ZStack(alignment: .bottom) {
@@ -26,14 +37,29 @@ struct HomePage: View {
                                         HStack {
                                             Spacer()
                                             VStack(spacing: 0) {
-                                                Image(systemName: "creditcard.circle")
-                                                    .resizable()
-                                                    .foregroundColor(.white)
-                                                    .frame(width: 50, height: 50)
-                                                Text("Card")
-                                                    .foregroundColor(.white)
-                                                    .fontWeight(.bold)
-                                                    .padding(0)
+                                                
+                                                
+                                                Button(action: {
+                                                    withAnimation {
+                                                        showCard = true
+                                                    }
+                                                }) {
+                                                    VStack(spacing: 0) {
+                                                        Image(systemName: "creditcard.circle")
+                                                            .resizable()
+                                                            .foregroundColor(.white)
+                                                            .frame(width: 50, height: 50)
+                                                        
+                                                        Text("Card")
+                                                            .foregroundColor(.white)
+                                                            .fontWeight(.bold)
+                                                            .padding(0)
+                                                    }
+                                                }
+                                                
+                                                                                                
+                                                
+                                                    
                                             }
                                             .padding(.top, -30)
                                         }
@@ -200,6 +226,12 @@ struct HomePage: View {
         }
     }
 }
+
+
+
+
+
+
 
 struct HomePage_Previews: PreviewProvider {
     static var previews: some View {

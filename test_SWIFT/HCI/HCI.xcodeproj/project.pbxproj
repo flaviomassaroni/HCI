@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A715801E2C10657900477F44 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A715801D2C10657900477F44 /* MainView.swift */; };
+		A748420E2C1ED3C20050D5D2 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748420D2C1ED3C20050D5D2 /* Card.swift */; };
 		A76A93322C10522100DFB084 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A93312C10522100DFB084 /* Transaction.swift */; };
 		A76A93362C1052EC00DFB084 /* FundDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A93352C1052EC00DFB084 /* FundDetailsView.swift */; };
 		A76A93382C10531400DFB084 /* CreateFundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A93372C10531400DFB084 /* CreateFundView.swift */; };
@@ -54,6 +55,7 @@
 
 /* Begin PBXFileReference section */
 		A715801D2C10657900477F44 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		A748420D2C1ED3C20050D5D2 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		A76A93312C10522100DFB084 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		A76A93352C1052EC00DFB084 /* FundDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FundDetailsView.swift; sourceTree = "<group>"; };
 		A76A93372C10531400DFB084 /* CreateFundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateFundView.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				A76A93392C10532B00DFB084 /* GroupsView.swift */,
 				A76A933B2C10534900DFB084 /* HomePage.swift */,
 				C80D2E472C134AAE0009478D /* NotificationView.swift */,
+				A748420D2C1ED3C20050D5D2 /* Card.swift */,
 				C80D2E4A2C13608B0009478D /* Checkbox.swift */,
 				C80D2E502C19F6E50009478D /* CategoryView.swift */,
 				C80D2E562C1C7ACC0009478D /* RemainderView.swift */,
@@ -375,6 +378,7 @@
 				C80D2E4B2C13608B0009478D /* Checkbox.swift in Sources */,
 				ED79FB942C1862E900EA92DB /* FriendNotificationView.swift in Sources */,
 				C8F43F502C1E0B9000E9AF78 /* GroupMenuView.swift in Sources */,
+				A748420E2C1ED3C20050D5D2 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,6 +542,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HCI/Preview Content\"";
+				DEVELOPMENT_TEAM = T5SVY7322K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -567,6 +572,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"HCI/Preview Content\"";
+				DEVELOPMENT_TEAM = T5SVY7322K;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
