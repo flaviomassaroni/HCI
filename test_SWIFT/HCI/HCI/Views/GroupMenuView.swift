@@ -40,6 +40,7 @@ struct BottomRoundedRectangle: Shape {
 }
 
 struct GroupMenuView: View {
+    @State var editMode: Bool = false
     @Binding var isVisible: Bool
     @ObservedObject var financeModel: FinanceViewModel
     @Binding var group: Group
@@ -48,24 +49,26 @@ struct GroupMenuView: View {
             HStack {
                 Spacer()
                 VStack(spacing: 1) {
-                    Button(action:{}){
-                    ZStack {
-                        TopRoundedRectangle(cornerRadius: 20)
-                            .frame(width: 250, height: 50)
-                            .foregroundColor(.white)
-                            .padding(.horizontal)
-                        HStack {
-                            Text("Modify Group")
-                                .foregroundColor(.black)
-                                .fontWeight(.semibold)
-                            Image(systemName: "pencil")
-                                .resizable()
-                                .frame(width: 20, height: 20)
-                                .padding(.leading, 95)
-                                .foregroundColor(.black)
+                    Button(action:{editMode = true}){
+                        ZStack {
+                            TopRoundedRectangle(cornerRadius: 20)
+                                .frame(width: 250, height: 50)
+                                .foregroundColor(.white)
+                                .padding(.horizontal)
+                            HStack {
+                                Text("Modify Group")
+                                    .foregroundColor(.black)
+                                    .fontWeight(.semibold)
+                                Image(systemName: "pencil")
+                                    .resizable()
+                                    .frame(width: 20, height: 20)
+                                    .padding(.leading, 95)
+                                    .foregroundColor(.black)
+                            }
                         }
+                    }.sheet(isPresented: $editMode) {
+                        ModifyGroupView(financeModel: FinanceViewModel(), group: $group, editMode: $editMode)
                     }
-                }
                     Button(action:{financeModel.deleteFund(groupName: group.name )}){
                         ZStack {
                             BottomRoundedRectangle(cornerRadius: 20)
@@ -94,6 +97,7 @@ struct GroupMenuView: View {
         .onTapGesture(perform: {
             isVisible = false
         })
+            
     }
 }
 
