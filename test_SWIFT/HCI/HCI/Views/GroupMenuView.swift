@@ -101,6 +101,6 @@ struct GroupMenuView: View {
     }
 }
 
-#Preview {
-    GroupMenuView(isVisible: .constant(true), financeModel: FinanceViewModel(), group: .constant(Group(name: "String", creationDate: "11/02/23", startDate: "11/02/23", endDate: "30/06/23", period: (1, "M"), totalAmount: 1000, currentAmount: 0, contributionAmount: 75, contributionHistory: [], participants: [])))
-}
+//#Preview {
+//    GroupMenuView(isVisible: .constant(true), financeModel: FinanceViewModel(), group: .constant(Group(name: "String", creationDate: "11/02/23", startDate: "11/02/23", endDate: "30/06/23", period: (1, "M"), totalAmount: 1000, currentAmount: 0, contributionAmount: 75, contributionHistory: [], participants: [])))
+//}

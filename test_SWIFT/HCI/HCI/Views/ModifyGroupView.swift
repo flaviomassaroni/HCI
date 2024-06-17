@@ -243,6 +243,7 @@ struct ModifyGroupView: View {
                                         .datePickerStyle(.compact)
                                         .labelsHidden()
                                         .padding()
+                                        .disabled(true)
                                         
                                     }
                                     .frame(maxWidth: .infinity, alignment: .center)
@@ -407,7 +408,7 @@ struct ModifyGroupView: View {
                                     .fontWeight(.semibold)
                                 
                                 Button(action:{
-                                    financeModel.modifyGroup(oldGroupName: group.name, with:
+                                    financeModel.modifyGroup(oldGroup: group, newGroup:
                                         Group(name: fundName, creationDate: group.creationDate, startDate: formatDateToString(date: startDate),
                                               endDate: formatDateToString(date: endDate), period: (selectedNumber, toChar(period:selectedUnit)), totalAmount: Double(totalAmount)!, currentAmount: group.currentAmount, contributionAmount: computedAmount, contributionHistory: group.contributionHistory, participants: participants))
                                     

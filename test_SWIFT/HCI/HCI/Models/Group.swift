@@ -2,17 +2,17 @@ import Foundation
 import SwiftUI
 
 struct Group: Identifiable {
-    let id: UUID
-    let name: String
-    let startDate: String
-    let endDate: String
-    let period: (Int, Character)
-    let totalAmount: Double
+    var id: UUID
+    var name: String
+    var startDate: String
+    var endDate: String
+    var period: (Int, Character)
+    var totalAmount: Double
     var currentAmount: Double
-    let contributionAmount: Double
+    var contributionAmount: Double
     var contributionHistory: [Contribution]
     var participants: [Participant]
-    let creationDate: String
+    var creationDate: String
     
     mutating func payContributions(checkedContributions: Set<UUID>)->Double {
         var paidAmount = 0.0
@@ -57,8 +57,13 @@ struct Group: Identifiable {
         self.contributionHistory = []
         self.contributionHistory = generateContributionHistory(for: self)
     }
-            
+
+    mutating func cleanHistory(){
+        self.contributionHistory = []
     }
+
+    
+}
 
 
 func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Date, selectedNumber: Int, selectedUnit: String, partNumb: Int) -> Double {
@@ -156,6 +161,34 @@ func generateContributionHistory(for group: Group) -> [Contribution] {
     }
     return contributions
 }
+
+func generateContributionHistoryParticipant(participant: Participant, startDate: String, endDate: String, amount: Double, period: (Int, Character)) -> [Contribution] {
+    guard let startDate = dateFromString(dateString: startDate),
+          let endDate = dateFromString(dateString: endDate) else {
+        return []
+    }
+    
+    var currentDate = startDate
+    var contributions = [Contribution]()
+    
+    while currentDate <= endDate {
+        let contribution = Contribution(
+            owner: participant,
+            date: stringFromDate(date: currentDate),
+            amount: amount,
+            paid: false
+        )
+        contributions.append(contribution)
+
+        if let nextDate = addPeriodToDate(date: currentDate, period: period) {
+            currentDate = nextDate
+        } else {
+            break
+        }
+    }
+    return contributions
+}
+
 
 
 
