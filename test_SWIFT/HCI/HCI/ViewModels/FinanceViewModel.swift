@@ -41,6 +41,84 @@ class FinanceViewModel: ObservableObject {
     
     @Published var groups: [Group] = []
     
+    func modifyGroup(oldGroup: Group, newGroup: Group){
+        
+        var workGroup = newGroup
+        workGroup.cleanHistory()
+        
+        for participant in newGroup.participants {
+            
+            var totPaid = 0.0
+            for contr in oldGroup.contributionHistory {
+                if contr.owner.name == participant.name && contr.paid {
+                    workGroup.contributionHistory.append(contr)
+                    totPaid += contr.amount
+                }
+            }
+            let missing = (newGroup.totalAmount / Double(newGroup.participants.count)) - totPaid
+            
+            let cost = missing / Double(numberOfIntervals(from: newGroup.startDate, to: newGroup.endDate, withFrequency: newGroup.period)!)
+            
+
+            let generatedContrs = generateContributionHistoryParticipant(participant: participant, startDate: newGroup.startDate, endDate: newGroup.endDate, amount: cost, period: newGroup.period)
+            print("GENERATEDDDDD: \(generatedContrs)\n")
+            workGroup.contributionHistory.append(contentsOf: generatedContrs)
+
+        }
+        
+        for index in groups.indices{
+            if groups[index].name == oldGroup.name{
+                print("\(groups[index])\n")
+                print("\(workGroup)\n")
+                
+                groups[index] = workGroup
+            }
+        }
+    }
+    
+    func numberOfIntervals(from startDate: String, to endDate: String, withFrequency frequency: (Int, Character)) -> Int? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yy"
+
+        guard let start = dateFormatter.date(from: startDate),
+              let end = dateFormatter.date(from: endDate) else {
+            return nil // Return nil if date formatting fails
+        }
+
+        let calendar = Calendar.current
+
+        let frequencyUnit = frequency.1
+        guard let frequencyValue = Optional(frequency.0) else {
+            return nil // Return nil if frequency parsing fails
+        }
+
+        var interval: Int = 0
+        switch frequencyUnit {
+        case "D":
+            interval = calendar.dateComponents([.day], from: start, to: end).day ?? 0
+            return interval / frequencyValue
+        case "W":
+            interval = calendar.dateComponents([.day], from: start, to: end).day ?? 0
+            return interval / (frequencyValue * 7)
+        case "M":
+            interval = calendar.dateComponents([.month], from: start, to: end).month ?? 0
+            return interval / frequencyValue
+        case "Y":
+            interval = calendar.dateComponents([.year], from: start, to: end).year ?? 0
+            return interval / frequencyValue
+        default:
+            return nil // Return nil if frequency unit is invalid
+        }
+    }
+    
+    private func getCurrentDate() -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: Date())
+    }
+    
+    
+    
     func addTransaction(name:String, amount:Double, sign:String="-")->(){
 
         transactions.insert(Transaction(name: name, date:currentDate(), time:currentTime(), amount:amount, category: moneyTransfersCategory, location: "Rome"),  at: 0)
@@ -64,7 +142,7 @@ class FinanceViewModel: ObservableObject {
         print("I'm deleting the group")
         var total: Double = 0
         for index in groups.indices{
-            print("groups[index].name", groups[index].name)
+//            print("groups[index].name", groups[index].name)
             if groups[index].name == groupName{
                 for contribution in groups[index].contributionHistory{
                     print(contribution)
