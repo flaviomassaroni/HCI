@@ -414,7 +414,7 @@ struct ModifyGroupView: View {
                                     
 //                                    financeModel.deleteFund(groupName: group.name)
                                     dismiss()
-                                    print(financeModel.groups)
+//                                    print(financeModel.groups)
                                 }) {
                                     Text("Modify Group")
                                         .font(.headline)
@@ -526,18 +526,18 @@ struct ModifyGroupView: View {
                 error[1] = "Invalid character"
             }
             let totalAmountDouble  = Double(0)
-            computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
+            computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber + 1, selectedUnit: selectedUnit, partNumb: participants.count)
             return
         }
         if totalAmountDouble <= 0 {
             error[1] = "Amount must be a greater than 0"
             let totalAmountDouble  = Double(0)
-            computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
+            computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber + 1, selectedUnit: selectedUnit, partNumb: participants.count)
             return
         }
 
         error[1] = ""
-        computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
+        computedAmount = calculateRecurringAmount(totalAmount: totalAmountDouble, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber + 1, selectedUnit: selectedUnit, partNumb: participants.count)
     }
     func toChar(period:String)->Character{
         if period == "Day" || period == "Days"{

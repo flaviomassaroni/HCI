@@ -55,11 +55,11 @@ class FinanceViewModel: ObservableObject {
                     totPaid += contr.amount
                 }
             }
-            var missing = (newGroup.totalAmount / Double(newGroup.participants.count)) - totPaid
+            let missing = (newGroup.totalAmount / Double(newGroup.participants.count)) - totPaid
             
-            var cost = missing / Double(numberOfIntervals(from: newGroup.startDate, to: newGroup.endDate, withFrequency: newGroup.period)!)
+            let cost = missing / Double(numberOfIntervals(from: newGroup.startDate, to: newGroup.endDate, withFrequency: newGroup.period)!)
             
-            for i in 0...Int(missing/cost) {
+            for _ in 0...Int(missing/cost) {
                 let generatedContrs = generateContributionHistoryParticipant(participant: participant, startDate: newGroup.startDate, endDate: newGroup.endDate, amount: cost, period: newGroup.period)
                 workGroup.contributionHistory.append(contentsOf: generatedContrs)
             }
@@ -67,6 +67,9 @@ class FinanceViewModel: ObservableObject {
         
         for index in groups.indices{
             if groups[index].name == oldGroup.name{
+                print("\(groups[index])\n")
+                print("\(workGroup)\n")
+                
                 groups[index] = workGroup
             }
         }

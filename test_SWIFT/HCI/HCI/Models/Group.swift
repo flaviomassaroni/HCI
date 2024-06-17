@@ -67,6 +67,9 @@ struct Group: Identifiable {
 
 
 func calculateRecurringAmount(totalAmount: Double, startDate: Date, endDate: Date, selectedNumber: Int, selectedUnit: String, partNumb: Int) -> Double {
+    
+    print("HELLOOOOO I'M USING: \(totalAmount), \(startDate), \(endDate), \(selectedNumber), \(selectedUnit), \(partNumb)\n")
+    
     var divideBy = 1
     if partNumb != 0 {divideBy = partNumb}
     // Calculate the total number of days between start and end date
