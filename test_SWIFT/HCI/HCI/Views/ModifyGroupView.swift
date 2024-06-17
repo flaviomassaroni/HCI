@@ -65,25 +65,33 @@ struct ModifyGroupView: View {
                 RoundedRectangle(cornerRadius: 14)
                     .foregroundColor(Color.blue)
                 
-                HStack {
-                    Button(action:{
-                        editMode = false
-                    }){
-                        Image(systemName: "xmark")
-                            .resizable()
-                            .frame(width:20, height:20)
-                            .foregroundColor(.white)
-                            .padding(.leading, 30)
+                VStack {
+                    RoundedRectangle(cornerRadius: 20)
+                        .frame(width: 70, height: 5)
+                        .padding(.top, 5)
+                        .foregroundColor(Color.gray)
+                        .padding(.top, 5)
+                    HStack {
+                        Button(action:{
+                            editMode = false
+                        }){
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .frame(width:20, height:20)
+                                .foregroundColor(.white)
+                                .padding(.leading, 30)
+                        }
+                        Spacer()
+                        Text("Modify Group")
+                            .font(.largeTitle)
+                            .padding()
+                            .foregroundColor(Color.white)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Spacer()
                     }
-                    Spacer()
-                    Text("Modify Group")
-                        .font(.largeTitle)
-                        .padding()
-                        .foregroundColor(Color.white)
-                        .fontWeight(.semibold)
-                    Spacer()
-                    Spacer()
                 }
+
                 
             }
             .frame(width: screenWidth, height: 110)
@@ -104,7 +112,7 @@ struct ModifyGroupView: View {
                             
                             
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("Fund Name")
+                                Text("Group Name")
                                     .font(.title3)
                                     .fontWeight(.semibold)
                                     .padding(.leading)
@@ -368,7 +376,7 @@ struct ModifyGroupView: View {
                                             .background(newParticipant.isEmpty ? Color.blue.opacity(0.5) : Color.blue)
                                             .foregroundColor(.white)
                                             .cornerRadius(10)
-                                    }
+                                    }.disabled(newParticipant.isEmpty)
                                     //                                    .opacity(fundName.isEmpty ? 0.5 : 1)
                                     //                                     .disabled(fundName.isEmpty ? true : false)
                                     
@@ -476,6 +484,7 @@ struct ModifyGroupView: View {
                                     .cornerRadius(10)
                             }
                             .padding(10)
+                            .disabled(fundName.isEmpty || totalAmount.isEmpty || !error[0].isEmpty || !error[1].isEmpty)
                             
                         }
                     }
@@ -508,8 +517,8 @@ struct ModifyGroupView: View {
     func convertToDate(from dateString: String) -> Date {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yy"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
+//        dateFormatter.locale = Locale(identifier: "it_IT")
+//        dateFormatter.timeZone = TimeZone(secondsFromGMT: 0)
 
         if let date = dateFormatter.date(from: dateString) {
             return date

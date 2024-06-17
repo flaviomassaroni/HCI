@@ -17,7 +17,7 @@ struct FundDetailsView: View {
                 
                 GroupMenuView(isVisible: $showOverlay,
                               financeModel: financeModel,
-                              group:.constant(group),
+                              group: .constant(group),
                               Confirmation: $confirmation
                 )
                 .zIndex(1.0)
@@ -157,7 +157,7 @@ struct FundDetailsView: View {
                                 .padding(.top, 15)
                                 .padding(.bottom , -1)
                                 
-                                NavigationLink(destination: PersonalNotificationView(financeModel: financeModel, group: .constant(group), participant: group.participants[0])){
+                                NavigationLink(destination: PersonalNotificationView(financeModel: financeModel, group: group, participant: group.participants[0])){
                                     HStack {
                                         Image(systemName: "person.circle.fill")
                                             .resizable()

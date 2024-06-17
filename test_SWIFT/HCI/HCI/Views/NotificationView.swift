@@ -5,7 +5,7 @@ struct PersonalNotificationView: View {
     @Environment (\.dismiss) var dismiss
     @ObservedObject var financeModel: FinanceViewModel
     
-    @Binding var group: Group
+    var group: Group
     var participant: Participant
     
     @State private var selectedContributions: [UUID: Bool] = [:]
@@ -46,7 +46,7 @@ struct PersonalNotificationView: View {
                             .foregroundColor(.white)
                             .font(.system(size: 18))
                             .fontWeight(.semibold)
-                        Text("\(group.currentAmount, specifier: "%.2f")/\(group.totalAmount, specifier: "%.2f")€")
+                        Text("\(Double(group.currentAmount), specifier: "%.2f")/\(Double(group.totalAmount), specifier: "%.2f")€")
                             .font(.system(size: 35))
                             .padding(.top, 20)
                             .foregroundColor(Color.white)
@@ -112,7 +112,7 @@ struct PersonalNotificationView: View {
                     if group.name == "Graduation Present" || group.name == "Spain Holidays"{} else{
                         ForEach(group.contributionHistory.filter { !$0.paid && comesBeforeToday(dateString: $0.date) && $0.owner == participant }, id: \.id) { contribution in
                             HStack {
-                                Text("\(contribution.amount, specifier: "%.2f")€")
+                                Text("\(Double(contribution.amount), specifier: "%.2f")€")
                                     .fontWeight(.bold)
                                     .font(.system(size: 20))
                                 Spacer()
@@ -162,6 +162,7 @@ struct PersonalNotificationView: View {
                 }
                 .background(Color(hex: "ECECEC"))
             }
+            
             .background(Color(hex: "ECECEC"))
             
             .onAppear {
@@ -252,7 +253,7 @@ struct NotificationView_Previews: PreviewProvider {
     static var previews: some View {
         PersonalNotificationView(
             financeModel: FinanceViewModel(),
-            group: .constant(Group(
+            group: Group(
                 name: "Graduation present",
                 creationDate: "23/05/24",
                 startDate: "23/05/24",
@@ -273,7 +274,7 @@ struct NotificationView_Previews: PreviewProvider {
                     Participant(name: "Andrea Salinetti", colour: Color(hex: "33FF57")),
                     Participant(name: "Andrea Salinetti", colour: Color(hex: "3357FF"))
                 ]
-            )),
+            ),
             participant: Participant(name: "You", colour: Color(hex: "FF5733"))
         )
     }

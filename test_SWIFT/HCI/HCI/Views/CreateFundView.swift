@@ -62,11 +62,25 @@ struct CreateFundView: View {
                         .padding(.top, 5)
                         .foregroundColor(Color.gray)
                         .padding(.top, 5)
-                    Text("Create New Fund")
-                        .font(.largeTitle)
-                        .padding()
-                        .foregroundColor(Color.white)
-                        .fontWeight(.semibold)
+                    HStack {
+                        Button(action:{
+                            dismiss()
+                        }){
+                            Image(systemName: "xmark")
+                                .resizable()
+                                .frame(width:20, height:20)
+                                .foregroundColor(.white)
+                                .padding(.leading, 30)
+                        }
+                        Spacer()
+                        Text("Modify Group")
+                            .font(.largeTitle)
+                            .padding()
+                            .foregroundColor(Color.white)
+                            .fontWeight(.semibold)
+                        Spacer()
+                        Spacer()
+                    }
                 }
                 
             }
@@ -88,7 +102,7 @@ struct CreateFundView: View {
                                 
                                 
                             VStack(alignment: .leading, spacing: 5) {
-                                Text("Fund Name")
+                                Text("Group Name")
                                     .font(.title3)
                                     .fontWeight(.semibold)
                                     .padding(.leading)
@@ -350,7 +364,7 @@ struct CreateFundView: View {
                                             .background(newParticipant.isEmpty ? Color.blue.opacity(0.5) : Color.blue)
                                             .foregroundColor(.white)
                                             .cornerRadius(10)
-                                    }
+                                    }.disabled(newParticipant.isEmpty)
 //                                    .opacity(fundName.isEmpty ? 0.5 : 1)
 //                                     .disabled(fundName.isEmpty ? true : false)
                                     
@@ -387,7 +401,7 @@ struct CreateFundView: View {
                                     }
                                     .padding()
                                 }
-                                Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
+                                Text("You will add: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
                                     .font(.body)
                                     .fontWeight(.semibold)
                                     .padding(.bottom)
@@ -415,7 +429,9 @@ struct CreateFundView: View {
                                             .fontWeight(participants.contains { $0.name == friend.name } ? .regular : .semibold)
                                             .foregroundColor(participants.contains { $0.name == friend.name } ? .gray : .black)
 //                                            .background(participants.contains { $0.name == friend.name } ? Color.gray : Color.white)
+                                        
                                             .onTapGesture {
+                                                newParticipant = friend.name
                                                 addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: financeModel.profileColors[colorIndex]))
                                                 colorIndex += 1
 //                                                participants.insert(, at: 0) : none }
@@ -428,6 +444,7 @@ struct CreateFundView: View {
                                     .listStyle(.inset)
                                     .cornerRadius(10)
                                     .offset(y: -210)
+                                    
                                 } // Adjust this value based on your layout
                             }
                             
@@ -444,7 +461,7 @@ struct CreateFundView: View {
                         
                         ZStack (alignment: .center) {
                             Button(action: createGroup) {
-                                Text("Create Fund")
+                                Text("Create New Group")
                                     .font(.headline)
                                     .foregroundColor(.white)
                                     .padding()
@@ -452,6 +469,7 @@ struct CreateFundView: View {
                                     .cornerRadius(10)
                             }
                             .padding(10)
+                            .disabled(fundName.isEmpty || totalAmount.isEmpty || !error[0].isEmpty || !error[1].isEmpty)
                         }
                         
                     }
@@ -503,6 +521,7 @@ struct CreateFundView: View {
             let amountD = Double(totalAmount)!
             let formatter = DateFormatter()
             formatter.dateFormat = "dd/MM/YY"
+            formatter.locale = Locale(identifier: "it_IT")
             
             
             let newGroup = Group(

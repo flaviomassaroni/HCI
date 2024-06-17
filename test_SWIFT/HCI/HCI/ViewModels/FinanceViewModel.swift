@@ -98,8 +98,8 @@ class FinanceViewModel: ObservableObject {
             interval = calendar.dateComponents([.day], from: start, to: end).day ?? 0
             return interval / frequencyValue
         case "W":
-            interval = calendar.dateComponents([.day], from: start, to: end).day ?? 0
-            return interval / (frequencyValue * 7)
+            interval = calendar.dateComponents([.weekOfYear], from: start, to: end).day ?? 0
+            return interval / frequencyValue
         case "M":
             interval = calendar.dateComponents([.month], from: start, to: end).month ?? 0
             return interval / frequencyValue
