@@ -402,15 +402,15 @@ struct ModifyGroupView: View {
                                     }
                                     .padding()
                                 }
-                                Text("You will put: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
+                                Text("You will add: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
                                     .font(.body)
                                     .fontWeight(.semibold)
                                 
                                 Button(action:{
-                                    financeModel.addGroup(
+                                    financeModel.modifyGroup(oldGroupName: group.name, with:
                                         Group(name: fundName, creationDate: group.creationDate, startDate: formatDateToString(date: startDate),
-                                              endDate: formatDateToString(date: endDate), period: (selectedNumber, toChar(period:selectedUnit)), totalAmount: Double(totalAmount)!, currentAmount: group.currentAmount, contributionAmount: computedAmount, contributionHistory: group.contributionHistory, participants: participants)
-                                    )
+                                              endDate: formatDateToString(date: endDate), period: (selectedNumber, toChar(period:selectedUnit)), totalAmount: Double(totalAmount)!, currentAmount: group.currentAmount, contributionAmount: computedAmount, contributionHistory: group.contributionHistory, participants: participants))
+                                    
 //                                    financeModel.deleteFund(groupName: group.name)
                                     dismiss()
                                     print(financeModel.groups)
@@ -488,7 +488,7 @@ struct ModifyGroupView: View {
             if unit == "Y"{selectedUnit = "Year"}
             selectedNumber = group.period.0
             participants = group.participants
-            
+        
         }
     }
 }

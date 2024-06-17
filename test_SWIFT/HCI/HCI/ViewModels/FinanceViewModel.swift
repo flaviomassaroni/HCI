@@ -41,6 +41,15 @@ class FinanceViewModel: ObservableObject {
     
     @Published var groups: [Group] = []
     
+    func modifyGroup(oldGroupName:String, with:Group){
+        for index in groups.indices{
+            if groups[index].name == oldGroupName{
+                groups[index] = with
+            }
+        }
+        
+    }
+    
     func addTransaction(name:String, amount:Double, sign:String="-")->(){
 
         transactions.insert(Transaction(name: name, date:currentDate(), time:currentTime(), amount:amount, category: moneyTransfersCategory, location: "Rome"),  at: 0)

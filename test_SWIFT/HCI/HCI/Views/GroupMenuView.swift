@@ -67,7 +67,7 @@ struct GroupMenuView: View {
                             }
                         }
                     }.sheet(isPresented: $editMode) {
-                        ModifyGroupView(financeModel: FinanceViewModel(), group: $group, editMode: $editMode)
+                        ModifyGroupView(financeModel: financeModel, group: $group, editMode: $editMode)
                     }
                     Button(action:{financeModel.deleteFund(groupName: group.name )}){
                         ZStack {

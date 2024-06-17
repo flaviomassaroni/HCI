@@ -159,6 +159,7 @@ struct GroupsView: View {
                             Spacer()
                             Button(action: {
                                 showingCreateFundView = true
+                                print("groups in groupsView", financeModel.groups)
                             }) {
                                 Image(systemName: "plus")
                                     .resizable()
