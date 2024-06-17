@@ -26,6 +26,7 @@ struct ModifyGroupView: View {
     @Binding var editMode:Bool
     @State private var isFriendsInputFocused: Bool = false
     
+    
     private enum Field: Int, CaseIterable {
         case name, amount
     }
@@ -53,6 +54,7 @@ struct ModifyGroupView: View {
     var body: some View {
         
         ZStack{
+            
             GeometryReader { geometry in
                 Rectangle()
                     .fill(Color.white) // Fill color of the rectangle
@@ -363,7 +365,7 @@ struct ModifyGroupView: View {
                                     }) {
                                         Image(systemName: "plus")
                                             .padding()
-                                            .background(Color.blue)
+                                            .background(newParticipant.isEmpty ? Color.blue.opacity(0.5) : Color.blue)
                                             .foregroundColor(.white)
                                             .cornerRadius(10)
                                     }
@@ -406,24 +408,7 @@ struct ModifyGroupView: View {
                                 Text("You will add: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
                                     .font(.body)
                                     .fontWeight(.semibold)
-                                
-                                Button(action:{
-                                    financeModel.modifyGroup(oldGroup: group, newGroup:
-                                        Group(name: fundName, creationDate: group.creationDate, startDate: formatDateToString(date: startDate),
-                                              endDate: formatDateToString(date: endDate), period: (selectedNumber, toChar(period:selectedUnit)), totalAmount: Double(totalAmount)!, currentAmount: group.currentAmount, contributionAmount: computedAmount, contributionHistory: group.contributionHistory, participants: participants))
-                                    
-//                                    financeModel.deleteFund(groupName: group.name)
-                                    dismiss()
-//                                    print(financeModel.groups)
-                                }) {
-                                    Text("Modify Group")
-                                        .font(.headline)
-                                        .foregroundColor(.white)
-                                        .padding()
-                                        .background(Color.green)
-                                        .cornerRadius(10)
-                                }
-                                .padding(10)
+                                    .padding(.bottom)
                             }
                             .onChange(of: participants) { _ in
                                 updateComputedAmount()}
@@ -464,7 +449,7 @@ struct ModifyGroupView: View {
                         }
                         .frame(width: screenWidth - 28, height: 86)
                         .padding(.horizontal, 14)
-                        .padding(.top, 90)
+                        .padding(.top, 63)
                         .padding(.vertical, 10)
                         .padding(.bottom)
                         
@@ -472,6 +457,27 @@ struct ModifyGroupView: View {
                         Spacer()
                         Spacer()
                         Spacer()
+                        
+                        ZStack (alignment: .center) {
+                            Button(action:{
+                                financeModel.modifyGroup(oldGroup: group, newGroup:
+                                    Group(name: fundName, creationDate: group.creationDate, startDate: formatDateToString(date: startDate),
+                                          endDate: formatDateToString(date: endDate), period: (selectedNumber, toChar(period:selectedUnit)), totalAmount: Double(totalAmount)!, currentAmount: group.currentAmount, contributionAmount: computedAmount, contributionHistory: group.contributionHistory, participants: participants))
+                                
+//                                    financeModel.deleteFund(groupName: group.name)
+                                dismiss()
+//                                    print(financeModel.groups)
+                            }) {
+                                Text("Modify Group")
+                                    .font(.headline)
+                                    .foregroundColor(.white)
+                                    .padding()
+                                    .background(!fundName.isEmpty && !totalAmount.isEmpty && error[0].isEmpty && error[1].isEmpty ? Color.green : Color.green.opacity(0.5))
+                                    .cornerRadius(10)
+                            }
+                            .padding(10)
+                            
+                        }
                     }
                     .frame(minHeight: geometry.size.height)
                 }

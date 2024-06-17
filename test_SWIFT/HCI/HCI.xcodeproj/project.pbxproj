@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A706F4A92C20928E00E15C9A /* ConfirmationDeleteButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = A706F4A82C20928E00E15C9A /* ConfirmationDeleteButton.swift */; };
 		A715801E2C10657900477F44 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A715801D2C10657900477F44 /* MainView.swift */; };
 		A748420E2C1ED3C20050D5D2 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748420D2C1ED3C20050D5D2 /* Card.swift */; };
 		A76A93322C10522100DFB084 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A76A93312C10522100DFB084 /* Transaction.swift */; };
@@ -55,6 +56,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A706F4A82C20928E00E15C9A /* ConfirmationDeleteButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationDeleteButton.swift; sourceTree = "<group>"; };
 		A715801D2C10657900477F44 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		A748420D2C1ED3C20050D5D2 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		A76A93312C10522100DFB084 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
@@ -116,20 +118,21 @@
 		A76A932D2C104EB000DFB084 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				C80D2E3F2C10BDA80009478D /* ProgressBar.swift */,
+				A748420D2C1ED3C20050D5D2 /* Card.swift */,
+				C80D2E502C19F6E50009478D /* CategoryView.swift */,
+				C80D2E4A2C13608B0009478D /* Checkbox.swift */,
+				A706F4A82C20928E00E15C9A /* ConfirmationDeleteButton.swift */,
+				A76A93372C10531400DFB084 /* CreateFundView.swift */,
 				ED79FB932C1862E900EA92DB /* FriendNotificationView.swift */,
 				A76A93352C1052EC00DFB084 /* FundDetailsView.swift */,
-				A715801D2C10657900477F44 /* MainView.swift */,
-				A76A93372C10531400DFB084 /* CreateFundView.swift */,
+				C8F43F4F2C1E0B9000E9AF78 /* GroupMenuView.swift */,
 				A76A93392C10532B00DFB084 /* GroupsView.swift */,
 				A76A933B2C10534900DFB084 /* HomePage.swift */,
-				C80D2E472C134AAE0009478D /* NotificationView.swift */,
-				A748420D2C1ED3C20050D5D2 /* Card.swift */,
-				C80D2E4A2C13608B0009478D /* Checkbox.swift */,
-				C80D2E502C19F6E50009478D /* CategoryView.swift */,
-				C80D2E562C1C7ACC0009478D /* RemainderView.swift */,
-				C8F43F4F2C1E0B9000E9AF78 /* GroupMenuView.swift */,
+				A715801D2C10657900477F44 /* MainView.swift */,
 				C8F43F532C1F45FE00E9AF78 /* ModifyGroupView.swift */,
+				C80D2E472C134AAE0009478D /* NotificationView.swift */,
+				C80D2E3F2C10BDA80009478D /* ProgressBar.swift */,
+				C80D2E562C1C7ACC0009478D /* RemainderView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -143,20 +146,6 @@
 				EDC0C8B52C1208D200A18B25 /* Friend.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		A76A932F2C104F1700DFB084 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
-		A76A93302C104F2200DFB084 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 		A76A933D2C10536000DFB084 /* ViewModels */ = {
@@ -196,8 +185,6 @@
 				A76A933D2C10536000DFB084 /* ViewModels */,
 				A76A932D2C104EB000DFB084 /* Views */,
 				A7FE46722C0F554500B3A2FC /* Color+Hex.swift */,
-				A76A93302C104F2200DFB084 /* Controllers */,
-				A76A932F2C104F1700DFB084 /* Services */,
 				A76A932E2C104EC600DFB084 /* Models */,
 				A7FE464C2C0F4AE400B3A2FC /* Assets.xcassets */,
 				A7FE464E2C0F4AE400B3A2FC /* Preview Content */,
@@ -377,6 +364,7 @@
 				A76A933A2C10532B00DFB084 /* GroupsView.swift in Sources */,
 				EDC0C8B62C1208D200A18B25 /* Friend.swift in Sources */,
 				C8F43F542C1F45FE00E9AF78 /* ModifyGroupView.swift in Sources */,
+				A706F4A92C20928E00E15C9A /* ConfirmationDeleteButton.swift in Sources */,
 				C80D2E572C1C7ACC0009478D /* RemainderView.swift in Sources */,
 				A76A93382C10531400DFB084 /* CreateFundView.swift in Sources */,
 				C80D2E4B2C13608B0009478D /* Checkbox.swift in Sources */,

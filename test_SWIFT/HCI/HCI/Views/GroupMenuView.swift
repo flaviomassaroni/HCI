@@ -44,6 +44,8 @@ struct GroupMenuView: View {
     @Binding var isVisible: Bool
     @ObservedObject var financeModel: FinanceViewModel
     @Binding var group: Group
+    @Binding var Confirmation: Bool
+    
     var body: some View {
         VStack {
             HStack {
@@ -69,7 +71,11 @@ struct GroupMenuView: View {
                     }.sheet(isPresented: $editMode) {
                         ModifyGroupView(financeModel: financeModel, group: $group, editMode: $editMode)
                     }
-                    Button(action:{financeModel.deleteFund(groupName: group.name )}){
+                    Button(action:{
+                        // financeModel.deleteFund(groupName: group.name)
+                        Confirmation = true
+                        isVisible = false
+                    }){
                         ZStack {
                             BottomRoundedRectangle(cornerRadius: 20)
                                 .frame(width: 250, height: 50)
@@ -79,6 +85,7 @@ struct GroupMenuView: View {
                                 Text("Delete Group")
                                     .fontWeight(.semibold)
                                     .foregroundColor(.red)
+                                
                                 Image(systemName: "xmark.circle")
                                     .resizable()
                                     .frame(width: 20, height: 20)
