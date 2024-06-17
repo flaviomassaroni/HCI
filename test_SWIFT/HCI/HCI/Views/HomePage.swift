@@ -7,6 +7,7 @@ struct HomePage: View {
     @State private var offset: CGFloat = 0
     @State private var isShowingGroupsView: Bool = false
     @State var showCard: Bool = false
+    @State private var cardOffset: CGFloat = 0
     
     var body: some View {
         ZStack{
@@ -16,10 +17,27 @@ struct HomePage: View {
             }
             if showCard {
                 CardView()
-//                     .transition(.move(edge: .bottom))
-                    .transition(.scale.combined(with: .opacity))
+                    .transition(.move(edge: .bottom))
+                    // .transition(.scale.combined(with: .opacity))
                     .animation(.easeInOut)
                     .zIndex(1.0)
+                    .offset(y: offset)
+                    .gesture(
+                        DragGesture()
+                            .onChanged { gesture in
+                                if gesture.translation.height > 0 {
+                                    self.offset = gesture.translation.height
+                                }
+                            }
+                            .onEnded { gesture in
+                                if gesture.translation.height > 100 {
+                                    withAnimation {
+                                        self.showCard = false
+                                    }
+                                }
+                                self.offset = 0
+                            }
+                    )
                     .onTapGesture {
                         showCard = false
                     }
@@ -223,7 +241,12 @@ struct HomePage: View {
                     }
                 }
             }
+            .opacity(showCard ? 0.1 : 1)
+            .background(Color.black.opacity(0.6))
+            .edgesIgnoringSafeArea(.all)
+            
         }
+        
     }
 }
 

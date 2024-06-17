@@ -13,21 +13,26 @@ struct CardView: View {
             Spacer()
             ZStack{
                 
-                
-                HStack{
+                VStack{
+                    // move the rectangle down
                     
-                    Image("Image")
-                        .resizable()
+                    RoundedRectangle(cornerRadius: 25.0)
+                        .frame(width: 150, height: 8)
+                        .foregroundColor(Color.white)
+                        .padding(.bottom, -0)
+                    Image("card ")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .padding(.top, -80)
                     
-                        .aspectRatio(contentMode: .fit)
-                        .padding()
                 }
+                
                 
                 
             }
             Spacer()
         }
-        .background(Color.black.opacity(0.5))
+        .background(Color.black.opacity(0.01))
     }
 }
 
