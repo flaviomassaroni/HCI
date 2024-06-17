@@ -59,10 +59,11 @@ class FinanceViewModel: ObservableObject {
             
             let cost = missing / Double(numberOfIntervals(from: newGroup.startDate, to: newGroup.endDate, withFrequency: newGroup.period)!)
             
-            for _ in 0...Int(missing/cost) {
-                let generatedContrs = generateContributionHistoryParticipant(participant: participant, startDate: newGroup.startDate, endDate: newGroup.endDate, amount: cost, period: newGroup.period)
-                workGroup.contributionHistory.append(contentsOf: generatedContrs)
-            }
+
+            let generatedContrs = generateContributionHistoryParticipant(participant: participant, startDate: newGroup.startDate, endDate: newGroup.endDate, amount: cost, period: newGroup.period)
+            print("GENERATEDDDDD: \(generatedContrs)\n")
+            workGroup.contributionHistory.append(contentsOf: generatedContrs)
+
         }
         
         for index in groups.indices{

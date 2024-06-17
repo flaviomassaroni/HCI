@@ -146,7 +146,7 @@ func generateContributionHistory(for group: Group) -> [Contribution] {
     var currentDate = startDate
     var contributions = [Contribution]()
     
-    while currentDate <= endDate {
+    while currentDate < endDate {
         for participant in group.participants {
             let contribution = Contribution(
                 owner: participant,
@@ -174,7 +174,7 @@ func generateContributionHistoryParticipant(participant: Participant, startDate:
     var currentDate = startDate
     var contributions = [Contribution]()
     
-    while currentDate <= endDate {
+    while currentDate < endDate {
         let contribution = Contribution(
             owner: participant,
             date: stringFromDate(date: currentDate),
