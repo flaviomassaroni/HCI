@@ -439,11 +439,12 @@ struct ModifyGroupView: View {
                                             .foregroundColor(participants.contains { $0.name == friend.name } ? .gray : .black)
                                         //                                            .background(participants.contains { $0.name == friend.name } ? Color.gray : Color.white)
                                             .onTapGesture {
-                                                addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: financeModel.profileColors[colorIndex]))
+                                                newParticipant = friend.name
+//                                                addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: financeModel.profileColors[colorIndex]))
                                                 colorIndex += 1
                                                 //                                                participants.insert(, at: 0) : none }
                                                 //                                                participants.append(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
-                                                newParticipant = ""
+//                                                newParticipant = ""
                                             }
                                     }
                                     .frame(height: 200)

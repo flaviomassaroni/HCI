@@ -283,6 +283,14 @@ struct FundDetailsView: View {
             }
             .navigationBarHidden(true)
             .toolbar(.hidden, for: .tabBar)
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width > 100 {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
+            )
         }
     }
 }
