@@ -417,6 +417,7 @@ struct ModifyGroupView: View {
                                     .font(.body)
                                     .fontWeight(.semibold)
                                     .padding(.bottom)
+                                
                             }
                             .onChange(of: participants) { _ in
                                 updateComputedAmount()}
@@ -466,7 +467,12 @@ struct ModifyGroupView: View {
                         Spacer()
                         Spacer()
                         Spacer()
-                        
+                        Text("\(Image(systemName: "exclamationmark.triangle")) Participants who have already contributed will have lower future contributions.")
+                            .padding(.horizontal)
+                            .padding(.top, -10)
+                            .multilineTextAlignment(.center)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.gray)
                         ZStack (alignment: .center) {
                             Button(action:{
                                 financeModel.modifyGroup(oldGroup: group, newGroup:
