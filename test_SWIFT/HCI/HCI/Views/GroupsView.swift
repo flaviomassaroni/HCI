@@ -90,6 +90,8 @@ struct GroupsView: View {
                                 .multilineTextAlignment(.center)
                                 .fontWeight(.bold)
                                 .padding(.bottom, 8)
+                                .padding(.leading, 10)
+                                .padding(.trailing, 10)
                                 .opacity(0.6)
                             Text("Create one by clicking the \(Image(systemName: "plus.circle")) button!")
                                                             .multilineTextAlignment(.center)
