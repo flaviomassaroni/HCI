@@ -170,10 +170,21 @@ struct FriendNotificationView: View {
                         
                         
                         
-                    }.background(Color(hex:"ECECEC"))
+                    }
+                    .background(Color(hex:"ECECEC"))
                     
-                }.background(Color(hex:"ECECEC"))
-            }.navigationBarHidden(true)
+                }
+                .background(Color(hex:"ECECEC"))
+            }
+            .navigationBarHidden(true)
+            .gesture(
+                DragGesture()
+                    .onEnded { value in
+                        if value.translation.width > 100 {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                    }
+            )
         }
     }
 }
