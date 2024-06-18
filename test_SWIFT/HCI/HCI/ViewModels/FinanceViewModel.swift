@@ -61,19 +61,53 @@ class FinanceViewModel: ObservableObject {
             
 
             let generatedContrs = generateContributionHistoryParticipant(participant: participant, startDate: newGroup.startDate, endDate: newGroup.endDate, amount: cost, period: newGroup.period)
-            print("GENERATEDDDDD: \(generatedContrs)\n")
+//            print("GENERATEDDDDD: \(generatedContrs)\n")
             workGroup.contributionHistory.append(contentsOf: generatedContrs)
 
+        }
+        for contr in workGroup.contributionHistory{
+            if contr.owner.name == "You"{
+                workGroup.yourContributionAmount = contr.amount}
         }
         
         for index in groups.indices{
             if groups[index].name == oldGroup.name{
                 print("\(groups[index])\n")
                 print("\(workGroup)\n")
-                
                 groups[index] = workGroup
+                break
             }
         }
+    }
+    func yourAmountFromFinance(group: Group)->Double{
+        var workGroup = group
+        workGroup.cleanHistory()
+        
+        for participant in group.participants {
+            
+            var totPaid = 0.0
+            for contr in group.contributionHistory {
+                if contr.owner.name == participant.name && contr.paid {
+                    workGroup.contributionHistory.append(contr)
+                    totPaid += contr.amount
+                }
+            }
+            let missing = (group.totalAmount / Double(group.participants.count)) - totPaid
+            
+            let cost = missing / Double(numberOfIntervals(from: group.startDate, to: group.endDate, withFrequency: group.period)!)
+            
+
+            let generatedContrs = generateContributionHistoryParticipant(participant: participant, startDate: group.startDate, endDate: group.endDate, amount: cost, period: group.period)
+//            print("GENERATEDDDDD: \(generatedContrs)\n")
+            workGroup.contributionHistory.append(contentsOf: generatedContrs)
+
+        }
+        for contr in workGroup.contributionHistory{
+            if contr.owner.name == "You"{
+                return contr.amount}
+            
+        }
+        return 0.0
     }
     
     func numberOfIntervals(from startDate: String, to endDate: String, withFrequency frequency: (Int, Character)) -> Int? {

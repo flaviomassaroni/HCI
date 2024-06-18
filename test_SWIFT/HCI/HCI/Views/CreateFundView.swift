@@ -73,7 +73,7 @@ struct CreateFundView: View {
                                 .padding(.leading, 30)
                         }
                         Spacer()
-                        Text("Modify Group")
+                        Text("Create New Group")
                             .font(.largeTitle)
                             .padding()
                             .foregroundColor(Color.white)
@@ -432,11 +432,11 @@ struct CreateFundView: View {
                                         
                                             .onTapGesture {
                                                 newParticipant = friend.name
-                                                addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: financeModel.profileColors[colorIndex]))
+//                                                addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: financeModel.profileColors[colorIndex]))
                                                 colorIndex += 1
 //                                                participants.insert(, at: 0) : none }
 //                                                participants.append(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
-                                                newParticipant = ""
+//                                                newParticipant = ""
                                             }
                                     }
                                     .frame(height: 200)
@@ -535,7 +535,8 @@ struct CreateFundView: View {
                 currentAmount: 0.0,
                 contributionAmount: calculateRecurringAmount(totalAmount: Double(totalAmount)!, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count),
                 contributionHistory: [],
-                participants: participants
+                participants: participants,
+                yourContributionAmount: calculateRecurringAmount(totalAmount: Double(totalAmount)!, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count)
             )
     //        var updatedGroup = newGroup
     //        updatedGroup.contributionHistory = generateContributionHistory(for: newGroup)

@@ -13,6 +13,7 @@ struct Group: Identifiable {
     var contributionHistory: [Contribution]
     var participants: [Participant]
     var creationDate: String
+    var yourContributionAmount: Double
     
     mutating func payContributions(checkedContributions: Set<UUID>)->Double {
         var paidAmount = 0.0
@@ -43,7 +44,7 @@ struct Group: Identifiable {
     }
 
     // Ensure that all initializers are defined explicitly.
-    init(id: UUID = UUID(), name: String, creationDate: String, startDate: String, endDate: String, period: (Int, Character), totalAmount: Double, currentAmount: Double,contributionAmount: Double, contributionHistory: [Contribution], participants: [Participant]) {
+    init(id: UUID = UUID(), name: String, creationDate: String, startDate: String, endDate: String, period: (Int, Character), totalAmount: Double, currentAmount: Double,contributionAmount: Double, contributionHistory: [Contribution], participants: [Participant], yourContributionAmount: Double) {
         self.id = id
         self.name = name
         self.creationDate = creationDate
@@ -55,6 +56,7 @@ struct Group: Identifiable {
         self.participants = participants
         self.contributionAmount = contributionAmount
         self.contributionHistory = []
+        self.yourContributionAmount = yourContributionAmount
         self.contributionHistory = generateContributionHistory(for: self)
     }
 

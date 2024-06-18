@@ -413,7 +413,7 @@ struct ModifyGroupView: View {
                                     }
                                     .padding()
                                 }
-                                Text("You will add: \(computedAmount, specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
+                                Text("You will add: \(yourAmountF(), specifier: "%.2f") every \(selectedNumber) \(selectedUnit)")
                                     .font(.body)
                                     .fontWeight(.semibold)
                                     .padding(.bottom)
@@ -439,11 +439,12 @@ struct ModifyGroupView: View {
                                             .foregroundColor(participants.contains { $0.name == friend.name } ? .gray : .black)
                                         //                                            .background(participants.contains { $0.name == friend.name } ? Color.gray : Color.white)
                                             .onTapGesture {
-                                                addParticipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: financeModel.profileColors[colorIndex]))
+                                                newParticipant = friend.name
+//                                                addP/*articipantIfNotExists(Participant(id: UUID(), name: friend.name, colour: fin*/anceModel.profileColors[colorIndex]))
                                                 colorIndex += 1
                                                 //                                                participants.insert(, at: 0) : none }
                                                 //                                                participants.append(Participant(id: UUID(), name: friend.name, colour: Color(hex: "FF5733")))
-                                                newParticipant = ""
+//                                                newParticipant = ""
                                             }
                                     }
                                     .frame(height: 200)
@@ -470,7 +471,7 @@ struct ModifyGroupView: View {
                             Button(action:{
                                 financeModel.modifyGroup(oldGroup: group, newGroup:
                                     Group(name: fundName, creationDate: group.creationDate, startDate: formatDateToString(date: startDate),
-                                          endDate: formatDateToString(date: endDate), period: (selectedNumber, toChar(period:selectedUnit)), totalAmount: Double(totalAmount)!, currentAmount: group.currentAmount, contributionAmount: computedAmount, contributionHistory: group.contributionHistory, participants: participants))
+                                          endDate: formatDateToString(date: endDate), period: (selectedNumber, toChar(period:selectedUnit)), totalAmount: Double(totalAmount)!, currentAmount: group.currentAmount, contributionAmount: computedAmount, contributionHistory: group.contributionHistory, participants: participants, yourContributionAmount: computedAmount))
                                 
 //                                    financeModel.deleteFund(groupName: group.name)
                                 dismiss()
@@ -592,7 +593,7 @@ struct ModifyGroupView: View {
                 currentAmount: 0.0,
                 contributionAmount: calculateRecurringAmount(totalAmount: Double(totalAmount)!, startDate: startDate, endDate: endDate, selectedNumber: selectedNumber, selectedUnit: selectedUnit, partNumb: participants.count),
                 contributionHistory: [],
-                participants: participants
+                participants: participants, yourContributionAmount: computedAmount
             )
     //        var updatedGroup = newGroup
     //        updatedGroup.contributionHistory = generateContributionHistory(for: newGroup)
@@ -612,6 +613,24 @@ struct ModifyGroupView: View {
         
         
     }
+    func yourAmountF() -> Double {
+        return financeModel.yourAmountFromFinance(group:
+            Group(
+                name: fundName,
+                creationDate: group.creationDate,
+                startDate: formatDateToString(date: startDate),
+                endDate: formatDateToString(date: endDate),
+                period: (selectedNumber, toChar(period: selectedUnit)),
+                totalAmount: Double(totalAmount) ?? 0.0, // Provide 0 as the default value
+                currentAmount: group.currentAmount,
+                contributionAmount: computedAmount,
+                contributionHistory: group.contributionHistory,
+                participants: participants,
+                yourContributionAmount: computedAmount
+            )
+        )
+    }
+
 }
 
 struct ModifyGroupViewPreview: PreviewProvider {
@@ -620,7 +639,7 @@ struct ModifyGroupViewPreview: PreviewProvider {
                         group: .constant(Group(name: "boat", creationDate: "21/05/24", startDate: "21/10/24", endDate: "21/05/26", period: (20,"M"), totalAmount: 5455, currentAmount: 340, contributionAmount: 50, contributionHistory: [], participants:
                     [Participant(name: "Mario", colour: .red),
                      Participant(name: "Luigi", colour: .green)
-                    ])), editMode: .constant(true)
+                    ], yourContributionAmount: 1.0)), editMode: .constant(true)
 //                        , editMode:.constant(true)
         )
     }

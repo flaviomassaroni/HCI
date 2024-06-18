@@ -135,7 +135,7 @@ struct PersonalNotificationView: View {
                     ZStack {
                         RoundedRectangle(cornerRadius: 14)
                         HStack {
-                            Text("Total: \(totalToPay(contributions: selectedContributions), specifier: "%.2f")€")
+                            Text("Total: \(yourTotalToPay(contributions: selectedContributions), specifier: "%.2f")€")
                                 .foregroundColor(Color(.black))
                                 .fontWeight(.semibold)
                                 .font(.system(size: 28))
@@ -143,13 +143,13 @@ struct PersonalNotificationView: View {
                                 .padding(.leading, 35)
                             Spacer()
                             Button("Add Missing Contributions") {
-                                financeModel.addTransaction(name: "Contribution to \(group.name)", amount: totalToPay(contributions: selectedContributions))
+                                financeModel.addTransaction(name: "Contribution to \(group.name)", amount: yourTotalToPay(contributions: selectedContributions))
                                 addMissingContributions()
 
                                 
-                            }.disabled(totalToPay(contributions: selectedContributions) == 0)
+                            }.disabled(yourTotalToPay(contributions: selectedContributions) == 0)
                             .frame(width: 140, height: 55)
-                            .background(totalToPay(contributions: selectedContributions) != 0 ? Color(hex: "62DF57") : Color.gray)
+                            .background(yourTotalToPay(contributions: selectedContributions) != 0 ? Color(hex: "62DF57") : Color.gray)
                             .cornerRadius(14)
                             .padding(.trailing, 15)
                             .fontWeight(.bold)
@@ -203,6 +203,22 @@ struct PersonalNotificationView: View {
         }
         return total
     }
+    func yourTotalToPay(contributions: [UUID: Bool]) -> Double {
+        var amount: Double = 0.0
+        for g in financeModel.groups{
+            if g.name == group.name{
+                amount = g.yourContributionAmount
+            }
+        }
+        var total: Double = 0
+        for (_, isSelected) in contributions{
+            if isSelected{
+                total += amount
+            }
+        }
+        return total
+    }
+
 }
 
 
@@ -273,9 +289,10 @@ struct NotificationView_Previews: PreviewProvider {
                     Participant(name: "Andrea Salinetti", colour: Color(hex: "FF5733")),
                     Participant(name: "Andrea Salinetti", colour: Color(hex: "33FF57")),
                     Participant(name: "Andrea Salinetti", colour: Color(hex: "3357FF"))
-                ]
+                ], yourContributionAmount: 1.0
             ),
             participant: Participant(name: "You", colour: Color(hex: "FF5733"))
+            
         )
     }
 }

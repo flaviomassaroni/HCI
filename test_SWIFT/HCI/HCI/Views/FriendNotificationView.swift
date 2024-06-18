@@ -191,6 +191,6 @@ struct FriendNotificationView_Previews: PreviewProvider {
               Participant(name:"Andrea Salinetti", colour: Color(hex: "FF5733")),
               Participant(name:"Andrea Salinetti", colour: Color(hex: "33FF57")),
               Participant(name:"Andrea Salinetti", colour: Color(hex: "3357FF"))
-        ]))
+         ], yourContributionAmount: 1.0))
     }
 }
